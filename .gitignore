@@ -1,0 +1,11 @@
+/vendor/
+/generated/
+/var/
+/pub/static/
+/pub/media/
+/app/etc/env.php
+
+/.idea/
+/.vscode/
+
+node_modules/
