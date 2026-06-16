@@ -18,7 +18,10 @@ if (!$product) {
 }
 
 $productName = (string) $product->getName();
-$productUrl = (string) $product->getProductUrl();
+$urlKey = trim((string) $product->getUrlKey(), '/');
+$productUrl = $urlKey !== ''
+    ? $block->getUrl('', ['_direct' => $urlKey . '.html'])
+    : (string) $product->getProductUrl();
 $imageUrl = $imageHelper
     ? $imageHelper->init($product, 'product_page_image_medium')->constrainOnly(true)->keepAspectRatio(true)->keepFrame(false)->getUrl()
     : '';
