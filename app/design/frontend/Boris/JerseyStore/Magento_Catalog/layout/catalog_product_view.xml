@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="page.main.title" remove="true"/>
+        <referenceContainer name="product.info.main" remove="true"/>
+        <referenceContainer name="product.info.media" remove="true"/>
+        <referenceBlock name="product.info.details" remove="true"/>
+        <referenceContainer name="content.aside" remove="true"/>
+        <referenceContainer name="content">
+            <block class="Magento\Catalog\Block\Product\View"
+                   name="jersey.product.view"
+                   template="Magento_Catalog::product/view/page.phtml"
+                   before="-">
+                <arguments>
+                    <argument name="jersey_category_products" xsi:type="object">Boris\CategoryPage\ViewModel\CategoryProducts</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

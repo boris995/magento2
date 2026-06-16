@@ -1,0 +1,121 @@
+<?php
+/**
+ * Dynamic product page for JerseyStore.
+ *
+ * @var \Magento\Catalog\Block\Product\View $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+<?php
+$product = $block->getProduct();
+$viewModel = $block->getData('jersey_category_products');
+$stockData = $viewModel ? $viewModel->getStockData($product) : ['is_in_stock' => null, 'qty' => null];
+$priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
+$outputHelper = $this->helper(\Magento\Catalog\Helper\Output::class);
+$imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
+$mainImageUrl = $imageHelper->init($product, 'product_page_image_large')->getUrl();
+$galleryImages = $product->getMediaGalleryImages();
+?>
+
+<section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:items-start">
+        <div class="space-y-4">
+            <div class="overflow-hidden rounded-lg bg-slate-100 ring-1 ring-slate-200">
+                <img
+                    src="<?= $escaper->escapeUrl($mainImageUrl) ?>"
+                    alt="<?= $escaper->escapeHtmlAttr($product->getName()) ?>"
+                    class="aspect-[4/5] w-full object-contain"
+                    itemprop="image"
+                />
+            </div>
+            <?php if ($galleryImages && $galleryImages->getSize() > 1): ?>
+                <div class="grid grid-cols-4 gap-3">
+                    <?php foreach ($galleryImages as $image): ?>
+                        <div class="overflow-hidden rounded-md bg-slate-100 ring-1 ring-slate-200">
+                            <img
+                                src="<?= $escaper->escapeUrl($image->getUrl()) ?>"
+                                alt="<?= $escaper->escapeHtmlAttr($image->getLabel() ?: $product->getName()) ?>"
+                                class="aspect-square w-full object-contain"
+                            />
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <article class="lg:sticky lg:top-24">
+            <p class="text-xs font-black uppercase tracking-[0.2em] text-yellow-700">
+                <?= $escaper->escapeHtml($product->getTypeId()) ?>
+            </p>
+            <h1 class="mt-3 text-3xl font-black leading-tight text-slate-950 sm:text-4xl">
+                <?= $escaper->escapeHtml($product->getName()) ?>
+            </h1>
+
+            <div class="mt-5 text-3xl font-black text-slate-950">
+                <?= /* @noEscape */ $priceHelper->currency($product->getFinalPrice(), true, false) ?>
+            </div>
+
+            <dl class="mt-6 grid grid-cols-2 gap-3 text-sm">
+                <div class="rounded-md bg-white p-4 shadow-sm ring-1 ring-slate-200">
+                    <dt class="font-black text-slate-500"><?= $escaper->escapeHtml(__('SKU')) ?></dt>
+                    <dd class="mt-1 font-bold text-slate-950"><?= $escaper->escapeHtml($product->getSku()) ?></dd>
+                </div>
+                <div class="rounded-md bg-white p-4 shadow-sm ring-1 ring-slate-200">
+                    <dt class="font-black text-slate-500"><?= $escaper->escapeHtml(__('Status')) ?></dt>
+                    <dd class="mt-1 font-bold text-slate-950">
+                        <?= $escaper->escapeHtml((int)$product->getStatus() === 1 ? __('Enabled') : __('Disabled')) ?>
+                    </dd>
+                </div>
+                <div class="rounded-md bg-white p-4 shadow-sm ring-1 ring-slate-200">
+                    <dt class="font-black text-slate-500"><?= $escaper->escapeHtml(__('Stock')) ?></dt>
+                    <dd class="mt-1 font-bold text-slate-950">
+                        <?php if ($stockData['is_in_stock'] === null): ?>
+                            <?= $escaper->escapeHtml(__('Unknown')) ?>
+                        <?php else: ?>
+                            <?= $escaper->escapeHtml($stockData['is_in_stock'] ? __('In stock') : __('Out of stock')) ?>
+                        <?php endif; ?>
+                    </dd>
+                </div>
+                <div class="rounded-md bg-white p-4 shadow-sm ring-1 ring-slate-200">
+                    <dt class="font-black text-slate-500"><?= $escaper->escapeHtml(__('Qty')) ?></dt>
+                    <dd class="mt-1 font-bold text-slate-950">
+                        <?= $escaper->escapeHtml($stockData['qty'] !== null ? (string)(float)$stockData['qty'] : __('Unknown')) ?>
+                    </dd>
+                </div>
+            </dl>
+
+            <?php if ($product->getShortDescription()): ?>
+                <div class="mt-6 rounded-lg bg-slate-50 p-5 text-base leading-7 text-slate-700 ring-1 ring-slate-200">
+                    <?= /* @noEscape */ $outputHelper->productAttribute($product, $product->getShortDescription(), 'short_description') ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($product->getDescription()): ?>
+                <div class="mt-8 border-t border-slate-200 pt-6">
+                    <h2 class="text-lg font-black text-slate-950"><?= $escaper->escapeHtml(__('Description')) ?></h2>
+                    <div class="mt-3 text-base leading-7 text-slate-700">
+                        <?= /* @noEscape */ $outputHelper->productAttribute($product, $product->getDescription(), 'description') ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <div class="mt-8 border-t border-slate-200 pt-6">
+                <h2 class="text-lg font-black text-slate-950"><?= $escaper->escapeHtml(__('Basic Data')) ?></h2>
+                <dl class="mt-3 grid gap-2 text-sm text-slate-700">
+                    <div class="flex justify-between gap-4">
+                        <dt class="font-bold text-slate-500"><?= $escaper->escapeHtml(__('URL Key')) ?></dt>
+                        <dd class="font-semibold text-slate-950"><?= $escaper->escapeHtml($product->getUrlKey()) ?></dd>
+                    </div>
+                    <div class="flex justify-between gap-4">
+                        <dt class="font-bold text-slate-500"><?= $escaper->escapeHtml(__('Attribute Set ID')) ?></dt>
+                        <dd class="font-semibold text-slate-950"><?= (int)$product->getAttributeSetId() ?></dd>
+                    </div>
+                    <div class="flex justify-between gap-4">
+                        <dt class="font-bold text-slate-500"><?= $escaper->escapeHtml(__('Type')) ?></dt>
+                        <dd class="font-semibold text-slate-950"><?= $escaper->escapeHtml($product->getTypeId()) ?></dd>
+                    </div>
+                </dl>
+            </div>
+        </article>
+    </div>
+</section>
