@@ -1,0 +1,209 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+
+$heroImage = $block->getViewFileUrl('Magento_Theme::images/jersey-hero.png');
+$categories = [
+    [
+        'label' => 'Club Jerseys',
+        'copy' => 'Elite home, away and third kits for matchday energy.',
+        'href' => $block->getUrl('football-jerseys'),
+    ],
+    [
+        'label' => 'Retro Icons',
+        'copy' => 'Throwback designs inspired by unforgettable football eras.',
+        'href' => $block->getUrl('retro-jerseys'),
+    ],
+    [
+        'label' => 'National Teams',
+        'copy' => 'Tournament-ready shirts for every big international night.',
+        'href' => $block->getUrl('national-teams'),
+    ],
+];
+$drops = [
+    ['name' => 'Midnight Pro Jersey', 'tag' => 'New drop', 'price' => '$79', 'tone' => 'from-slate-900 to-blue-950'],
+    ['name' => 'Heritage White Jersey', 'tag' => 'Retro fit', 'price' => '$69', 'tone' => 'from-white to-slate-200'],
+    ['name' => 'Gold Edition Jersey', 'tag' => 'Limited', 'price' => '$89', 'tone' => 'from-neutral-950 to-yellow-700'],
+];
+$benefits = [
+    'Premium breathable fabric',
+    'Fast tracked delivery',
+    'Secure checkout',
+    'Easy size exchange',
+];
+?>
+
+<main class="relative left-1/2 w-screen -translate-x-1/2 bg-slate-950 text-white">
+    <section class="relative isolate overflow-hidden">
+        <div class="absolute inset-0 -z-10">
+            <img
+                src="<?= $escaper->escapeUrl($heroImage) ?>"
+                alt="<?= $escaper->escapeHtmlAttr(__('Premium football jerseys in a dark studio')) ?>"
+                class="h-full w-full object-cover opacity-65"
+                loading="eager"
+            />
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-950/25"></div>
+            <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-950 to-transparent"></div>
+        </div>
+
+        <div class="mx-auto grid min-h-[720px] max-w-7xl items-center px-6 py-20 lg:grid-cols-[1.02fr_.98fr] lg:px-8">
+            <div class="max-w-3xl">
+                <p class="mb-5 inline-flex rounded-full border border-yellow-300/30 bg-yellow-300/10 px-4 py-2 text-sm font-bold uppercase tracking-[0.22em] text-yellow-300">
+                    2026 matchday collection
+                </p>
+                <h1 class="max-w-4xl text-5xl font-black leading-[0.96] tracking-tight sm:text-7xl lg:text-8xl">
+                    Jerseys built for the loudest fans.
+                </h1>
+                <p class="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl">
+                    Premium club, national and retro football jerseys with sharp fits, breathable fabric and street-ready details.
+                </p>
+
+                <div class="mt-10 flex flex-col gap-4 sm:flex-row">
+                    <a
+                        href="<?= $escaper->escapeUrl($block->getUrl('football-jerseys')) ?>"
+                        class="inline-flex items-center justify-center rounded-full bg-yellow-300 px-8 py-4 text-base font-black text-slate-950 shadow-2xl shadow-yellow-300/20 transition hover:-translate-y-0.5 hover:bg-yellow-200"
+                    >
+                        Shop Jerseys
+                    </a>
+                    <a
+                        href="<?= $escaper->escapeUrl($block->getUrl('retro-jerseys')) ?>"
+                        class="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-8 py-4 text-base font-bold text-white backdrop-blur transition hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/15"
+                    >
+                        Explore Retro
+                    </a>
+                </div>
+
+                <dl class="mt-14 grid max-w-2xl grid-cols-3 gap-5 border-t border-white/10 pt-8">
+                    <div>
+                        <dt class="text-3xl font-black text-yellow-300">120+</dt>
+                        <dd class="mt-1 text-sm text-slate-300">fresh kits</dd>
+                    </div>
+                    <div>
+                        <dt class="text-3xl font-black text-yellow-300">48h</dt>
+                        <dd class="mt-1 text-sm text-slate-300">dispatch</dd>
+                    </div>
+                    <div>
+                        <dt class="text-3xl font-black text-yellow-300">4.9</dt>
+                        <dd class="mt-1 text-sm text-slate-300">fan rating</dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </section>
+
+    <section class="border-y border-white/10 bg-white/[0.03]">
+        <div class="mx-auto grid max-w-7xl gap-3 px-6 py-5 text-sm font-bold uppercase tracking-[0.18em] text-slate-300 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
+            <?php foreach ($benefits as $benefit): ?>
+                <div class="flex items-center gap-3">
+                    <span class="h-2 w-2 rounded-full bg-yellow-300"></span>
+                    <span><?= $escaper->escapeHtml($benefit) ?></span>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+        <div class="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div>
+                <p class="text-sm font-black uppercase tracking-[0.24em] text-yellow-300">Shop by passion</p>
+                <h2 class="mt-3 text-4xl font-black tracking-tight sm:text-5xl">Find your next kit.</h2>
+            </div>
+            <p class="max-w-xl text-base leading-7 text-slate-300">
+                From clean modern strips to nostalgia-heavy classics, every collection is made to feel match-ready.
+            </p>
+        </div>
+
+        <div class="grid gap-5 md:grid-cols-3">
+            <?php foreach ($categories as $index => $category): ?>
+                <a
+                    href="<?= $escaper->escapeUrl($category['href']) ?>"
+                    class="group relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.04] p-7 transition hover:-translate-y-1 hover:border-yellow-300/50 hover:bg-white/[0.07]"
+                >
+                    <span class="absolute right-5 top-5 text-6xl font-black text-white/[0.04]">0<?= (int) $index + 1 ?></span>
+                    <div class="relative">
+                        <div class="mb-12 h-28 rounded-lg bg-gradient-to-br from-yellow-300/80 via-white/20 to-slate-900 p-1 shadow-2xl shadow-black/20">
+                            <div class="h-full rounded-md border border-white/20 bg-slate-950/60"></div>
+                        </div>
+                        <h3 class="text-2xl font-black"><?= $escaper->escapeHtml($category['label']) ?></h3>
+                        <p class="mt-3 min-h-14 text-sm leading-6 text-slate-300"><?= $escaper->escapeHtml($category['copy']) ?></p>
+                        <span class="mt-6 inline-flex font-black text-yellow-300 transition group-hover:translate-x-1">
+                            Shop collection
+                        </span>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </section>
+
+    <section class="bg-slate-100 text-slate-950">
+        <div class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+            <div class="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+                <div>
+                    <p class="text-sm font-black uppercase tracking-[0.24em] text-yellow-600">Featured drop</p>
+                    <h2 class="mt-3 text-4xl font-black tracking-tight sm:text-5xl">Weekend-ready favorites.</h2>
+                </div>
+                <a
+                    href="<?= $escaper->escapeUrl($block->getUrl('football-jerseys')) ?>"
+                    class="inline-flex w-fit rounded-full bg-slate-950 px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-slate-800"
+                >
+                    View all jerseys
+                </a>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-3">
+                <?php foreach ($drops as $drop): ?>
+                    <article class="overflow-hidden rounded-lg bg-white shadow-xl shadow-slate-950/10">
+                        <div class="relative h-72 bg-gradient-to-br <?= $escaper->escapeHtmlAttr($drop['tone']) ?> p-6">
+                            <span class="inline-flex rounded-full bg-white/90 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-slate-950">
+                                <?= $escaper->escapeHtml($drop['tag']) ?>
+                            </span>
+                            <div class="absolute inset-x-10 bottom-8 h-44 rounded-t-[3rem] border-x-[28px] border-t-[22px] border-white/80 bg-white/70 shadow-2xl shadow-black/20"></div>
+                            <div class="absolute left-1/2 top-24 h-28 w-20 -translate-x-1/2 rounded-b-full border-x border-slate-950/10 bg-slate-950/10"></div>
+                        </div>
+                        <div class="flex items-center justify-between gap-4 p-6">
+                            <div>
+                                <h3 class="text-xl font-black"><?= $escaper->escapeHtml($drop['name']) ?></h3>
+                                <p class="mt-1 text-sm font-semibold text-slate-500">Athletic fit, soft performance fabric</p>
+                            </div>
+                            <p class="text-2xl font-black"><?= $escaper->escapeHtml($drop['price']) ?></p>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="mx-auto grid max-w-7xl gap-8 px-6 py-20 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
+        <div>
+            <p class="text-sm font-black uppercase tracking-[0.24em] text-yellow-300">Built different</p>
+            <h2 class="mt-3 text-4xl font-black tracking-tight sm:text-5xl">Everything a serious jersey store needs.</h2>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+            <?php foreach (['Authentic-inspired details', 'Clean collars and sharp sleeve cuts', 'Sizes for every fan fit', 'Drops curated for matchday and streetwear'] as $feature): ?>
+                <div class="rounded-lg border border-white/10 bg-white/[0.04] p-6">
+                    <span class="mb-5 inline-flex h-10 w-10 items-center justify-center rounded-full bg-yellow-300 text-lg font-black text-slate-950">+</span>
+                    <h3 class="text-xl font-black"><?= $escaper->escapeHtml($feature) ?></h3>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </section>
+
+    <section class="px-6 pb-20 lg:px-8">
+        <div class="mx-auto max-w-7xl overflow-hidden rounded-lg bg-yellow-300 px-8 py-12 text-slate-950 md:px-12">
+            <div class="flex flex-col justify-between gap-8 md:flex-row md:items-center">
+                <div>
+                    <p class="text-sm font-black uppercase tracking-[0.24em]">Limited launch offer</p>
+                    <h2 class="mt-3 max-w-3xl text-4xl font-black tracking-tight sm:text-5xl">
+                        Upgrade your rotation before the next whistle.
+                    </h2>
+                </div>
+                <a
+                    href="<?= $escaper->escapeUrl($block->getUrl('football-jerseys')) ?>"
+                    class="inline-flex shrink-0 items-center justify-center rounded-full bg-slate-950 px-8 py-4 text-base font-black text-white transition hover:-translate-y-0.5 hover:bg-slate-800"
+                >
+                    Start Shopping
+                </a>
+            </div>
+        </div>
+    </section>
+</main>

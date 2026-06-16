@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="page.main.title" remove="true"/>
+        <referenceContainer name="category.view.container" remove="true"/>
+
+        <referenceBlock name="category.products.list"
+                        template="Magento_Catalog::product/list.phtml">
+            <arguments>
+                <argument name="jersey_category_products" xsi:type="object">Boris\CategoryPage\ViewModel\CategoryProducts</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="product_list_toolbar"
+                        template="Magento_Catalog::product/list/toolbar.phtml"/>
+    </body>
+</page>

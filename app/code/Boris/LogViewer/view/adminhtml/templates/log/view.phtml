@@ -1,0 +1,14 @@
+<?php
+/** @var \Boris\LogViewer\Block\Adminhtml\Log\ViewLog $block */
+/** @var \Magento\Framework\Escaper $escaper */
+?>
+
+<p>
+    <a href="<?= $escaper->escapeUrl($block->getBackUrl()) ?>">
+        <?= $escaper->escapeHtml(__('Back to log list')) ?>
+    </a>
+</p>
+
+<h2><?= $escaper->escapeHtml($block->getFileName()) ?></h2>
+
+<pre style="background:#111827;color:#e5e7eb;max-height:70vh;overflow:auto;padding:16px;white-space:pre-wrap;word-break:break-word;"><?= $escaper->escapeHtml($block->getLogContent()) ?></pre>

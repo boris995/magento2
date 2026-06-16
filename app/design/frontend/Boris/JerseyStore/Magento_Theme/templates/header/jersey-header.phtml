@@ -1,0 +1,145 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Magento\Catalog\Helper\Category $categoryHelper */
+
+$categoryHelper = $this->helper(\Magento\Catalog\Helper\Category::class);
+$storeCategories = $categoryHelper->getStoreCategories(true, false, true);
+$categoryNav = [];
+$getCleanCategoryUrl = static function ($category) use ($block): string {
+    $path = trim((string)($category->getUrlPath() ?: $category->getUrlKey()), '/');
+
+    return $path !== '' ? $block->getUrl($path) : '#';
+};
+
+foreach ($storeCategories as $category) {
+    if (!$category->getIsActive() || !$category->getIncludeInMenu()) {
+        continue;
+    }
+
+    $categoryNav[] = [
+        'label' => $category->getName(),
+        'href' => $getCleanCategoryUrl($category),
+    ];
+}
+
+$mainNav = [
+    ['label' => __('Home'), 'href' => $block->getUrl('')],
+    ['label' => __('Categories'), 'href' => $block->getUrl('categories')],
+];
+$mainNav = array_merge($mainNav, $categoryNav);
+$featuredNav = array_slice($categoryNav, 0, 3);
+?>
+
+<header class="jersey-site-header sticky top-0 z-50 border-b border-white/10 bg-slate-950/90 text-white shadow-2xl shadow-slate-950/20 backdrop-blur-xl">
+    <input id="jersey-mobile-menu" type="checkbox" class="peer sr-only" aria-label="<?= $escaper->escapeHtmlAttr(__('Toggle mobile navigation')) ?>" />
+
+    <div class="jersey-header-shell mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="jersey-header-bar flex h-20 items-center justify-between gap-5">
+            <a
+                href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"
+                class="jersey-header-logo group flex items-center gap-3"
+                aria-label="<?= $escaper->escapeHtmlAttr(__('JerseyStore Home')) ?>"
+            >
+                <span class="jersey-header-mark flex h-11 w-11 items-center justify-center rounded-lg bg-yellow-300 text-lg font-black text-slate-950 shadow-lg shadow-yellow-300/20 transition duration-300 group-hover:-rotate-6 group-hover:scale-105">
+                    JS
+                </span>
+                <span class="leading-none">
+                    <span class="jersey-header-brand block text-2xl font-black tracking-tight">
+                        Jersey<span class="text-yellow-300">Store</span>
+                    </span>
+                    <span class="jersey-header-tagline hidden text-xs font-bold uppercase tracking-[0.28em] text-slate-400 sm:block">
+                        <?= $escaper->escapeHtml(__('Football kits')) ?>
+                    </span>
+                </span>
+            </a>
+
+            <nav class="jersey-desktop-nav hidden items-center rounded-full border border-white/10 bg-white/[0.04] p-1 lg:flex" aria-label="<?= $escaper->escapeHtmlAttr(__('Main navigation')) ?>">
+                <?php foreach ($mainNav as $item): ?>
+                    <a
+                        href="<?= $escaper->escapeUrl($item['href']) ?>"
+                        class="jersey-nav-link rounded-full px-5 py-3 text-sm font-black text-slate-300 transition duration-300 hover:bg-white/10 hover:text-yellow-300"
+                    >
+                        <?= $escaper->escapeHtml($item['label']) ?>
+                    </a>
+                <?php endforeach; ?>
+            </nav>
+
+            <div class="jersey-header-actions hidden items-center gap-3 lg:flex">
+                <a
+                    href="<?= $escaper->escapeUrl($block->getUrl('customer/account')) ?>"
+                    class="jersey-action-link rounded-full border border-white/15 px-5 py-3 text-sm font-black text-slate-200 transition duration-300 hover:border-yellow-300/60 hover:text-yellow-300"
+                >
+                    <?= $escaper->escapeHtml(__('Account')) ?>
+                </a>
+                <a
+                    href="<?= $escaper->escapeUrl($block->getUrl('checkout/cart')) ?>"
+                    class="jersey-cart-link rounded-full bg-yellow-300 px-6 py-3 text-sm font-black text-slate-950 shadow-lg shadow-yellow-300/20 transition duration-300 hover:-translate-y-0.5 hover:bg-yellow-200"
+                >
+                    <?= $escaper->escapeHtml(__('Cart')) ?>
+                </a>
+            </div>
+
+            <label
+                for="jersey-mobile-menu"
+                class="jersey-menu-toggle group relative z-50 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/10 transition duration-300 hover:border-yellow-300/60 hover:bg-white/15 peer-checked:[&_.line-bottom]:top-2 peer-checked:[&_.line-bottom]:-rotate-45 peer-checked:[&_.line-middle]:opacity-0 peer-checked:[&_.line-top]:top-2 peer-checked:[&_.line-top]:rotate-45 lg:hidden"
+                aria-label="<?= $escaper->escapeHtmlAttr(__('Open mobile navigation')) ?>"
+            >
+                <span class="relative h-5 w-6">
+                    <span class="line-top absolute left-0 top-0 h-0.5 w-6 rounded-full bg-white transition duration-300"></span>
+                    <span class="line-middle absolute left-0 top-2 h-0.5 w-6 rounded-full bg-white transition duration-300"></span>
+                    <span class="line-bottom absolute left-0 top-4 h-0.5 w-6 rounded-full bg-white transition duration-300"></span>
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <div class="jersey-mobile-panel grid max-h-0 overflow-hidden border-white/10 bg-slate-950/98 opacity-0 shadow-2xl shadow-black/30 transition-all duration-500 ease-out peer-checked:max-h-[620px] peer-checked:border-t peer-checked:opacity-100 lg:hidden">
+        <div class="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6">
+            <nav class="grid gap-2" aria-label="<?= $escaper->escapeHtmlAttr(__('Mobile navigation')) ?>">
+                <?php foreach ($mainNav as $item): ?>
+                    <a
+                        href="<?= $escaper->escapeUrl($item['href']) ?>"
+                        class="jersey-mobile-link group flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.04] px-5 py-4 text-base font-black text-white transition duration-300 hover:border-yellow-300/50 hover:bg-yellow-300 hover:text-slate-950"
+                    >
+                        <span><?= $escaper->escapeHtml($item['label']) ?></span>
+                        <span class="transition duration-300 group-hover:translate-x-1">&rarr;</span>
+                    </a>
+                <?php endforeach; ?>
+            </nav>
+
+            <?php if ($featuredNav): ?>
+                <div class="mt-5 rounded-lg border border-white/10 bg-white/[0.04] p-4">
+                    <p class="text-xs font-black uppercase tracking-[0.24em] text-yellow-300">
+                        <?= $escaper->escapeHtml(__('Shop categories')) ?>
+                    </p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <?php foreach ($featuredNav as $item): ?>
+                            <a
+                                href="<?= $escaper->escapeUrl($item['href']) ?>"
+                                class="rounded-full bg-white/10 px-4 py-2 text-sm font-bold text-slate-200 transition duration-300 hover:bg-white/20 hover:text-yellow-300"
+                            >
+                                <?= $escaper->escapeHtml($item['label']) ?>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <div class="mt-5 grid grid-cols-2 gap-3">
+                <a
+                    href="<?= $escaper->escapeUrl($block->getUrl('customer/account')) ?>"
+                    class="rounded-full border border-white/15 px-5 py-3 text-center text-sm font-black text-slate-200 transition duration-300 hover:border-yellow-300/60 hover:text-yellow-300"
+                >
+                    <?= $escaper->escapeHtml(__('Account')) ?>
+                </a>
+                <a
+                    href="<?= $escaper->escapeUrl($block->getUrl('checkout/cart')) ?>"
+                    class="rounded-full bg-yellow-300 px-5 py-3 text-center text-sm font-black text-slate-950 transition duration-300 hover:bg-yellow-200"
+                >
+                    <?= $escaper->escapeHtml(__('Cart')) ?>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>

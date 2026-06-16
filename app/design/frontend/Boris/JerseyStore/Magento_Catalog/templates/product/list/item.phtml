@@ -1,0 +1,118 @@
+<?php
+/**
+ * Product card template for JerseyStore PLP.
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
+use Magento\Framework\App\Action\Action;
+
+/** @var \Magento\Catalog\Model\Product $_product */
+$_product = $block->getData('product');
+/** @var \Magento\Catalog\Block\Product\ListProduct $_listBlock */
+$_listBlock = $block->getData('list_block');
+$_imageDisplayArea = $block->getData('image_display_area') ?: 'category_page_grid';
+$_templateType = $block->getData('template_type') ?: \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+$_outputHelper = $_listBlock->getData('outputHelper');
+$_productImage = $_listBlock->getImage($_product, $_imageDisplayArea);
+$_productName = $_listBlock->stripTags($_product->getName(), null, true);
+$_viewModel = $_listBlock->getData('viewModel');
+$_assignedProductsFallback = (bool) $block->getData('assigned_products_fallback');
+$_priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
+?>
+
+<article
+    class="group flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-950/10 hover:ring-yellow-300/70"
+    id="product-item-info_<?= (int) $_product->getId() ?>"
+>
+    <a
+        href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"
+        class="relative block bg-gradient-to-br from-slate-200 via-white to-slate-300 p-5"
+        tabindex="-1"
+    >
+        <span class="absolute left-4 top-4 z-10 rounded-full bg-slate-950 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-yellow-300">
+            <?= $escaper->escapeHtml(__('Jersey')) ?>
+        </span>
+        <div class="aspect-[4/5] overflow-hidden rounded-md bg-white">
+            <div class="h-full w-full transition duration-500 group-hover:scale-105">
+                <?= $_productImage->toHtml() ?>
+            </div>
+        </div>
+    </a>
+
+    <div class="flex flex-1 flex-col p-5">
+        <div class="flex-1">
+            <h2 class="text-lg font-black leading-snug text-slate-950">
+                <a
+                    href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"
+                    class="transition hover:text-yellow-700"
+                    title="<?= $escaper->escapeHtmlAttr($_productName) ?>"
+                >
+                    <?= /* @noEscape */ $_outputHelper->productAttribute($_product, $_product->getName(), 'name') ?>
+                </a>
+            </h2>
+
+            <div class="mt-3 text-sm text-slate-500">
+                <?= $_listBlock->getReviewsSummaryHtml($_product, $_templateType) ?>
+            </div>
+
+            <div class="mt-4 text-xl font-black text-slate-950">
+                <?php if ($_assignedProductsFallback): ?>
+                    <?= /* @noEscape */ $_priceHelper->currency($_product->getFinalPrice(), true, false) ?>
+                <?php else: ?>
+                    <?= /* @noEscape */ $_listBlock->getProductPrice($_product) ?>
+                <?php endif; ?>
+            </div>
+
+            <?= $_listBlock->getProductDetailsHtml($_product) ?>
+        </div>
+
+        <div class="mt-5 flex flex-col gap-3">
+            <?php if ($_product->isSaleable()): ?>
+                <?php $_postParams = $_listBlock->getAddToCartPostParams($_product); ?>
+                <form
+                    data-role="tocart-form"
+                    data-product-sku="<?= $escaper->escapeHtmlAttr($_product->getSku()) ?>"
+                    action="<?= $escaper->escapeUrl($_postParams['action']) ?>"
+                    data-mage-init='{"catalogAddToCart": {}}'
+                    method="post"
+                >
+                    <?php $_options = $_viewModel ? $_viewModel->getOptionsData($_product) : []; ?>
+                    <?php foreach ($_options as $_optionItem): ?>
+                        <input
+                            type="hidden"
+                            name="<?= $escaper->escapeHtmlAttr($_optionItem['name']) ?>"
+                            value="<?= $escaper->escapeHtmlAttr($_optionItem['value']) ?>"
+                        />
+                    <?php endforeach; ?>
+                    <input type="hidden" name="product" value="<?= (int) $_postParams['data']['product'] ?>" />
+                    <input
+                        type="hidden"
+                        name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+                        value="<?= /* @noEscape */ $_postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>"
+                    />
+                    <?= $_listBlock->getBlockHtml('formkey') ?>
+                    <button
+                        type="submit"
+                        title="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
+                        class="w-full rounded-full bg-slate-950 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white transition hover:bg-yellow-300 hover:text-slate-950"
+                    >
+                        <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
+                    </button>
+                </form>
+            <?php else: ?>
+                <div class="rounded-full border border-slate-200 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.14em] text-slate-500">
+                    <?= $escaper->escapeHtml($_product->isAvailable() ? __('In stock') : __('Out of stock')) ?>
+                </div>
+            <?php endif; ?>
+
+            <a
+                href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"
+                class="text-center text-sm font-black text-slate-500 transition hover:text-slate-950"
+            >
+                <?= $escaper->escapeHtml(__('View details')) ?>
+            </a>
+        </div>
+    </div>
+</article>

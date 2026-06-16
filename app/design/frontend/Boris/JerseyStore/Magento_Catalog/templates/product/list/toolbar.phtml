@@ -1,0 +1,89 @@
+<?php
+/**
+ * Product list toolbar for JerseyStore PLP.
+ *
+ * @var \Magento\Catalog\Block\Product\ProductList\Toolbar $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+<?php if ($block->getCollection()->getSize()): ?>
+    <?php
+    $_widget = $this->helper(\Magento\Framework\Json\Helper\Data::class)
+        ->jsonDecode($block->getWidgetOptionsJson());
+    $_widgetOptions = $this->helper(\Magento\Framework\Json\Helper\Data::class)
+        ->jsonEncode($_widget['productListToolbarForm']);
+    ?>
+
+    <?php if ($block->getIsBottom()): ?>
+        <div
+            class="toolbar toolbar-products flex flex-col gap-5 rounded-lg border border-slate-200 bg-white p-5 shadow-sm md:flex-row md:items-center md:justify-between"
+            data-mage-init='{"productListToolbarForm":<?= /* @noEscape */ $_widgetOptions ?>}'
+        >
+            <div class="text-sm font-semibold text-slate-500">
+                <?= $block->fetchView($block->getTemplateFile('Magento_Catalog::product/list/toolbar/limiter.phtml')) ?>
+            </div>
+            <div class="flex justify-center md:justify-end">
+                <?= $block->getPagerHtml() ?>
+            </div>
+        </div>
+    <?php else: ?>
+        <div
+            class="toolbar toolbar-products flex flex-col gap-5 rounded-lg border border-slate-200 bg-white p-5 shadow-sm lg:flex-row lg:items-center lg:justify-between"
+            data-mage-init='{"productListToolbarForm":<?= /* @noEscape */ $_widgetOptions ?>}'
+        >
+            <div>
+                <p class="text-xs font-black uppercase tracking-[0.2em] text-yellow-700">
+                    <?= $escaper->escapeHtml(__('Available jerseys')) ?>
+                </p>
+                <div class="mt-1 text-sm font-semibold text-slate-500">
+                    <?= $block->fetchView($block->getTemplateFile('Magento_Catalog::product/list/toolbar/amount.phtml')) ?>
+                </div>
+            </div>
+
+            <?php if ($block->isExpanded()): ?>
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <label class="text-sm font-black text-slate-700" for="sorter">
+                        <?= $escaper->escapeHtml(__('Sort By')) ?>
+                    </label>
+                    <select
+                        id="sorter"
+                        data-role="sorter"
+                        class="min-w-48 rounded-full border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-950 outline-none transition focus:border-yellow-400 focus:ring-4 focus:ring-yellow-300/20"
+                    >
+                        <?php foreach ($block->getAvailableOrders() as $_key => $_order): ?>
+                            <option value="<?= $escaper->escapeHtmlAttr($_key) ?>"
+                                <?php if ($block->isOrderCurrent($_key)): ?>
+                                    selected="selected"
+                                <?php endif; ?>
+                            >
+                                <?= $escaper->escapeHtml(__($_order)) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <?php if ($block->getCurrentDirection() === 'desc'): ?>
+                        <a
+                            title="<?= $escaper->escapeHtmlAttr(__('Set Ascending Direction')) ?>"
+                            href="#"
+                            class="rounded-full border border-slate-200 px-4 py-3 text-sm font-black text-slate-700 transition hover:border-yellow-300 hover:bg-yellow-300 hover:text-slate-950"
+                            data-role="direction-switcher"
+                            data-value="asc"
+                        >
+                            <?= $escaper->escapeHtml(__('Asc')) ?>
+                        </a>
+                    <?php else: ?>
+                        <a
+                            title="<?= $escaper->escapeHtmlAttr(__('Set Descending Direction')) ?>"
+                            href="#"
+                            class="rounded-full border border-slate-200 px-4 py-3 text-sm font-black text-slate-700 transition hover:border-yellow-300 hover:bg-yellow-300 hover:text-slate-950"
+                            data-role="direction-switcher"
+                            data-value="desc"
+                        >
+                            <?= $escaper->escapeHtml(__('Desc')) ?>
+                        </a>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

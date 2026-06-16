@@ -1,0 +1,38 @@
+<?php
+/** @var \Boris\LogViewer\Block\Adminhtml\Log\ListLog $block */
+/** @var \Magento\Framework\Escaper $escaper */
+
+$files = $block->getLogFiles();
+?>
+
+<div class="admin__data-grid-wrap">
+    <table class="data-grid">
+        <thead>
+        <tr>
+            <th class="data-grid-th"><?= $escaper->escapeHtml(__('Log File')) ?></th>
+            <th class="data-grid-th"><?= $escaper->escapeHtml(__('Size')) ?></th>
+            <th class="data-grid-th"><?= $escaper->escapeHtml(__('Last Modified')) ?></th>
+            <th class="data-grid-th"><?= $escaper->escapeHtml(__('Action')) ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php if (!$files): ?>
+            <tr>
+                <td colspan="4"><?= $escaper->escapeHtml(__('No readable .log files found in var/log.')) ?></td>
+            </tr>
+        <?php endif; ?>
+        <?php foreach ($files as $file): ?>
+            <tr>
+                <td><?= $escaper->escapeHtml($file['name']) ?></td>
+                <td><?= $escaper->escapeHtml($block->formatSize((int)$file['size'])) ?></td>
+                <td><?= $escaper->escapeHtml(date('Y-m-d H:i:s', (int)$file['modified'])) ?></td>
+                <td>
+                    <a href="<?= $escaper->escapeUrl($file['url']) ?>">
+                        <?= $escaper->escapeHtml(__('View')) ?>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

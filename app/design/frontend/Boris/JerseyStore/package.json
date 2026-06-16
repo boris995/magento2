@@ -1,0 +1,20 @@
+{
+  "name": "jerseystore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx @tailwindcss/cli -i ./web/tailwind/input.css -o ./web/css/tailwind.css --watch",
+    "build": "npx @tailwindcss/cli -i ./web/tailwind/input.css -o ./web/css/tailwind.css",
+    "build-prod": "npx @tailwindcss/cli -i ./web/tailwind/input.css -o ./web/css/tailwind.css --minify",
+    "deploy": "npm run build-prod && cd /home/boris/Sites/magento2 && rm -rf pub/static/frontend/Boris/JerseyStore && php bin/magento setup:static-content:deploy -f en_US && php bin/magento cache:flush"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.1",
+    "tailwindcss": "^4.3.1"
+  }
+}
