@@ -14,3 +14,22 @@ body {
 .page-wrapper {
     @apply overflow-x-hidden;
 }
+
+.container-shop {
+    width: 100%;
+    max-width: 976px;
+    margin-inline: auto;
+    padding-inline: 20px;
+}
+
+@media (min-width: 1280px) {
+    .container-shop {
+        max-width: 1160px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .container-shop {
+        max-width: 1320px;
+    }
+}
