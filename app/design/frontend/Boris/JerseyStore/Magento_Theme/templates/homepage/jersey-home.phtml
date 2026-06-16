@@ -2,6 +2,14 @@
 /** @var \Magento\Framework\View\Element\Template $block */
 /** @var \Magento\Framework\Escaper $escaper */
 
+use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use Magento\Catalog\Model\Product\Visibility;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
+use Magento\CatalogInventory\Helper\Stock;
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Pricing\Helper\Data as PriceHelper;
+use Magento\Store\Model\StoreManagerInterface;
+
 $image = $block->getViewFileUrl('Magento_Theme::images/home-jersey-editorial.png');
 $categories = [
     ['title' => 'Klubovi', 'copy' => 'Najnoviji domaći i gostujući dresovi.', 'href' => 'klubovi', 'crop' => 'object-[72%_46%]'],
@@ -9,18 +17,35 @@ $categories = [
     ['title' => 'Retro Dresovi', 'copy' => 'Klasici inspirisani legendarnim sezonama.', 'href' => 'retro-dresovi', 'crop' => 'object-[30%_50%]'],
     ['title' => 'Dječiji Dresovi', 'copy' => 'Lagani modeli za najmlađe navijače.', 'href' => 'djeciji-dresovi', 'crop' => 'object-[84%_54%]'],
 ];
-$products = [
-    ['name' => 'Crveni Matchday Dres', 'price' => '€49.99', 'badge' => 'NEW', 'crop' => 'object-[68%_45%]'],
-    ['name' => 'Bijeli Away Dres', 'price' => '€44.99', 'badge' => '', 'crop' => 'object-[44%_44%]'],
-    ['name' => 'Retro Plavi Dres', 'price' => '€54.99', 'badge' => 'SALE', 'crop' => 'object-[26%_50%]'],
-    ['name' => 'Dječiji Fan Dres', 'price' => '€34.99', 'badge' => '', 'crop' => 'object-[86%_55%]'],
-];
 $benefits = [
     ['title' => 'Brza Dostava', 'copy' => 'Pakovanje i slanje bez čekanja.'],
     ['title' => 'Sigurno Plaćanje', 'copy' => 'Zaštićena kupovina svaki put.'],
     ['title' => 'Zamjena Veličine', 'copy' => 'Jednostavna zamjena ako fit nije pravi.'],
     ['title' => 'Originalni Proizvodi', 'copy' => 'Pažljivo odabrani modeli za navijače.'],
 ];
+
+$objectManager = ObjectManager::getInstance();
+$storeManager = $objectManager->get(StoreManagerInterface::class);
+$productCollectionFactory = $objectManager->get(CollectionFactory::class);
+$stockHelper = $objectManager->get(Stock::class);
+$priceHelper = $objectManager->get(PriceHelper::class);
+$imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
+
+$products = $productCollectionFactory->create();
+$products
+    ->addAttributeToSelect(['name', 'small_image', 'image', 'price', 'special_price', 'short_description', 'url_key'])
+    ->addAttributeToFilter('status', Status::STATUS_ENABLED)
+    ->addAttributeToFilter('visibility', [
+        'in' => [
+            Visibility::VISIBILITY_IN_CATALOG,
+            Visibility::VISIBILITY_IN_SEARCH,
+            Visibility::VISIBILITY_BOTH,
+        ],
+    ])
+    ->addStoreFilter((int) $storeManager->getStore()->getId())
+    ->setOrder('created_at', 'DESC');
+
+$stockHelper->addInStockFilterToCollection($products);
 ?>
 
 <main class="container-shop overflow-hidden bg-[#fafafa] text-neutral-950">
@@ -105,32 +130,23 @@ $benefits = [
             </a>
         </div>
 
-        <div class="-mx-5 flex snap-x gap-5 overflow-x-auto px-5 pb-4 sm:-mx-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0 lg:pb-0">
-            <?php foreach ($products as $product): ?>
-                <article class="group min-w-[76vw] snap-start sm:min-w-[320px] lg:min-w-0">
-                    <div class="relative h-[330px] overflow-hidden rounded-2xl bg-white shadow-sm lg:h-80 lg:rounded-none">
-                        <?php if ($product['badge']): ?>
-                            <span class="absolute left-3 top-3 z-10 bg-neutral-950 px-2 py-1 text-[10px] font-black text-white">
-                                <?= $escaper->escapeHtml($product['badge']) ?>
-                            </span>
-                        <?php endif; ?>
-
-                        <button class="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90" type="button">
-                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M20.8 5.7a5.1 5.1 0 0 0-7.2 0L12 7.3l-1.6-1.6a5.1 5.1 0 1 0-7.2 7.2L12 21l8.8-8.1a5.1 5.1 0 0 0 0-7.2Z" stroke="currentColor" stroke-width="1.6"/></svg>
-                        </button>
-
-                        <img src="<?= $escaper->escapeUrl($image) ?>"
-                             alt="<?= $escaper->escapeHtmlAttr($product['name']) ?>"
-                             class="h-full w-full object-cover <?= $escaper->escapeHtmlAttr($product['crop']) ?> transition duration-500 group-hover:scale-105"
-                             loading="lazy" />
-                    </div>
-
-                    <h3 class="mt-4 text-base font-black"><?= $escaper->escapeHtml($product['name']) ?></h3>
-                    <p class="mt-1 text-sm leading-5 text-neutral-600">Lagani navijački fit za stadion i grad.</p>
-                    <p class="mt-2 text-sm font-black"><?= $escaper->escapeHtml($product['price']) ?></p>
-                </article>
-            <?php endforeach; ?>
-        </div>
+        <?php if (!$products->getSize()): ?>
+            <div class="rounded-2xl border border-neutral-200 bg-white p-8 text-sm font-semibold text-neutral-600 shadow-sm">
+                <?= $escaper->escapeHtml(__('Trenutno nema aktivnih proizvoda na stanju.')) ?>
+            </div>
+        <?php else: ?>
+            <div class="-mx-5 flex snap-x gap-5 overflow-x-auto px-5 pb-4 sm:-mx-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0 lg:pb-0">
+                <?php foreach ($products as $product): ?>
+                    <?= $block->getLayout()
+                        ->createBlock(\Magento\Framework\View\Element\Template::class)
+                        ->setTemplate('Magento_Theme::homepage/product-card.phtml')
+                        ->setData('product', $product)
+                        ->setData('price_helper', $priceHelper)
+                        ->setData('image_helper', $imageHelper)
+                        ->toHtml() ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </section>
 
     <!-- BENEFITS -->
