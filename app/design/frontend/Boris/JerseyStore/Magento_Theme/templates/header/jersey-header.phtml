@@ -10,61 +10,97 @@ $navItems = [
 ];
 ?>
 
-<header class="jersey-header">
+<header class="sticky top-0 z-[999] border-b border-white/10 bg-[#050505]/96 text-white shadow-2xl shadow-black/40">
     <input
         id="jersey-mobile-menu"
         type="checkbox"
-        class="jersey-menu-checkbox"
+        class="lg:hidden"
         aria-label="<?= $escaper->escapeHtmlAttr(__('Toggle mobile navigation')) ?>"
     />
 
-    <div class="jersey-header-shell">
-        <div class="jersey-desktop-row">
-            <a href="<?= $escaper->escapeUrl($block->getUrl('')) ?>" class="jersey-logo" aria-label="<?= $escaper->escapeHtmlAttr(__('Jersey Store Home')) ?>">
-                <span class="jersey-logo-main">Jersey</span>
-                <span class="jersey-logo-accent">Store</span>
+    <div class="mx-auto max-w-[1440px] px-[18px] lg:px-10">
+        <div class="hidden h-[76px] items-center justify-between gap-8 lg:flex">
+            <a
+                href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"
+                class="inline-grid !text-white !no-underline leading-[.9]"
+                aria-label="<?= $escaper->escapeHtmlAttr(__('Jersey Store Home')) ?>"
+            >
+                <span class="text-2xl font-black uppercase tracking-[0.16em]">Jersey</span>
+                <span class="mt-[5px] text-[13px] font-black uppercase tracking-[0.34em] text-[#ff2b2b]">Store</span>
             </a>
 
-            <nav class="jersey-desktop-nav" aria-label="<?= $escaper->escapeHtmlAttr(__('Main navigation')) ?>">
+            <nav class="flex items-center gap-[38px]" aria-label="<?= $escaper->escapeHtmlAttr(__('Main navigation')) ?>">
                 <?php foreach ($navItems as $item): ?>
-                    <a href="<?= $escaper->escapeUrl($item['href']) ?>" class="jersey-nav-link">
+                    <a
+                        href="<?= $escaper->escapeUrl($item['href']) ?>"
+                        class="group relative inline-flex min-h-[76px] items-center !text-white !no-underline text-xs font-black uppercase tracking-[0.08em] transition hover:!text-[#ff2b2b] focus-visible:!text-[#ff2b2b]"
+                    >
                         <?= $escaper->escapeHtml($item['label']) ?>
+                        <span class="absolute bottom-[18px] left-0 h-0.5 w-0 bg-[#ff2b2b] transition-all duration-300 group-hover:w-full group-focus-visible:w-full"></span>
                     </a>
                 <?php endforeach; ?>
             </nav>
 
-            <div class="jersey-header-actions">
-                <a href="<?= $escaper->escapeUrl($block->getUrl('catalogsearch/result')) ?>" class="jersey-icon-link" aria-label="<?= $escaper->escapeHtmlAttr(__('Search')) ?>">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m21 21-4.2-4.2m1.2-5.3a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <div class="flex items-center gap-3.5">
+                <a
+                    href="<?= $escaper->escapeUrl($block->getUrl('catalogsearch/result')) ?>"
+                    class="grid h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#ff2b2b] focus-visible:!text-[#ff2b2b]"
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Search')) ?>"
+                >
+                    <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m21 21-4.2-4.2m1.2-5.3a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                 </a>
-                <a href="<?= $escaper->escapeUrl($block->getUrl('customer/account')) ?>" class="jersey-icon-link" aria-label="<?= $escaper->escapeHtmlAttr(__('Account')) ?>">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0m12-13a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <a
+                    href="<?= $escaper->escapeUrl($block->getUrl('customer/account')) ?>"
+                    class="grid h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#ff2b2b] focus-visible:!text-[#ff2b2b]"
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Account')) ?>"
+                >
+                    <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0m12-13a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                 </a>
-                <a href="<?= $escaper->escapeUrl($block->getUrl('checkout/cart')) ?>" class="jersey-icon-link jersey-cart-icon" aria-label="<?= $escaper->escapeHtmlAttr(__('Cart')) ?>">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.5 8h11l-1 12h-9l-1-12Zm3 0a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>0</span>
+                <a
+                    href="<?= $escaper->escapeUrl($block->getUrl('checkout/cart')) ?>"
+                    class="relative grid h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#ff2b2b] focus-visible:!text-[#ff2b2b]"
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Cart')) ?>"
+                >
+                    <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.5 8h11l-1 12h-9l-1-12Zm3 0a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="absolute right-1 top-[5px] h-4 min-w-4 rounded-full bg-[#ff2b2b] px-1 text-center text-[10px] font-black leading-4 text-white">0</span>
                 </a>
             </div>
         </div>
 
-        <div class="jersey-mobile-row">
-            <label for="jersey-mobile-menu" class="jersey-menu-button" aria-label="<?= $escaper->escapeHtmlAttr(__('Open mobile navigation')) ?>">
-                <span></span>
-                <span></span>
-                <span></span>
+        <div class="grid h-[68px] grid-cols-[48px_1fr_96px] items-center lg:hidden">
+            <label
+                for="jersey-mobile-menu"
+                class="jersey-menu-button flex h-11 w-11 cursor-pointer flex-col items-center justify-center gap-1.5 justify-self-start border border-white/15 bg-white/5 transition hover:border-[#ff2b2b]/70 hover:bg-white/10"
+                aria-label="<?= $escaper->escapeHtmlAttr(__('Open mobile navigation')) ?>"
+            >
+                <span class="block h-0.5 w-[25px] rounded-full bg-white transition duration-300"></span>
+                <span class="block h-0.5 w-[25px] rounded-full bg-white transition duration-300"></span>
+                <span class="block h-0.5 w-[25px] rounded-full bg-white transition duration-300"></span>
             </label>
 
-            <a href="<?= $escaper->escapeUrl($block->getUrl('')) ?>" class="jersey-logo jersey-mobile-logo" aria-label="<?= $escaper->escapeHtmlAttr(__('Jersey Store Home')) ?>">
-                <span class="jersey-logo-main">Jersey</span>
-                <span class="jersey-logo-accent">Store</span>
+            <a
+                href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"
+                class="inline-grid justify-self-center text-center !text-white !no-underline leading-[.9]"
+                aria-label="<?= $escaper->escapeHtmlAttr(__('Jersey Store Home')) ?>"
+            >
+                <span class="text-lg font-black uppercase tracking-[0.16em]">Jersey</span>
+                <span class="mt-[5px] text-[11px] font-black uppercase tracking-[0.34em] text-[#ff2b2b]">Store</span>
             </a>
 
-            <div class="jersey-mobile-actions">
-                <a href="<?= $escaper->escapeUrl($block->getUrl('catalogsearch/result')) ?>" class="jersey-icon-link" aria-label="<?= $escaper->escapeHtmlAttr(__('Search')) ?>">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m21 21-4.2-4.2m1.2-5.3a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <div class="flex items-center justify-end gap-1">
+                <a
+                    href="<?= $escaper->escapeUrl($block->getUrl('catalogsearch/result')) ?>"
+                    class="grid h-11 w-11 place-items-center !text-white !no-underline"
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Search')) ?>"
+                >
+                    <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m21 21-4.2-4.2m1.2-5.3a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                 </a>
-                <a href="<?= $escaper->escapeUrl($block->getUrl('checkout/cart')) ?>" class="jersey-icon-link" aria-label="<?= $escaper->escapeHtmlAttr(__('Cart')) ?>">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.5 8h11l-1 12h-9l-1-12Zm3 0a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a
+                    href="<?= $escaper->escapeUrl($block->getUrl('checkout/cart')) ?>"
+                    class="grid h-11 w-11 place-items-center !text-white !no-underline"
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Cart')) ?>"
+                >
+                    <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.5 8h11l-1 12h-9l-1-12Zm3 0a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
             </div>
         </div>
@@ -72,24 +108,38 @@ $navItems = [
 
     <label
         for="jersey-mobile-menu"
-        class="jersey-mobile-backdrop"
+        class="jersey-mobile-backdrop fixed inset-0 z-[998] bg-black/60 opacity-0 transition duration-300 lg:hidden"
         aria-label="<?= $escaper->escapeHtmlAttr(__('Close mobile navigation')) ?>"
     ></label>
 
-    <aside class="jersey-mobile-drawer" aria-label="<?= $escaper->escapeHtmlAttr(__('Mobile navigation')) ?>">
-        <div class="jersey-drawer-head">
-            <a href="<?= $escaper->escapeUrl($block->getUrl('')) ?>" class="jersey-logo" aria-label="<?= $escaper->escapeHtmlAttr(__('Jersey Store Home')) ?>">
-                <span class="jersey-logo-main">Jersey</span>
-                <span class="jersey-logo-accent">Store</span>
+    <aside
+        class="jersey-mobile-drawer fixed left-0 top-0 z-[999] h-screen overflow-y-auto bg-[#050505] shadow-2xl shadow-black/60 transition duration-300 lg:!hidden"
+        aria-label="<?= $escaper->escapeHtmlAttr(__('Mobile navigation')) ?>"
+    >
+        <div class="flex h-[78px] items-center justify-between border-b border-white/10 px-[22px]">
+            <a
+                href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"
+                class="inline-grid !text-white !no-underline leading-[.9]"
+                aria-label="<?= $escaper->escapeHtmlAttr(__('Jersey Store Home')) ?>"
+            >
+                <span class="text-2xl font-black uppercase tracking-[0.16em]">Jersey</span>
+                <span class="mt-[5px] text-[13px] font-black uppercase tracking-[0.34em] text-[#ff2b2b]">Store</span>
             </a>
-            <label for="jersey-mobile-menu" class="jersey-drawer-close" aria-label="<?= $escaper->escapeHtmlAttr(__('Close mobile navigation')) ?>">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <label
+                for="jersey-mobile-menu"
+                class="grid h-11 w-11 cursor-pointer place-items-center border border-white/15 text-white"
+                aria-label="<?= $escaper->escapeHtmlAttr(__('Close mobile navigation')) ?>"
+            >
+                <svg class="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </label>
         </div>
 
-        <nav class="jersey-mobile-nav">
+        <nav class="grid px-[22px] pb-7 pt-3">
             <?php foreach ($navItems as $item): ?>
-                <a href="<?= $escaper->escapeUrl($item['href']) ?>" class="jersey-mobile-nav-link">
+                <a
+                    href="<?= $escaper->escapeUrl($item['href']) ?>"
+                    class="flex min-h-[58px] items-center border-b border-white/10 !text-white !no-underline text-sm font-black uppercase tracking-[0.08em] transition hover:pl-2 hover:!text-[#ff2b2b] focus-visible:pl-2 focus-visible:!text-[#ff2b2b]"
+                >
                     <?= $escaper->escapeHtml($item['label']) ?>
                 </a>
             <?php endforeach; ?>
