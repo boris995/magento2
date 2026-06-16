@@ -46,7 +46,7 @@ class CategoryKeyRouter implements RouterInterface
     public function match(RequestInterface $request)
     {
         $path = trim((string)$request->getPathInfo(), '/');
-        $path = $this->normalizeCategoryPath($path);
+        $path = $this->normalizePath($path);
 
         if ($path === '' || str_contains($path, '.') || in_array($path, self::RESERVED_PATHS, true)) {
             return null;
@@ -78,7 +78,7 @@ class CategoryKeyRouter implements RouterInterface
         return $this->actionFactory->create(Forward::class, ['request' => $request]);
     }
 
-    private function normalizeCategoryPath(string $path): string
+    private function normalizePath(string $path): string
     {
         if (str_ends_with($path, '.html')) {
             return substr($path, 0, -5);
@@ -110,11 +110,17 @@ class CategoryKeyRouter implements RouterInterface
 
     private function findProductIdByUrlKey(string $urlKey): ?int
     {
+        $storeId = (int)$this->storeManager->getStore()->getId();
         $collection = $this->productCollectionFactory->create();
         $collection
-            ->addAttributeToSelect(['url_key'])
-            ->addAttributeToFilter('url_key', $urlKey)
-            ->addStoreFilter((int)$this->storeManager->getStore()->getId())
+            ->setStoreId($storeId)
+            ->addAttributeToSelect(['url_key', 'url_path'])
+            ->addAttributeToFilter([
+                ['attribute' => 'url_key', 'eq' => $urlKey],
+                ['attribute' => 'url_path', 'eq' => $urlKey],
+                ['attribute' => 'url_path', 'eq' => $urlKey . '.html'],
+            ])
+            ->addStoreFilter($storeId)
             ->setPageSize(1);
 
         $product = $collection->getFirstItem();
