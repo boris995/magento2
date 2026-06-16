@@ -23,7 +23,7 @@ $benefits = [
 ];
 ?>
 
-<main class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-[#fafafa] text-neutral-950">
+<main class="container-shop overflow-hidden bg-[#fafafa] text-neutral-950">
 
     <!-- HERO -->
     <section class="grid overflow-hidden bg-[#fafafa] lg:grid-cols-[0.85fr_1.15fr]">
@@ -67,7 +67,7 @@ $benefits = [
     </section>
 
     <!-- CATEGORIES -->
-    <section class="px-5 py-7 sm:px-8 lg:px-8 lg:py-10">
+    <section class="py-7 lg:py-10">
         <div class="mb-5 flex items-end justify-between lg:hidden">
             <h2 class="text-xl font-black">Kategorije</h2>
             <span class="text-xs font-bold uppercase text-neutral-500">Swipe →</span>
@@ -97,7 +97,7 @@ $benefits = [
     </section>
 
     <!-- BEST SELLERS -->
-    <section class="px-5 py-8 sm:px-8 lg:px-8 lg:py-12">
+    <section class="py-8 lg:py-12">
         <div class="mb-6 flex items-end justify-between">
             <h2 class="text-2xl font-black tracking-tight lg:text-3xl">Najprodavaniji</h2>
             <a href="<?= $escaper->escapeUrl($block->getUrl('akcije')) ?>" class="border-b border-neutral-950 pb-1 text-sm font-semibold">
@@ -134,7 +134,7 @@ $benefits = [
     </section>
 
     <!-- BENEFITS -->
-    <section class="px-5 py-8 sm:px-8 lg:px-8 lg:py-12">
+    <section class="py-8 lg:py-12">
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
             <?php foreach ($benefits as $benefit): ?>
                 <article class="rounded-2xl bg-white p-5 shadow-sm lg:rounded-none lg:p-7">
@@ -147,7 +147,7 @@ $benefits = [
     </section>
 
     <!-- PROMO -->
-    <section class="px-5 pb-14 pt-6 sm:px-8 lg:px-8 lg:pb-20">
+    <section class="pb-14 pt-6 lg:pb-20">
         <div class="grid overflow-hidden rounded-[28px] bg-[#f3eee9] lg:grid-cols-[0.9fr_1.4fr] lg:rounded-none">
             <div class="order-2 flex flex-col justify-center p-7 text-center lg:order-1 lg:p-16 lg:text-left">
                 <p class="text-xs font-black uppercase tracking-[0.18em] text-red-700">Personalizacija</p>
