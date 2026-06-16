@@ -1,3 +1,46 @@
-[x-cloak] {
-    display: none !important;
+.jersey-menu-checkbox {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+}
+
+.jersey-menu-button span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    border-radius: 999px;
+    background: #fff;
+    transition: transform .3s ease, opacity .2s ease;
+}
+
+.jersey-mobile-backdrop {
+    pointer-events: none;
+}
+
+.jersey-mobile-drawer {
+    transform: translateX(-105%);
+}
+
+.jersey-menu-checkbox:checked ~ div .jersey-menu-button span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.jersey-menu-checkbox:checked ~ div .jersey-menu-button span:nth-child(2) {
+    opacity: 0;
+}
+
+.jersey-menu-checkbox:checked ~ div .jersey-menu-button span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.jersey-menu-checkbox:checked ~ .jersey-mobile-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.jersey-menu-checkbox:checked ~ .jersey-mobile-drawer {
+    transform: translateX(0);
 }
