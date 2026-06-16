@@ -22,51 +22,72 @@ $benefits = [
     ['title' => 'Originalni Proizvodi', 'copy' => 'Pažljivo odabrani modeli za navijače.'],
 ];
 ?>
-<main class="relative left-1/2 w-screen -translate-x-1/2 bg-[#fafafa] text-neutral-950">
-    <section class="flex verflow-hidden ">
-        <div class="px-6 pb-8 pt-10 sm:px-10 lg:flex lg:flex-col lg:justify-center lg:px-20 lg:py-20">
-            <p class="text-xs font-black uppercase tracking-[0.18em] text-red-700">NOVA KOLEKCIJA 2025/26</p>
-            <h1 class="mt-5 max-w-xl text-4xl font-black leading-[1.05] tracking-normal sm:text-5xl lg:text-6xl">
+
+<main class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-[#fafafa] text-neutral-950">
+
+    <!-- HERO -->
+    <section class="grid overflow-hidden bg-[#fafafa] lg:grid-cols-[0.85fr_1.15fr]">
+        <div class="order-1 px-5 pb-8 pt-10 text-center sm:px-8 lg:order-none lg:flex lg:flex-col lg:justify-center lg:px-20 lg:py-20 lg:text-left">
+            <p class="text-[11px] font-black uppercase tracking-[0.18em] text-red-700">
+                NOVA KOLEKCIJA 2025/26
+            </p>
+
+            <h1 class="mt-4 text-[38px] font-black leading-[1.02] tracking-tight sm:text-5xl lg:mt-5 lg:max-w-xl lg:text-6xl">
                 Novi Dresovi<br />2025/26
             </h1>
-            <p class="mt-5 max-w-sm text-base leading-7 text-neutral-700 lg:text-lg">
+
+            <p class="mx-auto mt-4 max-w-[310px] text-[15px] leading-7 text-neutral-700 lg:mx-0 lg:mt-5 lg:max-w-sm lg:text-lg">
                 Pronađi dres svog omiljenog kluba ili reprezentacije.
             </p>
-            <a href="<?= $escaper->escapeUrl($block->getUrl('klubovi')) ?>" class="mt-7 inline-flex h-12 w-48 items-center justify-center bg-neutral-950 text-sm font-black uppercase text-white transition hover:bg-red-700">
+
+            <a href="<?= $escaper->escapeUrl($block->getUrl('klubovi')) ?>"
+               class="mx-auto mt-6 inline-flex h-12 w-[210px] items-center justify-center bg-neutral-950 text-sm font-black uppercase text-white transition hover:bg-red-700 lg:mx-0 lg:mt-7">
                 Pogledaj Kolekciju
             </a>
-            <div class="mt-8 flex items-center gap-6 text-sm font-semibold">
-                <button class="flex h-9 w-9 items-center justify-center" type="button" aria-label="<?= $escaper->escapeHtmlAttr(__('Previous slide')) ?>">
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 5-7 7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+            <div class="mt-7 flex items-center justify-center gap-6 text-sm font-semibold lg:justify-start">
+                <button class="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-white" type="button">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="m15 5-7 7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
                 <span>1 / 3</span>
-                <button class="flex h-9 w-9 items-center justify-center" type="button" aria-label="<?= $escaper->escapeHtmlAttr(__('Next slide')) ?>">
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <button class="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-white" type="button">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
             </div>
         </div>
 
-        <div class="relative h-[360px] overflow-hidden bg-[#f6f1ee] sm:h-[500px] lg:h-auto">
+        <div class="order-2 mx-5 mb-6 h-[360px] overflow-hidden rounded-[28px] bg-[#f6f1ee] sm:mx-8 sm:h-[480px] lg:order-none lg:m-0 lg:h-auto lg:rounded-none">
             <img
                 src="<?= $escaper->escapeUrl($image) ?>"
                 alt="<?= $escaper->escapeHtmlAttr(__('Premium football jersey collection')) ?>"
-                class="relative h-full w-full object-cover object-[66%_42%]"
+                class="h-full w-full object-cover object-[66%_42%]"
                 loading="eager"
             />
         </div>
     </section>
 
-    <section class="mx-auto px-5 py-5 lg:px-8 lg:py-9">
-        <div class="flex snap-x gap-4 overflow-x-auto pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
+    <!-- CATEGORIES -->
+    <section class="px-5 py-7 sm:px-8 lg:px-8 lg:py-10">
+        <div class="mb-5 flex items-end justify-between lg:hidden">
+            <h2 class="text-xl font-black">Kategorije</h2>
+            <span class="text-xs font-bold uppercase text-neutral-500">Swipe →</span>
+        </div>
+
+        <div class="-mx-5 flex snap-x gap-4 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0 lg:pb-0">
             <?php foreach ($categories as $category): ?>
-                <a href="<?= $escaper->escapeUrl($block->getUrl($category['href'])) ?>" class="group grid min-w-[76vw] snap-start grid-cols-[44%_1fr] overflow-hidden bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:min-w-[380px] lg:min-w-0">
+                <a href="<?= $escaper->escapeUrl($block->getUrl($category['href'])) ?>"
+                   class="group grid min-w-[82vw] snap-start grid-cols-[42%_1fr] overflow-hidden rounded-2xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:min-w-[390px] lg:min-w-0 lg:rounded-none">
                     <div class="h-36 overflow-hidden bg-neutral-100 lg:h-44">
-                        <img src="<?= $escaper->escapeUrl($image) ?>" alt="<?= $escaper->escapeHtmlAttr($category['title']) ?>" class="h-full w-full object-cover <?= $escaper->escapeHtmlAttr($category['crop']) ?>" loading="lazy" />
+                        <img src="<?= $escaper->escapeUrl($image) ?>"
+                             alt="<?= $escaper->escapeHtmlAttr($category['title']) ?>"
+                             class="h-full w-full object-cover <?= $escaper->escapeHtmlAttr($category['crop']) ?> transition duration-500 group-hover:scale-105"
+                             loading="lazy" />
                     </div>
+
                     <div class="flex flex-col justify-center p-5">
                         <h2 class="text-lg font-black leading-tight"><?= $escaper->escapeHtml($category['title']) ?></h2>
                         <p class="mt-2 text-sm leading-5 text-neutral-600"><?= $escaper->escapeHtml($category['copy']) ?></p>
-                        <span class="mt-4 text-xs font-black uppercase tracking-normal">
+                        <span class="mt-4 text-xs font-black uppercase">
                             Shop now <span class="inline-block transition group-hover:translate-x-1">→</span>
                         </span>
                     </div>
@@ -75,23 +96,35 @@ $benefits = [
         </div>
     </section>
 
-    <section class="mx-auto px-5 py-8 lg:px-8 lg:py-10">
+    <!-- BEST SELLERS -->
+    <section class="px-5 py-8 sm:px-8 lg:px-8 lg:py-12">
         <div class="mb-6 flex items-end justify-between">
-            <h2 class="text-2xl font-black tracking-normal lg:text-3xl">Najprodavaniji</h2>
-            <a href="<?= $escaper->escapeUrl($block->getUrl('akcije')) ?>" class="border-b border-neutral-950 pb-1 text-sm font-semibold">Pogledaj sve</a>
+            <h2 class="text-2xl font-black tracking-tight lg:text-3xl">Najprodavaniji</h2>
+            <a href="<?= $escaper->escapeUrl($block->getUrl('akcije')) ?>" class="border-b border-neutral-950 pb-1 text-sm font-semibold">
+                Pogledaj sve
+            </a>
         </div>
-        <div class="flex snap-x gap-5 overflow-x-auto pb-3 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
+
+        <div class="-mx-5 flex snap-x gap-5 overflow-x-auto px-5 pb-4 sm:-mx-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0 lg:pb-0">
             <?php foreach ($products as $product): ?>
-                <article class="group min-w-[72vw] snap-start sm:min-w-[320px] lg:min-w-0">
-                    <div class="relative h-72 overflow-hidden bg-white shadow-sm lg:h-80">
+                <article class="group min-w-[76vw] snap-start sm:min-w-[320px] lg:min-w-0">
+                    <div class="relative h-[330px] overflow-hidden rounded-2xl bg-white shadow-sm lg:h-80 lg:rounded-none">
                         <?php if ($product['badge']): ?>
-                            <span class="absolute left-3 top-3 z-10 bg-neutral-950 px-2 py-1 text-[10px] font-black text-white"><?= $escaper->escapeHtml($product['badge']) ?></span>
+                            <span class="absolute left-3 top-3 z-10 bg-neutral-950 px-2 py-1 text-[10px] font-black text-white">
+                                <?= $escaper->escapeHtml($product['badge']) ?>
+                            </span>
                         <?php endif; ?>
-                        <button class="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center bg-white/90" type="button" aria-label="<?= $escaper->escapeHtmlAttr(__('Add to wishlist')) ?>">
-                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 5.7a5.1 5.1 0 0 0-7.2 0L12 7.3l-1.6-1.6a5.1 5.1 0 1 0-7.2 7.2L12 21l8.8-8.1a5.1 5.1 0 0 0 0-7.2Z" stroke="currentColor" stroke-width="1.6"/></svg>
+
+                        <button class="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90" type="button">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M20.8 5.7a5.1 5.1 0 0 0-7.2 0L12 7.3l-1.6-1.6a5.1 5.1 0 1 0-7.2 7.2L12 21l8.8-8.1a5.1 5.1 0 0 0 0-7.2Z" stroke="currentColor" stroke-width="1.6"/></svg>
                         </button>
-                        <img src="<?= $escaper->escapeUrl($image) ?>" alt="<?= $escaper->escapeHtmlAttr($product['name']) ?>" class="h-full w-full object-cover <?= $escaper->escapeHtmlAttr($product['crop']) ?> transition duration-500 group-hover:scale-105" loading="lazy" />
+
+                        <img src="<?= $escaper->escapeUrl($image) ?>"
+                             alt="<?= $escaper->escapeHtmlAttr($product['name']) ?>"
+                             class="h-full w-full object-cover <?= $escaper->escapeHtmlAttr($product['crop']) ?> transition duration-500 group-hover:scale-105"
+                             loading="lazy" />
                     </div>
+
                     <h3 class="mt-4 text-base font-black"><?= $escaper->escapeHtml($product['name']) ?></h3>
                     <p class="mt-1 text-sm leading-5 text-neutral-600">Lagani navijački fit za stadion i grad.</p>
                     <p class="mt-2 text-sm font-black"><?= $escaper->escapeHtml($product['price']) ?></p>
@@ -100,10 +133,11 @@ $benefits = [
         </div>
     </section>
 
-    <section class="mx-auto px-5 py-8 lg:px-8 lg:py-10">
-        <div class="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
+    <!-- BENEFITS -->
+    <section class="px-5 py-8 sm:px-8 lg:px-8 lg:py-12">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
             <?php foreach ($benefits as $benefit): ?>
-                <article class="bg-white p-5 shadow-sm lg:p-7">
+                <article class="rounded-2xl bg-white p-5 shadow-sm lg:rounded-none lg:p-7">
                     <div class="mb-5 h-8 w-8 border border-neutral-950"></div>
                     <h2 class="text-base font-black"><?= $escaper->escapeHtml($benefit['title']) ?></h2>
                     <p class="mt-2 text-sm leading-5 text-neutral-600"><?= $escaper->escapeHtml($benefit['copy']) ?></p>
@@ -112,22 +146,33 @@ $benefits = [
         </div>
     </section>
 
-    <section class="mx-auto px-5 pb-14 pt-6 lg:px-8 lg:pb-20">
-        <div class="grid overflow-hidden bg-[#f3eee9] lg:grid-cols-[0.9fr_1.4fr]">
-            <div class="flex flex-col justify-center p-8 lg:p-16">
+    <!-- PROMO -->
+    <section class="px-5 pb-14 pt-6 sm:px-8 lg:px-8 lg:pb-20">
+        <div class="grid overflow-hidden rounded-[28px] bg-[#f3eee9] lg:grid-cols-[0.9fr_1.4fr] lg:rounded-none">
+            <div class="order-2 flex flex-col justify-center p-7 text-center lg:order-1 lg:p-16 lg:text-left">
                 <p class="text-xs font-black uppercase tracking-[0.18em] text-red-700">Personalizacija</p>
                 <h2 class="mt-4 text-3xl font-black leading-tight lg:text-4xl">Personalizuj svoj dres</h2>
-                <p class="mt-4 max-w-sm text-base leading-7 text-neutral-700">Dodaj ime i broj za dres koji izgleda spremno za utakmicu.</p>
-                <a href="<?= $escaper->escapeUrl($block->getUrl('personalizacija')) ?>" class="mt-7 inline-flex h-12 w-40 items-center justify-center bg-neutral-950 text-sm font-black uppercase text-white transition hover:bg-red-700">
+                <p class="mx-auto mt-4 max-w-sm text-base leading-7 text-neutral-700 lg:mx-0">
+                    Dodaj ime i broj za dres koji izgleda spremno za utakmicu.
+                </p>
+
+                <a href="<?= $escaper->escapeUrl($block->getUrl('personalizacija')) ?>"
+                   class="mx-auto mt-7 inline-flex h-12 w-40 items-center justify-center bg-neutral-950 text-sm font-black uppercase text-white transition hover:bg-red-700 lg:mx-0">
                     Kreiraj
                 </a>
             </div>
-            <div class="relative h-80 overflow-hidden lg:h-[360px]">
-                <img src="<?= $escaper->escapeUrl($image) ?>" alt="<?= $escaper->escapeHtmlAttr(__('Back view of personalized football jersey')) ?>" class="h-full w-full object-cover object-[78%_55%]" loading="lazy" />
-                <div class="absolute right-6 top-6 flex h-20 w-20 items-center justify-center rounded-full bg-neutral-950 text-center text-sm font-black uppercase leading-tight text-white">
+
+            <div class="order-1 relative h-80 overflow-hidden lg:order-2 lg:h-[360px]">
+                <img src="<?= $escaper->escapeUrl($image) ?>"
+                     alt="<?= $escaper->escapeHtmlAttr(__('Back view of personalized football jersey')) ?>"
+                     class="h-full w-full object-cover object-[78%_55%]"
+                     loading="lazy" />
+
+                <div class="absolute right-5 top-5 flex h-16 w-16 items-center justify-center rounded-full bg-neutral-950 text-center text-xs font-black uppercase leading-tight text-white lg:h-20 lg:w-20 lg:text-sm">
                     20%<br />OFF
                 </div>
             </div>
         </div>
     </section>
+
 </main>
