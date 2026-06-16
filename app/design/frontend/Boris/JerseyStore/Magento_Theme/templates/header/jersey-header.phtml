@@ -4,11 +4,9 @@
 
 $navItems = [
     ['label' => __('Home'), 'href' => $block->getUrl('')],
-    ['label' => __('Klubovi'), 'href' => $block->getUrl('klubovi')],
-    ['label' => __('Reprezentacije'), 'href' => $block->getUrl('reprezentacije')],
-    ['label' => __('Retro Dresovi'), 'href' => $block->getUrl('retro-dresovi')],
-    ['label' => __('Dječiji Dresovi'), 'href' => $block->getUrl('djeciji-dresovi')],
-    ['label' => __('Akcije'), 'href' => $block->getUrl('akcije')],
+    ['label' => __('About Us'), 'href' => $block->getUrl('about-us')],
+    ['label' => __('Contact Page'), 'href' => $block->getUrl('contact-page')],
+    ['label' => __('Category Page'), 'href' => $block->getUrl('category-page')],
 ];
 ?>
 
@@ -40,7 +38,7 @@ $navItems = [
 
             <nav class="flex items-center gap-9 text-sm font-semibold" aria-label="<?= $escaper->escapeHtmlAttr(__('Main navigation')) ?>">
                 <?php foreach ($navItems as $item): ?>
-                    <a href="<?= $escaper->escapeUrl($item['href']) ?>" class="transition hover:text-red-700 text-[16px] py-2 px-4 !h-[20px]">
+                    <a href="<?= $escaper->escapeUrl($item['href']) ?>" class="px-3 py-2 text-[16px] transition hover:text-red-700">
                         <?= $escaper->escapeHtml($item['label']) ?>
                     </a>
                 <?php endforeach; ?>
