@@ -3,41 +3,227 @@
 /** @var \Magento\Framework\Escaper $escaper */
 
 $categories = [
-    ['title' => 'Klubovi', 'copy' => 'Dresovi najvećih klubova za ligu, kup i evropske večeri.', 'href' => 'klubovi'],
-    ['title' => 'Reprezentacije', 'copy' => 'Navijački modeli za turnire, kvalifikacije i ljetne utakmice.', 'href' => 'reprezentacije'],
-    ['title' => 'Retro Dresovi', 'copy' => 'Kolekcije inspirisane legendarnim sezonama i klasicima.', 'href' => 'retro-dresovi'],
-    ['title' => 'Dječiji Dresovi', 'copy' => 'Lagani dresovi za mlađe navijače i prve fudbalske treninge.', 'href' => 'djeciji-dresovi'],
+    [
+        'title' => 'CLUBS',
+        'copy' => 'Discover the newest club jerseys from around the world.',
+        'button' => 'VIEW COLLECTION',
+        'href' => 'klubovi',
+        'accent' => '#ff2b2b',
+        'scene' => 'flares',
+    ],
+    [
+        'title' => 'NATIONAL TEAMS',
+        'copy' => 'Support your country with official national team jerseys.',
+        'button' => 'VIEW COLLECTION',
+        'href' => 'reprezentacije',
+        'accent' => '#f5b21b',
+        'scene' => 'stars',
+    ],
+    [
+        'title' => 'RETRO COLLECTION',
+        'copy' => 'Football history reimagined through iconic shirts.',
+        'button' => 'VIEW COLLECTION',
+        'href' => 'retro-dresovi',
+        'accent' => '#ff2b2b',
+        'scene' => 'retro',
+    ],
+    [
+        'title' => 'KIDS',
+        'copy' => 'Future champions deserve premium jerseys too.',
+        'button' => 'VIEW COLLECTION',
+        'href' => 'djeciji-dresovi',
+        'accent' => '#2f68ff',
+        'scene' => 'kids',
+    ],
+];
+
+$lockers = [
+    ['club' => 'AC MILAN', 'base' => '#151515', 'stripe' => '#d71920', 'trim' => '#ffffff'],
+    ['club' => 'REAL MADRID', 'base' => '#f4f1e8', 'stripe' => '#d5b45b', 'trim' => '#141414'],
+    ['club' => 'BARCELONA', 'base' => '#173b88', 'stripe' => '#a21432', 'trim' => '#f5bd18'],
+    ['club' => 'BAYERN', 'base' => '#bc0f1d', 'stripe' => '#efefef', 'trim' => '#ffffff'],
 ];
 ?>
 
-<main class="relative left-1/2 w-screen -translate-x-1/2 bg-[#fafafa] text-neutral-950">
-    <section class="mx-auto max-w-6xl px-5 py-16 sm:px-8 lg:py-24">
-        <div class="grid gap-10 border-b border-neutral-200 pb-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-            <div>
-                <p class="text-xs font-black uppercase tracking-[0.18em] text-red-700">
-                    <?= $escaper->escapeHtml(__('Category Page')) ?>
-                </p>
-                <h1 class="mt-5 text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
-                    <?= $escaper->escapeHtml(__('Izaberi kolekciju dresova.')) ?>
-                </h1>
-            </div>
-            <p class="max-w-2xl text-base leading-8 text-neutral-700">
-                <?= $escaper->escapeHtml(__('Brzo pronađi kategoriju koja odgovara tvom timu, turniru, retro ukusu ili dječijem modelu.')) ?>
-            </p>
+<main class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-[#050505] text-white">
+    <section class="relative min-h-[650px] overflow-hidden border-b border-white/10">
+        <div class="absolute inset-0">
+            <svg class="h-full w-full" viewBox="0 0 1600 700" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                    <radialGradient id="stadiumSpotA" cx="71%" cy="9%" r="52%">
+                        <stop offset="0" stop-color="#ff2b2b" stop-opacity="0.34"/>
+                        <stop offset="0.42" stop-color="#631010" stop-opacity="0.12"/>
+                        <stop offset="1" stop-color="#050505" stop-opacity="0"/>
+                    </radialGradient>
+                    <radialGradient id="stadiumSpotB" cx="24%" cy="18%" r="58%">
+                        <stop offset="0" stop-color="#ffffff" stop-opacity="0.12"/>
+                        <stop offset="0.55" stop-color="#151515" stop-opacity="0.2"/>
+                        <stop offset="1" stop-color="#050505" stop-opacity="0"/>
+                    </radialGradient>
+                    <linearGradient id="heroFade" x1="0" x2="1">
+                        <stop offset="0" stop-color="#050505"/>
+                        <stop offset="0.48" stop-color="#090909" stop-opacity="0.95"/>
+                        <stop offset="1" stop-color="#050505" stop-opacity="0.7"/>
+                    </linearGradient>
+                </defs>
+                <rect width="1600" height="700" fill="#050505"/>
+                <rect width="1600" height="700" fill="url(#stadiumSpotA)"/>
+                <rect width="1600" height="700" fill="url(#stadiumSpotB)"/>
+                <path d="M0 96 C240 40 410 64 660 116 C900 166 1180 126 1600 34 V0 H0 Z" fill="#151515" opacity="0.75"/>
+                <path d="M0 660 C240 590 430 604 690 642 C1000 690 1220 624 1600 572 V700 H0 Z" fill="#111" opacity="0.85"/>
+                <path d="M140 650 L650 70" stroke="#ffffff" stroke-opacity="0.05" stroke-width="2"/>
+                <path d="M440 690 L980 22" stroke="#ffffff" stroke-opacity="0.04" stroke-width="2"/>
+                <rect width="1600" height="700" fill="url(#heroFade)" opacity="0.72"/>
+            </svg>
         </div>
 
-        <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            <?php foreach ($categories as $index => $category): ?>
-                <a href="<?= $escaper->escapeUrl($block->getUrl($category['href'])) ?>" class="group bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                    <span class="text-sm font-black text-red-700">0<?= (int)$index + 1 ?></span>
-                    <div class="mt-8 aspect-[4/3] bg-neutral-100"></div>
-                    <h2 class="mt-6 text-xl font-black"><?= $escaper->escapeHtml($category['title']) ?></h2>
-                    <p class="mt-3 min-h-20 text-sm leading-6 text-neutral-600"><?= $escaper->escapeHtml($category['copy']) ?></p>
-                    <span class="mt-5 inline-flex text-sm font-black uppercase">
-                        <?= $escaper->escapeHtml(__('Otvori')) ?>
-                        <span class="ml-2 transition group-hover:translate-x-1">→</span>
-                    </span>
+        <div class="relative mx-auto grid max-w-[1500px] gap-10 px-6 py-16 lg:min-h-[650px] lg:grid-cols-[0.78fr_1.22fr] lg:items-center lg:px-10 xl:px-14">
+            <div class="max-w-2xl">
+                <p class="text-sm font-black uppercase tracking-[0.22em] text-[#ff2b2b]">FOR EVERY FAN</p>
+                <h1 class="mt-5 text-5xl font-black uppercase leading-[0.92] tracking-tight sm:text-7xl xl:text-8xl">
+                    CHOOSE<br />YOUR STYLE
+                </h1>
+                <div class="mt-5 h-1 w-28 bg-[#ff2b2b]"></div>
+                <p class="mt-6 max-w-md text-base leading-7 text-white/72 sm:text-lg">
+                    Find jerseys that represent your club, nation, or football passion.
+                </p>
+                <a href="<?= $escaper->escapeUrl($block->getUrl('category-page')) ?>" class="group mt-9 inline-flex h-14 items-center gap-8 border border-white/70 px-8 text-xs font-black uppercase tracking-[0.08em] transition hover:border-[#ff2b2b] hover:bg-[#ff2b2b]">
+                    SHOP NOW
+                    <svg class="h-4 w-8 transition group-hover:translate-x-1" viewBox="0 0 32 16" fill="none" aria-hidden="true">
+                        <path d="M1 8h28m-6-6 7 6-7 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </a>
+            </div>
+
+            <div class="relative">
+                <div class="absolute inset-x-8 -top-6 h-20 bg-[#ff2b2b]/20 blur-3xl"></div>
+                <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                    <?php foreach ($lockers as $locker): ?>
+                        <article class="group relative min-h-[360px] overflow-hidden border border-white/10 bg-black shadow-2xl shadow-black/70">
+                            <div class="absolute inset-x-0 top-0 h-1 bg-[#ff2b2b] shadow-[0_0_28px_rgba(255,43,43,0.95)]"></div>
+                            <div class="absolute inset-0 bg-gradient-to-b from-white/8 via-transparent to-black/80"></div>
+                            <div class="absolute inset-3 border border-white/10 bg-white/[0.03]"></div>
+                            <svg class="relative z-10 h-[300px] w-full transition duration-500 group-hover:scale-105" viewBox="0 0 220 300" aria-hidden="true">
+                                <defs>
+                                    <filter id="jerseyShadow<?= $escaper->escapeHtmlAttr(str_replace(' ', '', $locker['club'])) ?>" x="-30%" y="-20%" width="160%" height="150%">
+                                        <feDropShadow dx="0" dy="18" stdDeviation="12" flood-color="#000" flood-opacity="0.78"/>
+                                    </filter>
+                                </defs>
+                                <path d="M110 34v28" stroke="#dedede" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M92 34c0-10 18-16 18-2 0 8-8 9-8 17" fill="none" stroke="#dedede" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M59 79 88 57h44l29 22-16 50-18-8v120H93V121l-18 8-16-50Z" fill="<?= $escaper->escapeHtmlAttr($locker['base']) ?>" filter="url(#jerseyShadow<?= $escaper->escapeHtmlAttr(str_replace(' ', '', $locker['club'])) ?>)"/>
+                                <path d="M101 57h18l-4 18h-10l-4-18Z" fill="<?= $escaper->escapeHtmlAttr($locker['trim']) ?>" opacity="0.9"/>
+                                <path d="M95 60v177" stroke="<?= $escaper->escapeHtmlAttr($locker['stripe']) ?>" stroke-width="11" opacity="0.92"/>
+                                <path d="M125 60v177" stroke="<?= $escaper->escapeHtmlAttr($locker['stripe']) ?>" stroke-width="11" opacity="0.92"/>
+                                <path d="M73 84 59 79l16 50 17-8-9-36Z" fill="#000" opacity="0.28"/>
+                                <path d="M147 84 161 79l-16 50-17-8 9-36Z" fill="#000" opacity="0.28"/>
+                                <text x="110" y="151" text-anchor="middle" fill="<?= $escaper->escapeHtmlAttr($locker['trim']) ?>" font-size="14" font-weight="900" font-family="Arial, sans-serif"><?= $escaper->escapeHtml($locker['club']) ?></text>
+                            </svg>
+                            <div class="relative z-10 border-t border-white/10 px-4 py-4">
+                                <h2 class="text-center text-xs font-black uppercase tracking-[0.16em] text-white/85"><?= $escaper->escapeHtml($locker['club']) ?></h2>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-[#050505] px-6 py-8 lg:px-10">
+        <div class="mx-auto grid max-w-[1500px] gap-4 lg:grid-cols-4">
+            <?php foreach ($categories as $category): ?>
+                <a href="<?= $escaper->escapeUrl($block->getUrl($category['href'])) ?>" class="group relative min-h-[420px] overflow-hidden border border-white/10 bg-[#111] shadow-2xl shadow-black/50">
+                    <div class="absolute inset-0 transition duration-700 group-hover:scale-105">
+                        <svg class="h-full w-full" viewBox="0 0 420 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                            <defs>
+                                <radialGradient id="cardGlow<?= $escaper->escapeHtmlAttr($category['scene']) ?>" cx="50%" cy="20%" r="65%">
+                                    <stop offset="0" stop-color="<?= $escaper->escapeHtmlAttr($category['accent']) ?>" stop-opacity="0.55"/>
+                                    <stop offset="0.42" stop-color="#151515" stop-opacity="0.3"/>
+                                    <stop offset="1" stop-color="#050505"/>
+                                </radialGradient>
+                            </defs>
+                            <rect width="420" height="520" fill="url(#cardGlow<?= $escaper->escapeHtmlAttr($category['scene']) ?>)"/>
+                            <?php if ($category['scene'] === 'flares'): ?>
+                                <path d="M0 350 C96 285 176 320 260 286 C330 256 374 270 420 234 V520H0Z" fill="#050505" opacity="0.82"/>
+                                <?php foreach ([60, 118, 185, 250, 312, 362] as $x): ?>
+                                    <path d="M<?= (int)$x ?> 356v86" stroke="#111" stroke-width="14" stroke-linecap="round"/>
+                                    <circle cx="<?= (int)$x ?>" cy="330" r="20" fill="#161616"/>
+                                    <path d="M<?= (int)$x - 24 ?> 292 C<?= (int)$x - 4 ?> 260 <?= (int)$x + 18 ?> 260 <?= (int)$x + 38 ?> 292" stroke="#ff2b2b" stroke-width="9" stroke-linecap="round" opacity="0.72"/>
+                                <?php endforeach; ?>
+                                <path d="M35 118 C100 70 134 106 186 78 C254 41 306 88 388 54" stroke="#ff2b2b" stroke-width="30" stroke-opacity="0.48" filter="blur(10px)"/>
+                            <?php elseif ($category['scene'] === 'stars'): ?>
+                                <circle cx="102" cy="214" r="46" fill="#141414"/>
+                                <circle cx="208" cy="186" r="58" fill="#1b1b1b"/>
+                                <circle cx="322" cy="220" r="48" fill="#171717"/>
+                                <path d="M62 277h82l22 143H40Z" fill="#112a68"/>
+                                <path d="M162 258h100l24 162H138Z" fill="#7f0f1b"/>
+                                <path d="M280 280h82l18 140H264Z" fill="#efefef"/>
+                                <text x="208" y="335" fill="#fff" text-anchor="middle" font-size="44" font-weight="900">10</text>
+                            <?php elseif ($category['scene'] === 'retro'): ?>
+                                <?php foreach ([[72,170,'#132b58','10'], [184,145,'#f0eadc','5'], [296,168,'#7a1017','7']] as $shirt): ?>
+                                    <path d="M<?= (int)$shirt[0] - 43 ?> <?= (int)$shirt[1] ?>l26-21h34l26 21-13 44-15-7v100h-56v-100l-15 7-13-44Z" fill="<?= $escaper->escapeHtmlAttr($shirt[2]) ?>"/>
+                                    <text x="<?= (int)$shirt[0] ?>" y="<?= (int)$shirt[1] + 78 ?>" text-anchor="middle" fill="#f9d568" font-size="34" font-weight="900"><?= $escaper->escapeHtml($shirt[3]) ?></text>
+                                <?php endforeach; ?>
+                                <rect x="18" y="86" width="384" height="280" fill="none" stroke="#9a6a2c" stroke-opacity="0.35"/>
+                                <path d="M34 110h352" stroke="#ff2b2b" stroke-opacity="0.35"/>
+                            <?php else: ?>
+                                <circle cx="148" cy="198" r="38" fill="#242424"/>
+                                <circle cx="274" cy="198" r="38" fill="#242424"/>
+                                <path d="M102 250h90l18 130H82Z" fill="#173b88"/>
+                                <path d="M229 250h90l18 130H209Z" fill="#f1f1ec"/>
+                                <path d="M137 250v130M158 250v130" stroke="#a21432" stroke-width="12"/>
+                                <path d="M253 250v130" stroke="#d5b45b" stroke-width="10"/>
+                                <path d="M110 166c25-26 58-26 82 0M235 166c25-26 58-26 82 0" stroke="#fff" stroke-opacity="0.18" stroke-width="7" stroke-linecap="round"/>
+                            <?php endif; ?>
+                            <rect width="420" height="520" fill="#000" opacity="0.24"/>
+                        </svg>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent"></div>
+                    <div class="relative z-10 flex min-h-[420px] flex-col justify-end p-7">
+                        <div class="mb-5 flex h-11 w-11 items-center justify-center border border-white/25 bg-black/70">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M12 3 20 7v6c0 4.4-3.1 7.4-8 8-4.9-.6-8-3.6-8-8V7l8-4Z" stroke="currentColor" stroke-width="1.7"/>
+                                <path d="m9 12 2 2 4-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-3xl font-black uppercase leading-none"><?= $escaper->escapeHtml($category['title']) ?></h2>
+                        <div class="mt-3 h-0.5 w-16" style="background-color: <?= $escaper->escapeHtmlAttr($category['accent']) ?>"></div>
+                        <p class="mt-4 min-h-14 text-sm leading-6 text-white/72"><?= $escaper->escapeHtml($category['copy']) ?></p>
+                        <span class="mt-6 inline-flex items-center justify-between border-t border-white/15 pt-5 text-xs font-black uppercase tracking-[0.08em]">
+                            <?= $escaper->escapeHtml($category['button']) ?>
+                            <span class="text-xl text-[#ff2b2b] transition group-hover:translate-x-1">→</span>
+                        </span>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </section>
+
+    <section class="px-6 pb-12 lg:px-10">
+        <div class="mx-auto grid max-w-[1500px] bg-white text-[#050505] shadow-2xl shadow-black/40 sm:grid-cols-2 lg:grid-cols-4">
+            <?php foreach ([
+                ['title' => 'FREE SHIPPING', 'copy' => 'Fast delivery on premium drops.', 'icon' => 'truck'],
+                ['title' => 'AUTHENTIC PRODUCTS', 'copy' => 'Verified jersey quality.', 'icon' => 'shield'],
+                ['title' => 'SECURE PAYMENT', 'copy' => 'Encrypted checkout flow.', 'icon' => 'lock'],
+                ['title' => '24/7 SUPPORT', 'copy' => 'Always here for football fans.', 'icon' => 'headset'],
+            ] as $item): ?>
+                <article class="flex items-center gap-5 border-b border-black/10 p-7 sm:border-r lg:border-b-0">
+                    <div class="flex h-12 w-12 shrink-0 items-center justify-center border border-black/15">
+                        <?php if ($item['icon'] === 'truck'): ?>
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7h11v9H3V7Zm11 3h4l3 3v3h-7v-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="7" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/><circle cx="18" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/></svg>
+                        <?php elseif ($item['icon'] === 'shield'): ?>
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 20 7v6c0 4.4-3.1 7.4-8 8-4.9-.6-8-3.6-8-8V7l8-4Z" stroke="currentColor" stroke-width="1.7"/><path d="m9 12 2 2 4-5" stroke="#ff2b2b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <?php elseif ($item['icon'] === 'lock'): ?>
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 10h12v10H6V10Zm3 0V7a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 14v3" stroke="#ff2b2b" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        <?php else: ?>
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0v4a3 3 0 0 1-3 3h-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M4 13h3v5H4v-5Zm13 0h3v5h-3v-5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-black uppercase"><?= $escaper->escapeHtml($item['title']) ?></h2>
+                        <p class="mt-1 text-xs leading-5 text-black/55"><?= $escaper->escapeHtml($item['copy']) ?></p>
+                    </div>
+                </article>
             <?php endforeach; ?>
         </div>
     </section>
