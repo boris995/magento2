@@ -1,7 +1,16 @@
 @import "tailwindcss";
 
-@source "../../**/*.phtml";
-@source "../../**/*.xml";
-@source "../../**/*.html";
-@source "../../../../../../code/**/*.phtml";
-@source "../../../../../../code/**/*.xml";
+@source "../../../**/*.phtml";
+@source "../../../**/*.xml";
+@source "../../../**/*.html";
+@source "../../../../../../app/code/**/*.phtml";
+@source "../../../../../../app/code/**/*.xml";
+
+html,
+body {
+    font-size: 16px;
+}
+
+.page-wrapper {
+    @apply overflow-x-hidden;
+}

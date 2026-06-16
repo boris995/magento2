@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Boris\CategoryPage\Router;
 
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
 use Magento\Framework\App\Action\Forward;
 use Magento\Framework\App\ActionFactory;
 use Magento\Framework\App\RequestInterface;
@@ -27,15 +28,18 @@ class CategoryKeyRouter implements RouterInterface
 
     private ActionFactory $actionFactory;
     private CollectionFactory $categoryCollectionFactory;
+    private ProductCollectionFactory $productCollectionFactory;
     private StoreManagerInterface $storeManager;
 
     public function __construct(
         ActionFactory $actionFactory,
         CollectionFactory $categoryCollectionFactory,
+        ProductCollectionFactory $productCollectionFactory,
         StoreManagerInterface $storeManager
     ) {
         $this->actionFactory = $actionFactory;
         $this->categoryCollectionFactory = $categoryCollectionFactory;
+        $this->productCollectionFactory = $productCollectionFactory;
         $this->storeManager = $storeManager;
     }
 
@@ -49,15 +53,27 @@ class CategoryKeyRouter implements RouterInterface
         }
 
         $categoryId = $this->findCategoryIdByPath($path);
-        if (!$categoryId) {
+        if ($categoryId) {
+            $request
+                ->setModuleName('catalog')
+                ->setControllerName('category')
+                ->setActionName('view')
+                ->setParam('id', $categoryId);
+
+            return $this->actionFactory->create(Forward::class, ['request' => $request]);
+        }
+
+        $productId = $this->findProductIdByUrlKey($path);
+        if (!$productId) {
             return null;
         }
 
         $request
             ->setModuleName('catalog')
-            ->setControllerName('category')
+            ->setControllerName('product')
             ->setActionName('view')
-            ->setParam('id', $categoryId);
+            ->setParam('id', $productId)
+            ->setParam('boris_allow_hidden_product', 1);
 
         return $this->actionFactory->create(Forward::class, ['request' => $request]);
     }
@@ -90,5 +106,20 @@ class CategoryKeyRouter implements RouterInterface
         $categoryId = (int)$category->getId();
 
         return $categoryId > 0 ? $categoryId : null;
+    }
+
+    private function findProductIdByUrlKey(string $urlKey): ?int
+    {
+        $collection = $this->productCollectionFactory->create();
+        $collection
+            ->addAttributeToSelect(['url_key'])
+            ->addAttributeToFilter('url_key', $urlKey)
+            ->addStoreFilter((int)$this->storeManager->getStore()->getId())
+            ->setPageSize(1);
+
+        $product = $collection->getFirstItem();
+        $productId = (int)$product->getId();
+
+        return $productId > 0 ? $productId : null;
     }
 }
