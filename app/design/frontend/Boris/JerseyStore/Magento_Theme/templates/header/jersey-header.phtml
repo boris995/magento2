@@ -23,10 +23,13 @@ $navItems = [
                 <span class="mt-[5px] text-[13px] font-black uppercase tracking-[0.34em] text-[#ff2b2b]">Store</span>
             </a>
 
-            <nav class="flex items-center gap-[38px]">
+            <nav class="flex items-center">
                 <?php foreach ($navItems as $item): ?>
-                    <a href="<?= $escaper->escapeUrl($item['href']) ?>"
-                        class="group relative inline-flex min-h-[76px] items-center !text-white !no-underline text-xs font-black uppercase tracking-[0.08em] transition hover:!text-[#ff2b2b]">
+                    <a href="<?= $escaper->escapeUrl($item['href']) ?>" class="group relative inline-flex min-h-[76px] items-center px-[19px]
+                   !text-white !no-underline text-xs font-black uppercase tracking-[0.08em]
+                   transition hover:!text-[#ff2b2b]
+                   after:content-['•'] after:absolute after:right-[-3px] after:text-white
+                   last:after:hidden">
                         <?= $escaper->escapeHtml($item['label']) ?>
                         <span
                             class="absolute bottom-[18px] left-0 h-0.5 w-0 bg-[#ff2b2b] transition-all duration-300 group-hover:w-full"></span>
