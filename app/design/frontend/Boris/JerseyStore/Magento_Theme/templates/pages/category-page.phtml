@@ -2,8 +2,15 @@
 /** @var \Magento\Framework\View\Element\Template $block */
 /** @var \Magento\Framework\Escaper $escaper */
 
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $categoryHelper = $this->helper(\Magento\Catalog\Helper\Category::class);
+$imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
+$priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
+$productCollectionFactory = $objectManager->get(\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::class);
+$storeManager = $objectManager->get(\Magento\Store\Model\StoreManagerInterface::class);
+$storeId = (int)$storeManager->getStore()->getId();
 $categories = [];
+$products = [];
 $cardStyles = [
     ['accent' => '#ff2b2b', 'scene' => 'flares'],
     ['accent' => '#f5b21b', 'scene' => 'stars'],
@@ -20,7 +27,9 @@ $collectCategories = function ($categoryItems) use (&$collectCategories, &$categ
         $description = trim(strip_tags((string)$categoryItem->getDescription()));
 
         $categories[] = [
+            'id' => (int)$categoryItem->getId(),
             'title' => strtoupper((string)$categoryItem->getName()),
+            'name' => (string)$categoryItem->getName(),
             'copy' => $description !== ''
                 ? mb_substr($description, 0, 120)
                 : (string)__('Pogledaj dostupne fudbalske dresove u ovoj kategoriji.'),
@@ -39,6 +48,28 @@ $collectCategories = function ($categoryItems) use (&$collectCategories, &$categ
 
 $collectCategories($categoryHelper->getStoreCategories(false, true, true));
 
+$productCollection = $productCollectionFactory->create();
+$productCollection
+    ->addAttributeToSelect(['name', 'price', 'small_image', 'thumbnail', 'url_key', 'status', 'visibility'])
+    ->addStoreFilter($storeId)
+    ->addAttributeToFilter('status', 1)
+    ->addAttributeToFilter('visibility', ['in' => [2, 3, 4]])
+    ->setPageSize(24)
+    ->setCurPage(1);
+
+foreach ($productCollection as $product) {
+    $categoryIds = array_map('intval', $product->getCategoryIds());
+    $products[] = [
+        'id' => (int)$product->getId(),
+        'name' => (string)$product->getName(),
+        'url' => (string)$product->getProductUrl(),
+        'price' => (float)$product->getFinalPrice(),
+        'image' => (string)$imageHelper->init($product, 'category_page_grid')->keepFrame(false)->getUrl(),
+        'is_saleable' => (bool)$product->isSaleable(),
+        'category_ids' => $categoryIds,
+    ];
+}
+
 $lockers = [
     ['club' => 'AC MILAN', 'base' => '#151515', 'stripe' => '#d71920', 'trim' => '#ffffff'],
     ['club' => 'REAL MADRID', 'base' => '#f4f1e8', 'stripe' => '#d5b45b', 'trim' => '#141414'],
@@ -47,8 +78,8 @@ $lockers = [
 ];
 ?>
 
-<main class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-[#050505] text-white">
-    <section class="relative min-h-[650px] overflow-hidden border-b border-white/10">
+<main class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-white text-[#050505]">
+    <section class="relative min-h-[520px] overflow-hidden border-b border-white/10 bg-[#050505] text-white">
         <div class="absolute inset-0">
             <svg class="h-full w-full" viewBox="0 0 1600 700" preserveAspectRatio="none" aria-hidden="true">
                 <defs>
@@ -79,7 +110,7 @@ $lockers = [
             </svg>
         </div>
 
-        <div class="container-shop relative grid gap-10 py-16 lg:min-h-[650px] lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
+        <div class="container-shop relative grid gap-10 py-14 lg:min-h-[520px] lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
             <div class="max-w-2xl">
                 <p class="text-sm font-black uppercase tracking-[0.22em] text-[#ff2b2b]">FOR EVERY FAN</p>
                 <h1 class="mt-5 text-5xl font-black uppercase leading-[0.92] tracking-tight sm:text-7xl xl:text-8xl">
@@ -131,87 +162,140 @@ $lockers = [
         </div>
     </section>
 
-    <section id="available-categories" class="bg-[#050505] py-8">
-        <div class="container-shop grid gap-4 lg:grid-cols-4">
+    <section id="available-categories" class="bg-white py-10 text-[#050505]">
+        <div class="container-shop">
+            <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                    <p class="text-xs font-black uppercase tracking-[0.18em] text-[#d60000]"><?= $escaper->escapeHtml(__('Kategorije')) ?></p>
+                    <h2 class="mt-2 text-3xl font-black uppercase"><?= $escaper->escapeHtml(__('Izaberi kategoriju')) ?></h2>
+                </div>
+                <span class="text-sm font-bold text-black/50"><?= $escaper->escapeHtml(__('%1 dostupno', count($categories))) ?></span>
+            </div>
+
             <?php if (!$categories): ?>
-                <div class="border border-white/10 bg-[#111] p-8 text-white lg:col-span-4">
+                <div class="border border-black/10 bg-[#f5f5f5] p-8 text-[#050505]">
                     <h2 class="text-2xl font-black uppercase"><?= $escaper->escapeHtml(__('Nema dostupnih kategorija')) ?></h2>
-                    <p class="mt-3 max-w-2xl text-sm leading-6 text-white/65">
+                    <p class="mt-3 max-w-2xl text-sm leading-6 text-black/60">
                         <?= $escaper->escapeHtml(__('U admin panelu aktiviraj kategorije ispod store root kategorije da bi se prikazale ovdje.')) ?>
                     </p>
                 </div>
             <?php else: ?>
+                <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <?php foreach ($categories as $category): ?>
-                <a href="<?= $escaper->escapeUrl($category['href']) ?>" class="group relative min-h-[420px] overflow-hidden border border-white/10 bg-[#111] shadow-2xl shadow-black/50">
-                    <div class="absolute inset-0 transition duration-700 group-hover:scale-105">
-                        <svg class="h-full w-full" viewBox="0 0 420 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                            <defs>
-                                <radialGradient id="cardGlow<?= $escaper->escapeHtmlAttr($category['scene']) ?>" cx="50%" cy="20%" r="65%">
-                                    <stop offset="0" stop-color="<?= $escaper->escapeHtmlAttr($category['accent']) ?>" stop-opacity="0.55"/>
-                                    <stop offset="0.42" stop-color="#151515" stop-opacity="0.3"/>
-                                    <stop offset="1" stop-color="#050505"/>
-                                </radialGradient>
-                            </defs>
-                            <rect width="420" height="520" fill="url(#cardGlow<?= $escaper->escapeHtmlAttr($category['scene']) ?>)"/>
-                            <?php if ($category['scene'] === 'flares'): ?>
-                                <path d="M0 350 C96 285 176 320 260 286 C330 256 374 270 420 234 V520H0Z" fill="#050505" opacity="0.82"/>
-                                <?php foreach ([60, 118, 185, 250, 312, 362] as $x): ?>
-                                    <path d="M<?= (int)$x ?> 356v86" stroke="#111" stroke-width="14" stroke-linecap="round"/>
-                                    <circle cx="<?= (int)$x ?>" cy="330" r="20" fill="#161616"/>
-                                    <path d="M<?= (int)$x - 24 ?> 292 C<?= (int)$x - 4 ?> 260 <?= (int)$x + 18 ?> 260 <?= (int)$x + 38 ?> 292" stroke="#ff2b2b" stroke-width="9" stroke-linecap="round" opacity="0.72"/>
-                                <?php endforeach; ?>
-                                <path d="M35 118 C100 70 134 106 186 78 C254 41 306 88 388 54" stroke="#ff2b2b" stroke-width="30" stroke-opacity="0.48" filter="blur(10px)"/>
-                            <?php elseif ($category['scene'] === 'stars'): ?>
-                                <circle cx="102" cy="214" r="46" fill="#141414"/>
-                                <circle cx="208" cy="186" r="58" fill="#1b1b1b"/>
-                                <circle cx="322" cy="220" r="48" fill="#171717"/>
-                                <path d="M62 277h82l22 143H40Z" fill="#112a68"/>
-                                <path d="M162 258h100l24 162H138Z" fill="#7f0f1b"/>
-                                <path d="M280 280h82l18 140H264Z" fill="#efefef"/>
-                                <text x="208" y="335" fill="#fff" text-anchor="middle" font-size="44" font-weight="900">10</text>
-                            <?php elseif ($category['scene'] === 'retro'): ?>
-                                <?php foreach ([[72,170,'#132b58','10'], [184,145,'#f0eadc','5'], [296,168,'#7a1017','7']] as $shirt): ?>
-                                    <path d="M<?= (int)$shirt[0] - 43 ?> <?= (int)$shirt[1] ?>l26-21h34l26 21-13 44-15-7v100h-56v-100l-15 7-13-44Z" fill="<?= $escaper->escapeHtmlAttr($shirt[2]) ?>"/>
-                                    <text x="<?= (int)$shirt[0] ?>" y="<?= (int)$shirt[1] + 78 ?>" text-anchor="middle" fill="#f9d568" font-size="34" font-weight="900"><?= $escaper->escapeHtml($shirt[3]) ?></text>
-                                <?php endforeach; ?>
-                                <rect x="18" y="86" width="384" height="280" fill="none" stroke="#9a6a2c" stroke-opacity="0.35"/>
-                                <path d="M34 110h352" stroke="#ff2b2b" stroke-opacity="0.35"/>
-                            <?php else: ?>
-                                <circle cx="148" cy="198" r="38" fill="#242424"/>
-                                <circle cx="274" cy="198" r="38" fill="#242424"/>
-                                <path d="M102 250h90l18 130H82Z" fill="#173b88"/>
-                                <path d="M229 250h90l18 130H209Z" fill="#f1f1ec"/>
-                                <path d="M137 250v130M158 250v130" stroke="#a21432" stroke-width="12"/>
-                                <path d="M253 250v130" stroke="#d5b45b" stroke-width="10"/>
-                                <path d="M110 166c25-26 58-26 82 0M235 166c25-26 58-26 82 0" stroke="#fff" stroke-opacity="0.18" stroke-width="7" stroke-linecap="round"/>
-                            <?php endif; ?>
-                            <rect width="420" height="520" fill="#000" opacity="0.24"/>
-                        </svg>
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent"></div>
-                    <div class="relative z-10 flex min-h-[420px] flex-col justify-end p-7">
-                        <div class="mb-5 flex h-11 w-11 items-center justify-center border border-white/25 bg-black/70">
-                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M12 3 20 7v6c0 4.4-3.1 7.4-8 8-4.9-.6-8-3.6-8-8V7l8-4Z" stroke="currentColor" stroke-width="1.7"/>
-                                <path d="m9 12 2 2 4-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <h2 class="text-3xl font-black uppercase leading-none"><?= $escaper->escapeHtml($category['title']) ?></h2>
-                        <div class="mt-3 h-0.5 w-16" style="background-color: <?= $escaper->escapeHtmlAttr($category['accent']) ?>"></div>
-                        <p class="mt-4 min-h-14 text-sm leading-6 text-white/72"><?= $escaper->escapeHtml($category['copy']) ?></p>
-                        <span class="mt-6 inline-flex items-center justify-between border-t border-white/15 pt-5 text-xs font-black uppercase tracking-[0.08em]">
-                            <?= $escaper->escapeHtml($category['button']) ?>
-                            <span class="text-xl text-[#ff2b2b] transition group-hover:translate-x-1">→</span>
+                    <button
+                        type="button"
+                        data-category-filter="<?= (int)$category['id'] ?>"
+                        class="group min-h-32 border border-black/10 bg-white p-5 text-left shadow-sm transition hover:border-[#d60000] hover:bg-[#d60000] hover:text-white"
+                    >
+                        <span class="block text-lg font-black uppercase leading-tight"><?= $escaper->escapeHtml($category['title']) ?></span>
+                        <span class="mt-3 block text-sm leading-6 text-black/55 group-hover:text-white/75"><?= $escaper->escapeHtml($category['copy']) ?></span>
+                        <span class="mt-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.1em]">
+                            <?= $escaper->escapeHtml(__('Filtriraj')) ?>
+                            <span class="transition group-hover:translate-x-1">→</span>
                         </span>
-                    </div>
-                </a>
+                    </button>
                 <?php endforeach; ?>
+                </div>
             <?php endif; ?>
         </div>
     </section>
 
-    <section class="pb-12">
-        <div class="container-shop grid bg-white text-[#050505] shadow-2xl shadow-black/40 sm:grid-cols-2 lg:grid-cols-4">
+    <section class="border-y border-black/10 bg-[#f6f6f6] py-6 text-[#050505]">
+        <div class="container-shop grid gap-4 lg:grid-cols-[minmax(220px,1fr)_auto_auto_auto] lg:items-end" data-category-page-filters>
+            <label class="block">
+                <span class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-black/50"><?= $escaper->escapeHtml(__('Pretraga')) ?></span>
+                <input data-product-search type="search" placeholder="<?= $escaper->escapeHtmlAttr(__('Pretraži proizvode')) ?>" class="h-12 w-full border border-black/15 bg-white px-4 text-sm font-semibold outline-none transition focus:border-[#d60000]" />
+            </label>
+            <label class="block">
+                <span class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-black/50"><?= $escaper->escapeHtml(__('Sortiranje')) ?></span>
+                <select data-product-sort class="h-12 w-full min-w-48 border border-black/15 bg-white px-4 text-sm font-black outline-none transition focus:border-[#d60000]">
+                    <option value="default"><?= $escaper->escapeHtml(__('Preporučeno')) ?></option>
+                    <option value="name-asc"><?= $escaper->escapeHtml(__('Naziv A-Z')) ?></option>
+                    <option value="price-asc"><?= $escaper->escapeHtml(__('Cijena niža')) ?></option>
+                    <option value="price-desc"><?= $escaper->escapeHtml(__('Cijena viša')) ?></option>
+                </select>
+            </label>
+            <label class="flex h-12 items-center gap-3 border border-black/15 bg-white px-4 text-sm font-black lg:mt-6">
+                <input data-stock-filter type="checkbox" class="h-4 w-4 accent-[#d60000]" />
+                <?= $escaper->escapeHtml(__('Samo dostupno')) ?>
+            </label>
+            <button type="button" data-reset-filters class="h-12 bg-[#050505] px-5 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:bg-[#d60000] lg:mt-6">
+                <?= $escaper->escapeHtml(__('Reset')) ?>
+            </button>
+            <div class="text-sm font-bold text-black/50 lg:col-span-4">
+                <span data-product-count><?= $escaper->escapeHtml(__('%1 proizvoda prikazano', count($products))) ?></span>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white py-10 text-[#050505]">
+        <div class="container-shop">
+            <div class="mb-6">
+                <p class="text-xs font-black uppercase tracking-[0.18em] text-[#d60000]"><?= $escaper->escapeHtml(__('Proizvodi')) ?></p>
+                <h2 class="mt-2 text-3xl font-black uppercase"><?= $escaper->escapeHtml(__('Dostupni dresovi')) ?></h2>
+            </div>
+
+            <?php if (!$products): ?>
+                <div class="border border-black/10 bg-[#f6f6f6] p-8">
+                    <h3 class="text-xl font-black"><?= $escaper->escapeHtml(__('Nema proizvoda za prikaz')) ?></h3>
+                    <p class="mt-2 text-sm text-black/60"><?= $escaper->escapeHtml(__('Dodaj proizvode u Magento admin panel da bi se prikazali ovdje.')) ?></p>
+                </div>
+            <?php else: ?>
+                <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" data-product-grid>
+                    <?php foreach ($products as $index => $product): ?>
+                        <article
+                            data-product-card
+                            data-default-order="<?= (int)$index ?>"
+                            data-product-name="<?= $escaper->escapeHtmlAttr(mb_strtolower($product['name'])) ?>"
+                            data-product-price="<?= $escaper->escapeHtmlAttr((string)$product['price']) ?>"
+                            data-product-stock="<?= $product['is_saleable'] ? '1' : '0' ?>"
+                            data-product-categories="<?= $escaper->escapeHtmlAttr(implode(',', $product['category_ids'])) ?>"
+                            class="group flex h-full flex-col overflow-hidden border border-black/10 bg-white transition hover:-translate-y-1 hover:border-[#d60000] hover:shadow-2xl hover:shadow-black/10"
+                        >
+                            <a href="<?= $escaper->escapeUrl($product['url']) ?>" class="relative block bg-gradient-to-br from-neutral-100 via-white to-neutral-200 p-4">
+                                <span class="absolute left-4 top-4 z-10 bg-[#d60000] px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] text-white">
+                                    <?= $escaper->escapeHtml($product['is_saleable'] ? __('Dres') : __('Nema na stanju')) ?>
+                                </span>
+                                <div class="aspect-[4/5] bg-white">
+                                    <img class="h-full w-full object-contain transition duration-500 group-hover:scale-105" src="<?= $escaper->escapeUrl($product['image']) ?>" alt="<?= $escaper->escapeHtmlAttr($product['name']) ?>" loading="lazy" />
+                                </div>
+                            </a>
+                            <div class="flex flex-1 flex-col p-5">
+                                <h3 class="text-lg font-black leading-snug">
+                                    <a href="<?= $escaper->escapeUrl($product['url']) ?>" class="!text-[#050505] !no-underline transition hover:!text-[#d60000]">
+                                        <?= $escaper->escapeHtml($product['name']) ?>
+                                    </a>
+                                </h3>
+                                <div class="mt-4 text-2xl font-black">
+                                    <?= /* @noEscape */ $priceHelper->currency($product['price'], true, false) ?>
+                                </div>
+                                <div class="mt-4 grid grid-cols-2 border border-black/10 text-sm">
+                                    <div class="border-r border-black/10 bg-[#f6f6f6] p-3">
+                                        <div class="font-black text-black/45"><?= $escaper->escapeHtml(__('Stanje')) ?></div>
+                                        <div class="mt-1 font-bold"><?= $escaper->escapeHtml($product['is_saleable'] ? __('Dostupno') : __('Nema')) ?></div>
+                                    </div>
+                                    <div class="bg-[#f6f6f6] p-3">
+                                        <div class="font-black text-black/45"><?= $escaper->escapeHtml(__('Tip')) ?></div>
+                                        <div class="mt-1 font-bold"><?= $escaper->escapeHtml(__('Original')) ?></div>
+                                    </div>
+                                </div>
+                                <a href="<?= $escaper->escapeUrl($product['url']) ?>" class="mt-5 block bg-[#d60000] px-5 py-3 text-center text-sm font-black uppercase tracking-[0.1em] !text-white !no-underline transition hover:bg-[#050505]">
+                                    <?= $escaper->escapeHtml(__('Detalji proizvoda')) ?>
+                                </a>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+                <div data-empty-products class="mt-6 hidden border border-black/10 bg-[#f6f6f6] p-8">
+                    <h3 class="text-xl font-black"><?= $escaper->escapeHtml(__('Nema proizvoda za odabrane filtere')) ?></h3>
+                    <p class="mt-2 text-sm text-black/60"><?= $escaper->escapeHtml(__('Promijeni filtere ili resetuj prikaz.')) ?></p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <section class="pb-12 text-[#050505]">
+        <div class="container-shop grid bg-white shadow-2xl shadow-black/10 ring-1 ring-black/10 sm:grid-cols-2 lg:grid-cols-4">
             <?php foreach ([
                 ['title' => 'FREE SHIPPING', 'copy' => 'Fast delivery on premium drops.', 'icon' => 'truck'],
                 ['title' => 'AUTHENTIC PRODUCTS', 'copy' => 'Verified jersey quality.', 'icon' => 'shield'],
@@ -239,3 +323,94 @@ $lockers = [
         </div>
     </section>
 </main>
+
+<script>
+require(['jquery'], function ($) {
+    var activeCategory = '';
+    var $cards = $('[data-product-card]');
+    var $categoryButtons = $('[data-category-filter]');
+    var $search = $('[data-product-search]');
+    var $sort = $('[data-product-sort]');
+    var $stock = $('[data-stock-filter]');
+    var $reset = $('[data-reset-filters]');
+    var $count = $('[data-product-count]');
+    var $empty = $('[data-empty-products]');
+    var $grid = $('[data-product-grid]');
+
+    function applyFilters() {
+        var query = ($search.val() || '').toString().toLowerCase().trim();
+        var stockOnly = $stock.is(':checked');
+        var visibleCount = 0;
+
+        $cards.each(function () {
+            var $card = $(this);
+            var name = ($card.data('product-name') || '').toString();
+            var categories = ($card.data('product-categories') || '').toString().split(',');
+            var inCategory = !activeCategory || categories.indexOf(activeCategory) !== -1;
+            var matchesSearch = !query || name.indexOf(query) !== -1;
+            var matchesStock = !stockOnly || $card.data('product-stock').toString() === '1';
+            var visible = inCategory && matchesSearch && matchesStock;
+
+            $card.toggleClass('hidden', !visible);
+            if (visible) {
+                visibleCount++;
+            }
+        });
+
+        sortProducts();
+        $empty.toggleClass('hidden', visibleCount !== 0);
+        $count.text(visibleCount + ' <?= $escaper->escapeJs(__('proizvoda prikazano')) ?>');
+    }
+
+    function sortProducts() {
+        var sortValue = $sort.val();
+        var sortedCards = $cards.get().sort(function (a, b) {
+            var $a = $(a);
+            var $b = $(b);
+
+            if (sortValue === 'name-asc') {
+                return ($a.data('product-name') || '').toString().localeCompare(($b.data('product-name') || '').toString());
+            }
+
+            if (sortValue === 'price-asc') {
+                return parseFloat($a.data('product-price')) - parseFloat($b.data('product-price'));
+            }
+
+            if (sortValue === 'price-desc') {
+                return parseFloat($b.data('product-price')) - parseFloat($a.data('product-price'));
+            }
+
+            return parseInt($a.data('default-order'), 10) - parseInt($b.data('default-order'), 10);
+        });
+
+        $.each(sortedCards, function (_, card) {
+            $grid.append(card);
+        });
+    }
+
+    $categoryButtons.on('click', function () {
+        var $button = $(this);
+        var nextCategory = $button.data('category-filter').toString();
+        activeCategory = activeCategory === nextCategory ? '' : nextCategory;
+
+        $categoryButtons.removeClass('border-[#d60000] bg-[#d60000] text-white').addClass('border-black/10 bg-white');
+        if (activeCategory) {
+            $button.removeClass('border-black/10 bg-white').addClass('border-[#d60000] bg-[#d60000] text-white');
+        }
+
+        applyFilters();
+    });
+
+    $search.on('input', applyFilters);
+    $sort.on('change', applyFilters);
+    $stock.on('change', applyFilters);
+    $reset.on('click', function () {
+        activeCategory = '';
+        $search.val('');
+        $sort.val('default');
+        $stock.prop('checked', false);
+        $categoryButtons.removeClass('border-[#d60000] bg-[#d60000] text-white').addClass('border-black/10 bg-white');
+        applyFilters();
+    });
+});
+</script>
