@@ -11,6 +11,28 @@ $category = $block->getLayer()->getCurrentCategory();
 $viewModel = $block->getData('jersey_category_products');
 $products = ($category && $viewModel) ? $viewModel->getAssignedProducts($category) : [];
 $outputHelper = $block->getData('outputHelper');
+$categoryHelper = $this->helper(\Magento\Catalog\Helper\Category::class);
+$availableCategories = [];
+$collectCategories = function ($categories, int $level = 0) use (&$collectCategories, &$availableCategories): void {
+    foreach ($categories as $categoryItem) {
+        if (!$categoryItem->getIsActive()) {
+            continue;
+        }
+
+        $availableCategories[] = [
+            'name' => (string)$categoryItem->getName(),
+            'url' => (string)$categoryItem->getUrl(),
+            'level' => $level,
+        ];
+
+        $children = $categoryItem->getChildrenCategories();
+        if ($children && count($children)) {
+            $collectCategories($children, $level + 1);
+        }
+    }
+};
+
+$collectCategories($categoryHelper->getStoreCategories(false, true, true));
 ?>
 
 <section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -30,6 +52,51 @@ $outputHelper = $block->getData('outputHelper');
             <?= $escaper->escapeHtml(__('%1 assigned product(s)', count($products))) ?>
         </div>
     </header>
+
+    <section class="mb-10">
+        <div class="mb-4 flex flex-wrap items-end justify-between gap-4">
+            <div>
+                <p class="text-xs font-black uppercase tracking-[0.18em] text-red-600">
+                    <?= $escaper->escapeHtml(__('Kategorije')) ?>
+                </p>
+                <h2 class="mt-2 text-2xl font-black text-slate-950">
+                    <?= $escaper->escapeHtml(__('Sve dostupne kategorije')) ?>
+                </h2>
+            </div>
+            <span class="text-sm font-bold text-slate-500">
+                <?= $escaper->escapeHtml(__('%1 kategorija', count($availableCategories))) ?>
+            </span>
+        </div>
+
+        <?php if (!$availableCategories): ?>
+            <div class="rounded-lg border border-slate-200 bg-white p-5 text-sm font-semibold text-slate-600">
+                <?= $escaper->escapeHtml(__('Trenutno nema dostupnih kategorija za prikaz.')) ?>
+            </div>
+        <?php else: ?>
+            <nav class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-label="<?= $escaper->escapeHtmlAttr(__('Sve dostupne kategorije')) ?>">
+                <?php foreach ($availableCategories as $availableCategory): ?>
+                    <a
+                        href="<?= $escaper->escapeUrl($availableCategory['url']) ?>"
+                        class="<?= (int)$availableCategory['level'] > 0 ? 'border-slate-200 bg-slate-50' : 'border-slate-300 bg-white' ?> group flex min-h-16 items-center justify-between gap-4 rounded-lg border px-4 py-3 !text-slate-950 !no-underline shadow-sm transition hover:border-red-600 hover:shadow-md"
+                    >
+                        <span class="min-w-0">
+                            <span class="block truncate text-sm font-black uppercase tracking-[0.04em]">
+                                <?= $escaper->escapeHtml($availableCategory['name']) ?>
+                            </span>
+                            <?php if ((int)$availableCategory['level'] > 0): ?>
+                                <span class="mt-1 block text-xs font-bold text-slate-500">
+                                    <?= $escaper->escapeHtml(__('Podkategorija')) ?>
+                                </span>
+                            <?php endif; ?>
+                        </span>
+                        <svg class="h-5 w-5 shrink-0 text-red-600 transition group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                <?php endforeach; ?>
+            </nav>
+        <?php endif; ?>
+    </section>
 
     <?php if (!$products): ?>
         <div class="rounded-lg border border-slate-200 bg-white p-8 text-slate-600">

@@ -148,3 +148,10 @@ Markdown
   - `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/list/item.phtml`
 - **Sledeći koraci:** Predložiti strukturu PLP koda sa pravilnim Magento URL generatorom (`$_product->getProductUrl()`) i sačekati potvrdu pre kreiranja ili izmene template fajlova.
 
+### [2026-06-17] Faza: Lista Dostupnih Kategorija na Category Page
+- **Status:** Završeno
+- **Opis zadatka:** Dodat je dinamički prikaz svih dostupnih Magento kategorija na Product Listing Page, bez hard-coded naziva kategorija, tako da se aktivne kategorije iz admin panela izlistaju na frontend category stranici kroz responsive grid linkove.
+- **Izmenjeni fajlovi:**
+  - `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/list.phtml`
+  - `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+- **Sledeći koraci:** Proveriti category page u browseru i potvrditi da su željene kategorije u admin panelu aktivne (`Enable Category = Yes`) i dostupne u store root hijerarhiji.

@@ -2,40 +2,42 @@
 /** @var \Magento\Framework\View\Element\Template $block */
 /** @var \Magento\Framework\Escaper $escaper */
 
-$categories = [
-    [
-        'title' => 'CLUBS',
-        'copy' => 'Discover the newest club jerseys from around the world.',
-        'button' => 'VIEW COLLECTION',
-        'href' => 'klubovi',
-        'accent' => '#ff2b2b',
-        'scene' => 'flares',
-    ],
-    [
-        'title' => 'NATIONAL TEAMS',
-        'copy' => 'Support your country with official national team jerseys.',
-        'button' => 'VIEW COLLECTION',
-        'href' => 'reprezentacije',
-        'accent' => '#f5b21b',
-        'scene' => 'stars',
-    ],
-    [
-        'title' => 'RETRO COLLECTION',
-        'copy' => 'Football history reimagined through iconic shirts.',
-        'button' => 'VIEW COLLECTION',
-        'href' => 'retro-dresovi',
-        'accent' => '#ff2b2b',
-        'scene' => 'retro',
-    ],
-    [
-        'title' => 'KIDS',
-        'copy' => 'Future champions deserve premium jerseys too.',
-        'button' => 'VIEW COLLECTION',
-        'href' => 'djeciji-dresovi',
-        'accent' => '#2f68ff',
-        'scene' => 'kids',
-    ],
+$categoryHelper = $this->helper(\Magento\Catalog\Helper\Category::class);
+$categories = [];
+$cardStyles = [
+    ['accent' => '#ff2b2b', 'scene' => 'flares'],
+    ['accent' => '#f5b21b', 'scene' => 'stars'],
+    ['accent' => '#ff2b2b', 'scene' => 'retro'],
+    ['accent' => '#2f68ff', 'scene' => 'kids'],
 ];
+$collectCategories = function ($categoryItems) use (&$collectCategories, &$categories, $cardStyles): void {
+    foreach ($categoryItems as $categoryItem) {
+        if (!$categoryItem->getIsActive()) {
+            continue;
+        }
+
+        $style = $cardStyles[count($categories) % count($cardStyles)];
+        $description = trim(strip_tags((string)$categoryItem->getDescription()));
+
+        $categories[] = [
+            'title' => strtoupper((string)$categoryItem->getName()),
+            'copy' => $description !== ''
+                ? mb_substr($description, 0, 120)
+                : (string)__('Pogledaj dostupne fudbalske dresove u ovoj kategoriji.'),
+            'button' => (string)__('Pogledaj kategoriju'),
+            'href' => (string)$categoryItem->getUrl(),
+            'accent' => $style['accent'],
+            'scene' => $style['scene'],
+        ];
+
+        $children = $categoryItem->getChildrenCategories();
+        if ($children && count($children)) {
+            $collectCategories($children);
+        }
+    }
+};
+
+$collectCategories($categoryHelper->getStoreCategories(false, true, true));
 
 $lockers = [
     ['club' => 'AC MILAN', 'base' => '#151515', 'stripe' => '#d71920', 'trim' => '#ffffff'],
@@ -87,7 +89,7 @@ $lockers = [
                 <p class="mt-6 max-w-md text-base leading-7 text-white/72 sm:text-lg">
                     Find jerseys that represent your club, nation, or football passion.
                 </p>
-                <a href="<?= $escaper->escapeUrl($block->getUrl('category-page')) ?>" class="group mt-9 inline-flex h-14 items-center gap-8 border border-white/70 px-8 text-xs font-black uppercase tracking-[0.08em] transition hover:border-[#ff2b2b] hover:bg-[#ff2b2b]">
+                <a href="#available-categories" class="group mt-9 inline-flex h-14 items-center gap-8 border border-white/70 px-8 text-xs font-black uppercase tracking-[0.08em] transition hover:border-[#ff2b2b] hover:bg-[#ff2b2b]">
                     SHOP NOW
                     <svg class="h-4 w-8 transition group-hover:translate-x-1" viewBox="0 0 32 16" fill="none" aria-hidden="true">
                         <path d="M1 8h28m-6-6 7 6-7 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -129,10 +131,18 @@ $lockers = [
         </div>
     </section>
 
-    <section class="bg-[#050505] py-8">
+    <section id="available-categories" class="bg-[#050505] py-8">
         <div class="container-shop grid gap-4 lg:grid-cols-4">
-            <?php foreach ($categories as $category): ?>
-                <a href="<?= $escaper->escapeUrl($block->getUrl($category['href'])) ?>" class="group relative min-h-[420px] overflow-hidden border border-white/10 bg-[#111] shadow-2xl shadow-black/50">
+            <?php if (!$categories): ?>
+                <div class="border border-white/10 bg-[#111] p-8 text-white lg:col-span-4">
+                    <h2 class="text-2xl font-black uppercase"><?= $escaper->escapeHtml(__('Nema dostupnih kategorija')) ?></h2>
+                    <p class="mt-3 max-w-2xl text-sm leading-6 text-white/65">
+                        <?= $escaper->escapeHtml(__('U admin panelu aktiviraj kategorije ispod store root kategorije da bi se prikazale ovdje.')) ?>
+                    </p>
+                </div>
+            <?php else: ?>
+                <?php foreach ($categories as $category): ?>
+                <a href="<?= $escaper->escapeUrl($category['href']) ?>" class="group relative min-h-[420px] overflow-hidden border border-white/10 bg-[#111] shadow-2xl shadow-black/50">
                     <div class="absolute inset-0 transition duration-700 group-hover:scale-105">
                         <svg class="h-full w-full" viewBox="0 0 420 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
                             <defs>
@@ -195,7 +205,8 @@ $lockers = [
                         </span>
                     </div>
                 </a>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </section>
 
