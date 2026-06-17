@@ -15,7 +15,27 @@ $navItems = [
     <input id="jersey-mobile-menu" type="checkbox" class="jersey-menu-checkbox"
         aria-label="<?= $escaper->escapeHtmlAttr(__('Toggle mobile navigation')) ?>" />
 
-    <div class="container-shop">
+    <div class="container-shop relative">
+        <div class="absolute right-5 top-3 z-20 flex items-center gap-1 lg:top-4 lg:gap-3.5">
+            <a href="<?= $escaper->escapeUrl($block->getUrl('catalogsearch/result')) ?>"
+                class="grid h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#ff2b2b]">
+                <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none">
+                    <path d="m21 21-4.2-4.2m1.2-5.3a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+            </a>
+
+            <a href="<?= $escaper->escapeUrl($block->getUrl('customer/account')) ?>"
+                class="hidden h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#ff2b2b] lg:grid">
+                <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 21a8 8 0 0 0-16 0m12-13a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+            </a>
+
+            <?= $block->getChildHtml('minicart') ?>
+        </div>
+
         <div class="hidden h-[76px] items-center justify-between gap-8 lg:flex">
             <a href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"
                 class="inline-grid !text-white !no-underline leading-[.9]">
@@ -36,34 +56,7 @@ $navItems = [
                     </a>
                 <?php endforeach; ?>
             </nav>
-
-            <div class="flex items-center gap-3.5">
-                <a href="<?= $escaper->escapeUrl($block->getUrl('catalogsearch/result')) ?>"
-                    class="grid h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#ff2b2b]">
-                    <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none">
-                        <path d="m21 21-4.2-4.2m1.2-5.3a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" />
-                    </svg>
-                </a>
-
-                <a href="<?= $escaper->escapeUrl($block->getUrl('customer/account')) ?>"
-                    class="grid h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#ff2b2b]">
-                    <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none">
-                        <path d="M20 21a8 8 0 0 0-16 0m12-13a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" />
-                    </svg>
-                </a>
-
-                <a href="<?= $escaper->escapeUrl($block->getUrl('checkout/cart')) ?>"
-                    class="relative grid h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#ff2b2b]">
-                    <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none">
-                        <path d="M6.5 8h11l-1 12h-9l-1-12Zm3 0a2.5 2.5 0 0 1 5 0" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <span
-                        class="absolute right-1 top-[5px] h-4 min-w-4 rounded-full bg-[#ff2b2b] px-1 text-center text-[10px] font-black leading-4 text-white">0</span>
-                </a>
-            </div>
+            <div class="w-[140px]"></div>
         </div>
 
         <div class="grid h-[68px] grid-cols-[48px_1fr_96px] items-center lg:hidden">
@@ -79,24 +72,7 @@ $navItems = [
                 <span class="text-lg font-black uppercase tracking-[0.16em]">Jersey</span>
                 <span class="mt-[5px] text-[11px] font-black uppercase tracking-[0.34em] text-[#ff2b2b]">Store</span>
             </a>
-
-            <div class="flex items-center justify-end gap-1">
-                <a href="<?= $escaper->escapeUrl($block->getUrl('catalogsearch/result')) ?>"
-                    class="grid h-11 w-11 place-items-center !text-white !no-underline">
-                    <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none">
-                        <path d="m21 21-4.2-4.2m1.2-5.3a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" />
-                    </svg>
-                </a>
-
-                <a href="<?= $escaper->escapeUrl($block->getUrl('checkout/cart')) ?>"
-                    class="grid h-11 w-11 place-items-center !text-white !no-underline">
-                    <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none">
-                        <path d="M6.5 8h11l-1 12h-9l-1-12Zm3 0a2.5 2.5 0 0 1 5 0" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </a>
-            </div>
+            <div></div>
         </div>
     </div>
 

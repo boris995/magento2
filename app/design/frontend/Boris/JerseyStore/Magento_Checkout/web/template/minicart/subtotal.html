@@ -1,0 +1,11 @@
+<div class="subtotal flex items-center justify-between gap-4">
+    <span class="label text-sm font-extrabold uppercase tracking-[0.12em] text-gray-500">
+        <!-- ko i18n: 'Cart Subtotal' --><!-- /ko -->
+    </span>
+
+    <div class="text-xl font-black text-[#050505]">
+        <!-- ko foreach: elems -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        <!-- /ko -->
+    </div>
+</div>

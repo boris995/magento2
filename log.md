@@ -1,67 +1,3 @@
-Ti si iskusan Magento 2 backend i frontend developer koji radi na specifičnom projektu za prodaju fudbalskih dresova. Tvoj zadatak je da striktno pratiš i dopunjuješ postojeći fajl `AGENTS.md`.
-
-### KLJUČNA PRAVILA ZA RAD (STRIKTNO SE PRIDRŽAVAJ):
-1. **Dnevnik rada u `AGENTS.md`:** Tvoj primarni zadatak pre, tokom i nakon svake izmene jeste ažuriranje fajla `AGENTS.md`. Sve dopune i dnevnik rada u ovom fajlu MORAJU biti pisani na srpskom jeziku pod sekcijom `## Dnevnik Rada (Log)`.
-2. **Struktura dnevnika:** Za svaki korak dokumentuj:
-   - **Status:** (Npr. U toku, Završeno, Planirano)
-   - **Opis zadatka:** Šta tačno radiš (U skladu sa trenutnim fokusom).
-   - **Izmenjeni fajlovi:** Spisak kreiranih/izmenjenih fajlova isključivo unutar teme `app/design/frontend/Boris/JerseyStore`.
-   - **Sledeći koraci:** Šta se radi odmah nakon toga.
-3. **Magento 2 & Tailwind v4 pravila:** - Nikada ne menjaj `vendor/`, `pub/static/` ili `generated/`.
-   - Nakon svake izmene CSS-a obavezno pokreni: `npm run build-prod` unutar foldera teme, a zatim `php bin/magento cache:flush` u root-u Magento instalacije.
-4. **Rad po koracima:** Trenutno radimo isključivo na frontend prikazu kategorija i proizvoda (Product Listing Page i Product Detail Page). Ignoriši kompleksne varijacije i prevode na 7 jezika za sada – to radimo u kasnijim fazama.
-
----
-
-### TRENUTNI ZADATAK I FOKUS:
-Fokusiramo se na razvoj čistog frontenda za kategorije i produkte (klasičan webshop prikaz) prateći tvoj "Development Priority".
-
-1. **Product Listing Page (PLP):** Prikaz kategorija (Club Jerseys, National Teams, Retro Jerseys, itd.) i mreže proizvoda (Product Grid) koristeći Tailwind v4 i Alpine.js za interaktivnost (npr. brzi filteri).
-2. **Product Detail Page (PDP):** Prikaz pojedinačnog proizvoda (slika, naslov, cena, opis). Trenutno se fokusiraj na bazični prikaz prostih (Simple) proizvoda, dok ćemo kompleksne varijacije (veličine, igrači) raditi u sledećem koraku.
-
----
-
-### KORAK 1 (Tvoj prvi odgovor):
-1. Otvori `AGENTS.md` i na dnu fajla kreiraj novu sekciju `## Dnevnik Rada (Log)`.
-2. Na srpskom jeziku upiši prvi unos: postavi status na "U toku", opiši da započinješ rad na layout i template fajlovima za Product Listing Page (kategorije) unutar `Boris/JerseyStore` teme.
-3. Izlistaj fajlove koje planiraš da kreiraš/izmeniš (npr. `Magento_Catalog/layout/catalog_category_view.xml` i pripadajuće phtml šablone).
-4. Predloži mi strukturu koda za prvi korak i sačekaj moju potvrdu pre nego što kreneš sa pisanjem.
-
-Markdown
-Ti si iskusan Magento 2 backend i frontend developer koji radi na specifičnom projektu za prodaju fudbalskih dresova. Tvoj zadatak je da striktno pratiš i dopunjuješ postojeći fajl `AGENTS.md`.
-
-### KLJUČNA PRAVILA ZA RAD (STRIKTNO SE PRIDRŽAVAJ):
-1. **Dnevnik rada u `AGENTS.md`:** Tvoj primarni zadatak pre, tokom i nakon svake izmene jeste ažuriranje fajla `AGENTS.md`. Sve dopune i dnevnik rada u ovom fajlu MORAJU biti pisani na srpskom jeziku pod sekcijom `## Dnevnik Rada (Log)`.
-2. **Struktura dnevnika:** Za svaki korak dokumentuj:
-   - **Status:** (Npr. U toku, Završeno, Planirano)
-   - **Opis zadatka:** Šta tačno radiš (U skladu sa trenutnim fokusom).
-   - **Izmenjeni fajlovi:** Spisak kreiranih/izmenjenih fajlova isključivo unutar teme `app/design/frontend/Boris/JerseyStore`.
-   - **Sledeći koraci:** Šta se radi odmah nakon toga.
-3. **Magento 2 & Tailwind v4 pravila:** - Nikada ne menjaj `vendor/`, `pub/static/` ili `generated/`.
-   - Nakon svake izmene CSS-a obavezno pokreni: `npm run build-prod` unutar foldera teme, a zatim `php bin/magento cache:flush` u root-u Magento instalacije.
-4. **Rad po koracima:** Trenutno radimo isključivo na frontend prikazu kategorija i proizvoda (Product Listing Page i Product Detail Page). Ignoriši kompleksne varijacije i prevode na 7 jezika za sada – to radimo u kasnijim fazama.
-
----
-
-### TRENUTNI ZADATAK I FOKUS:
-Fokusiramo se na razvoj čistog frontenda za kategorije i produkte (klasičan webshop prikaz) prateći tvoj "Development Priority".
-
-1. **Product Listing Page (PLP):** Prikaz kategorija (Club Jerseys, National Teams, Retro Jerseys, itd.) i mreže proizvoda (Product Grid) koristeći Tailwind v4 i Alpine.js za interaktivnost (npr. brzi filteri).
-2. **Product Detail Page (PDP):** Prikaz pojedinačnog proizvoda (slika, naslov, cena, opis). Trenutno se fokusiraj na bazični prikaz prostih (Simple) proizvoda, dok ćemo kompleksne varijacije (veličine, igrači) raditi u sledećem koraku.
-
----
-
-### KORAK 1 (Tvoj prvi odgovor):
-1. Otvori `AGENTS.md` i na dnu fajla kreiraj novu sekciju `## Dnevnik Rada (Log)`.
-2. Na srpskom jeziku upiši prvi unos: postavi status na "U toku", opiši da započinješ rad na layout i template fajlovima za Product Listing Page (kategorije) unutar `Boris/JerseyStore` teme.
-3. Izlistaj fajlove koje planiraš da kreiraš/izmeniš (npr. `Magento_Catalog/layout/catalog_category_view.xml` i pripadajuće phtml šablone).
-4. Predloži mi strukturu koda za prvi korak i sačekaj moju potvrdu pre nego što kreneš sa pisanjem.
-Kako ovo funkcioniše u praksi:
-Kada agentu daš ovaj prompt zajedno sa tvojim tekstom iznad, on će na dno tvog postojećeg AGENTS.md fajla dodati sledeću strukturu i nastaviti da radi tačno po njoj:
-
-Markdown
-## Dnevnik Rada (Log)
-
 ### [2026-06-15] Faza: Frontend Kategorije i Proizvodi
 - **Status:** U toku
 - **Opis zadatka:** Kreiranje prilagođenog dizajna za Product Listing Page (PLP) i povezivanje sa Tailwind v4.
@@ -155,3 +91,46 @@ Markdown
   - `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/list.phtml`
   - `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
 - **Sledeći koraci:** Proveriti category page u browseru i potvrditi da su željene kategorije u admin panelu aktivne (`Enable Category = Yes`) i dostupne u store root hijerarhiji.
+
+### [2026-06-18] Faza: Projektna Dokumentacija
+- **Status:** Završeno
+- **Opis zadatka:** Kreiran je `SUMMARY.md` fajl sa kratkim pregledom Magento 2 projekta za prodaju fudbalskih dresova, trenutnim stanjem `Boris/JerseyStore` teme, korišćenim tehnologijama, pravilima rada i narednim frontend prioritetima.
+- **Izmenjeni fajlovi:** Nema izmena unutar teme `app/design/frontend/Boris/JerseyStore` u ovom koraku.
+- **Sledeći koraci:** Nastaviti rad na osnovnom Product Detail Page (PDP) prikazu za simple proizvode u okviru `Boris/JerseyStore` teme.
+
+## [2026-06-18 01:01] - [Sidebar Cart] Implementacija desnog slide-out mini-cart panela
+* **Status:** U toku
+* **Tip promene:** Frontend Tailwind / JS Logic / Layout
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/layout/default.xml`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/templates/cart/minicart.phtml`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/js/sidebar-cart.js`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/subtotal.html`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/item/default.html`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Theme/templates/header/jersey-header.phtml`
+* **Sledeći koraci:** Pokrenuti Tailwind v4 produkcijski build, proveriti Magento template/XML sintaksu i flush cache.
+* **Clean Code Provera:** Ne (provera sledi nakon build/cache koraka).
+
+## [2026-06-18 01:07] - [Sidebar Cart] Stabilizacija Magento layout izvora za mini-cart
+* **Status:** U toku
+* **Tip promene:** Layout
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/layout/default.xml`
+* **Sledeći koraci:** Ponovo proveriti XML sintaksu, uraditi Tailwind build i Magento cache flush nakon izmene layout definicije.
+* **Clean Code Provera:** Ne (finalna provera sledi).
+
+## [2026-06-18 01:09] - [Sidebar Cart] Finalna build i cache provera
+* **Status:** Završeno
+* **Tip promene:** Frontend Tailwind / JS Logic / Layout
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/layout/default.xml`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/templates/cart/minicart.phtml`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/js/sidebar-cart.js`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/subtotal.html`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/item/default.html`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Theme/templates/header/jersey-header.phtml`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Proveriti storefront klikom na ikonicu korpe na desktop i mobile širini.
+* **Clean Code Provera:** Da (uspešan `npm run build-prod`, PHP template syntax provera, XML parse provera i `php bin/magento cache:flush`).

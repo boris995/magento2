@@ -1,0 +1,82 @@
+<?php
+/** @var $block \Magento\Checkout\Block\Cart\Sidebar */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+?>
+
+<div
+    data-block="minicart"
+    class="jersey-minicart-wrapper"
+    data-mage-init='{"Magento_Checkout/js/sidebar-cart":{}}'>
+    <a class="action showcart relative grid h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#ff2b2b]"
+       href="<?= $block->escapeUrl($block->getShoppingCartUrl()) ?>"
+       aria-label="<?= $block->escapeHtmlAttr(__('Open cart')) ?>"
+       data-bind="scope: 'minicart_content'">
+        <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6.5 8h11l-1 12h-9l-1-12Zm3 0a2.5 2.5 0 0 1 5 0"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+        </svg>
+        <span class="counter qty absolute right-1 top-[5px] h-4 min-w-4 rounded-full bg-[#ff2b2b] px-1 text-center text-[10px] font-black leading-4 text-white"
+              data-bind="css: { empty: !!getCartParam('summary_count') == false && !isLoading() },
+               blockLoader: isLoading">
+            <span class="counter-number">
+                <!-- ko if: getCartParam('summary_count') -->
+                <!-- ko text: getCartParam('summary_count').toLocaleString(window.LOCALE) --><!-- /ko -->
+                <!-- /ko -->
+                <!-- ko ifnot: getCartParam('summary_count') -->0<!-- /ko -->
+            </span>
+            <span class="counter-label sr-only">
+                <!-- ko if: getCartParam('summary_count') -->
+                    <!-- ko text: getCartParam('summary_count').toLocaleString(window.LOCALE) --><!-- /ko -->
+                    <!-- ko i18n: 'items' --><!-- /ko -->
+                <!-- /ko -->
+            </span>
+        </span>
+    </a>
+
+    <div class="block block-minicart fixed inset-0 z-[1000] hidden overflow-hidden pointer-events-none"
+         data-role="dropdownDialog"
+         data-mage-init='{"dropdownDialog":{
+            "appendTo":"[data-block=minicart]",
+            "triggerTarget":".showcart",
+            "timeout": "2000",
+            "closeOnMouseLeave": false,
+            "closeOnEscape": true,
+            "triggerClass":"active",
+            "parentClass":"active",
+            "buttons":[]}}'>
+        <button type="button"
+                data-role="minicart-overlay"
+                class="absolute inset-0 cursor-default bg-gray-500/75 opacity-0 transition-opacity duration-500"
+                aria-label="<?= $block->escapeHtmlAttr(__('Close cart')) ?>"></button>
+
+        <div class="fixed inset-y-0 right-0 flex max-w-full pl-0 sm:pl-10 pointer-events-none">
+            <div data-role="minicart-panel"
+                 class="pointer-events-auto w-screen max-w-md transform translate-x-full bg-white shadow-xl transition-all duration-500 ease-in-out">
+                <div id="minicart-content-wrapper"
+                     class="flex h-full flex-col"
+                     data-bind="scope: 'minicart_content'">
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                </div>
+                <?= $block->getChildHtml('minicart.addons') ?>
+            </div>
+        </div>
+    </div>
+
+    <?= /* @noEscape */ $secureRenderer->renderTag('script', [], 'window.checkout = ' .
+        /* @noEscape */ $block->getSerializedConfig(), false); ?>
+    <script type="text/x-magento-init">
+    {
+        "[data-block='minicart']": {
+            "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+        },
+        "*": {
+            "Magento_Ui/js/block-loader": "<?= $block->escapeJs(
+                $block->escapeUrl($block->getViewFileUrl('images/loader-1.gif'))
+            ) ?>"
+        }
+    }
+    </script>
+</div>
