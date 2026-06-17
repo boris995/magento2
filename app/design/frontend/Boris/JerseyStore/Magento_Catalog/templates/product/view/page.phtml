@@ -1,121 +1,371 @@
 <?php
 /**
- * Dynamic product page for JerseyStore.
+ * Custom JerseyStore PDP template.
  *
  * @var \Magento\Catalog\Block\Product\View $block
  * @var \Magento\Framework\Escaper $escaper
  */
-?>
-<?php
-$product = $block->getProduct();
-$viewModel = $block->getData('jersey_category_products');
-$stockData = $viewModel ? $viewModel->getStockData($product) : ['is_in_stock' => null, 'qty' => null];
-$priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
-$outputHelper = $this->helper(\Magento\Catalog\Helper\Output::class);
-$imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
-$mainImageUrl = $imageHelper->init($product, 'product_page_image_large')->getUrl();
-$galleryImages = $product->getMediaGalleryImages();
+
+$_product = $block->getProduct();
+$_outputHelper = $this->helper(\Magento\Catalog\Helper\Output::class);
+$_imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
+$_priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
+$_productName = $_product ? (string) $_product->getName() : '';
+$_shortDescription = $_product ? (string) $_product->getShortDescription() : '';
+$_description = $_product ? (string) $_product->getDescription() : '';
+$_finalPrice = $_product ? (float) $_product->getFinalPrice() : 0;
+$_regularPrice = $_product ? (float) $_product->getPrice() : 0;
+$_hasDiscount = $_regularPrice > $_finalPrice && $_finalPrice > 0;
+$_discountPercent = $_hasDiscount ? (int) round((($_regularPrice - $_finalPrice) / $_regularPrice) * 100) : 0;
+$_galleryImages = $_product ? $_product->getMediaGalleryImages() : null;
+$_heroImage = $_product
+    ? $_imageHelper->init($_product, 'product_page_image_large')->keepFrame(false)->getUrl()
+    : '';
+$_thumbnailImage = $_product
+    ? $_imageHelper->init($_product, 'product_page_image_small')->keepFrame(false)->getUrl()
+    : '';
+$_galleryItems = [];
+
+if ($_galleryImages && $_galleryImages->getSize()) {
+    foreach ($_galleryImages as $_image) {
+        if (count($_galleryItems) >= 4) {
+            break;
+        }
+
+        $_galleryItems[] = [
+            'url' => (string) $_image->getUrl(),
+            'label' => (string) ($_image->getLabel() ?: $_productName),
+        ];
+    }
+}
+
+if (!count($_galleryItems) && $_heroImage) {
+    $_galleryItems[] = [
+        'url' => $_heroImage,
+        'label' => $_productName,
+    ];
+}
 ?>
 
-<section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:items-start">
-        <div class="space-y-4">
-            <div class="overflow-hidden rounded-lg bg-slate-100 ring-1 ring-slate-200">
-                <img
-                    src="<?= $escaper->escapeUrl($mainImageUrl) ?>"
-                    alt="<?= $escaper->escapeHtmlAttr($product->getName()) ?>"
-                    class="aspect-[4/5] w-full object-contain"
-                    itemprop="image"
-                />
-            </div>
-            <?php if ($galleryImages && $galleryImages->getSize() > 1): ?>
-                <div class="grid grid-cols-4 gap-3">
-                    <?php foreach ($galleryImages as $image): ?>
-                        <div class="overflow-hidden rounded-md bg-slate-100 ring-1 ring-slate-200">
+<?php if ($_product): ?>
+<main class="bg-white text-[#0b0b0b]">
+    <section class="border-b border-neutral-200 bg-white">
+        <div class="container-shop">
+            <nav class="flex min-h-14 items-center gap-3 overflow-x-auto whitespace-nowrap text-xs text-neutral-500 sm:text-sm">
+                <a class="!text-neutral-500 !no-underline transition hover:!text-[#d60000]" href="<?= $escaper->escapeUrl($block->getUrl('')) ?>">
+                    <?= $escaper->escapeHtml(__('Početna')) ?>
+                </a>
+                <span aria-hidden="true">›</span>
+                <a class="!text-neutral-500 !no-underline transition hover:!text-[#d60000]" href="<?= $escaper->escapeUrl($block->getUrl('category-page')) ?>">
+                    <?= $escaper->escapeHtml(__('Klubovi')) ?>
+                </a>
+                <span aria-hidden="true">›</span>
+                <strong class="font-black text-neutral-950"><?= $escaper->escapeHtml($_productName) ?></strong>
+            </nav>
+        </div>
+    </section>
+
+    <section class="container-shop py-5 sm:py-8 lg:py-10">
+        <div class="grid gap-7 lg:grid-cols-[minmax(0,1.2fr)_minmax(430px,0.8fr)] lg:items-start xl:gap-12">
+            <div class="grid gap-3 sm:grid-cols-[96px_minmax(0,1fr)] lg:sticky lg:top-24">
+                <div class="order-2 flex gap-2 overflow-x-auto pb-1 sm:order-1 sm:flex-col sm:overflow-visible sm:pb-0">
+                    <?php foreach ($_galleryItems as $_index => $_item): ?>
+                        <button
+                            type="button"
+                            class="<?= $_index === 0 ? 'border-[#d60000]' : 'border-neutral-200' ?> js-pdp-thumb grid aspect-square min-w-20 place-items-center overflow-hidden rounded-md border-2 bg-[#f5f5f5] p-2 transition hover:border-[#d60000] sm:min-w-0"
+                            data-full-image="<?= $escaper->escapeUrl($_item['url']) ?>"
+                            aria-label="<?= $escaper->escapeHtmlAttr(__('Prikaži sliku proizvoda')) ?>"
+                        >
                             <img
-                                src="<?= $escaper->escapeUrl($image->getUrl()) ?>"
-                                alt="<?= $escaper->escapeHtmlAttr($image->getLabel() ?: $product->getName()) ?>"
-                                class="aspect-square w-full object-contain"
+                                class="h-full w-full object-contain"
+                                src="<?= $escaper->escapeUrl($_item['url']) ?>"
+                                alt="<?= $escaper->escapeHtmlAttr($_item['label']) ?>"
+                                loading="<?= $_index === 0 ? 'eager' : 'lazy' ?>"
                             />
+                        </button>
+                    <?php endforeach; ?>
+
+                    <button type="button" class="grid aspect-square min-w-20 place-items-center rounded border border-neutral-200 bg-neutral-100 text-center text-[11px] font-black uppercase text-neutral-950 sm:min-w-0">
+                        <svg class="mx-auto mb-1 h-7 w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+                            <path d="m10 8 6 4-6 4V8Z" fill="currentColor"/>
+                        </svg>
+                        <?= $escaper->escapeHtml(__('Video')) ?>
+                    </button>
+                </div>
+
+                <div class="relative order-1 overflow-hidden rounded-md bg-gradient-to-br from-[#f2f2f2] via-white to-[#eeeeee] sm:order-2">
+                    <?php if ($_hasDiscount): ?>
+                        <div class="absolute right-4 top-4 z-10 rounded-xl bg-[#d60000] px-3 py-2 text-lg font-black text-white shadow-lg shadow-red-900/20">
+                            -<?= (int) $_discountPercent ?>%
+                        </div>
+                    <?php endif; ?>
+                    <div class="grid aspect-[4/3] min-h-[340px] place-items-center p-4 sm:min-h-[520px] sm:p-6 lg:min-h-[560px]">
+                        <img
+                            id="jersey-pdp-main-image"
+                            class="h-full max-h-[640px] w-full object-contain"
+                            src="<?= $escaper->escapeUrl($_heroImage) ?>"
+                            alt="<?= $escaper->escapeHtmlAttr($_productName) ?>"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:pt-3">
+                <div class="mb-3 text-sm font-black uppercase tracking-[0.08em] text-[#d60000]">
+                    <?= $escaper->escapeHtml(__('Novo')) ?>
+                </div>
+
+                <h1 class="max-w-[680px] text-3xl font-black leading-tight text-neutral-950 sm:text-4xl lg:text-[42px]">
+                    <?= /* @noEscape */ $_outputHelper->productAttribute($_product, $_productName, 'name') ?>
+                </h1>
+
+                <div class="mt-4 flex flex-wrap items-center gap-3">
+                    <div class="flex text-xl text-[#d60000]" aria-label="<?= $escaper->escapeHtmlAttr(__('Ocena proizvoda')) ?>">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span class="text-neutral-300">★</span>
+                    </div>
+                    <a href="#reviews" class="!text-sm !font-semibold !text-neutral-700 !no-underline hover:!text-[#d60000]">
+                        <?= $escaper->escapeHtml(__('(124 recenzije)')) ?>
+                    </a>
+                </div>
+
+                <div class="mt-4 flex flex-wrap items-center gap-4">
+                    <strong class="text-3xl font-black text-neutral-950">
+                        <?= /* @noEscape */ $_priceHelper->currency($_finalPrice, true, false) ?>
+                    </strong>
+                    <?php if ($_hasDiscount): ?>
+                        <span class="text-lg font-bold text-neutral-400 line-through">
+                            <?= /* @noEscape */ $_priceHelper->currency($_regularPrice, true, false) ?>
+                        </span>
+                        <span class="rounded bg-[#d60000] px-3 py-2 text-xs font-black uppercase text-white">
+                            <?= $escaper->escapeHtml(__('Ušteda')) ?> <?= /* @noEscape */ $_priceHelper->currency($_regularPrice - $_finalPrice, true, false) ?>
+                        </span>
+                    <?php endif; ?>
+                </div>
+
+                <div class="mt-5 max-w-[640px] text-[15px] leading-7 text-neutral-800">
+                    <?php if ($_shortDescription): ?>
+                        <?= /* @noEscape */ $_outputHelper->productAttribute($_product, $_shortDescription, 'short_description') ?>
+                    <?php else: ?>
+                        <?= $escaper->escapeHtml(__('Zvanični fudbalski dres sa laganim materijalom, modernim krojem i udobnošću za svakodnevno nošenje.')) ?>
+                    <?php endif; ?>
+                </div>
+
+                <div class="mt-7 grid grid-cols-2 gap-4 border-b border-neutral-200 pb-6 sm:grid-cols-4">
+                    <?php
+                    $benefits = [
+                        ['label' => __('100% Original'), 'icon' => 'M12 3.5 14.7 9l6 .9-4.4 4.3 1 6-5.3-2.8L7 20.2l1-6-4.4-4.3 6-.9L12 3.5Z'],
+                        ['label' => __('HEAT.RDY tehnologija'), 'icon' => 'M12 3v18M8 6v12M16 6v12M5 10h14M5 14h14'],
+                        ['label' => __('Zvanični proizvod'), 'icon' => 'M12 3 20 7v6c0 4-3.4 6.8-8 8-4.6-1.2-8-4-8-8V7l8-4Z'],
+                        ['label' => __('Brza dostava'), 'icon' => 'M3 7h11v9H3V7Zm11 4h4l3 3v2h-7v-5ZM6 18a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm11 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z'],
+                    ];
+                    ?>
+                    <?php foreach ($benefits as $benefit): ?>
+                        <div class="flex items-center gap-3 text-sm font-semibold text-neutral-800">
+                            <svg class="h-7 w-7 shrink-0 text-neutral-950" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="<?= $escaper->escapeHtmlAttr($benefit['icon']) ?>" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span><?= $escaper->escapeHtml($benefit['label']) ?></span>
                         </div>
                     <?php endforeach; ?>
                 </div>
-            <?php endif; ?>
+
+                <form
+                    class="mt-6"
+                    data-product-sku="<?= $escaper->escapeHtmlAttr($_product->getSku()) ?>"
+                    action="<?= $escaper->escapeUrl($block->getSubmitUrl($_product)) ?>"
+                    method="post"
+                    id="product_addtocart_form"
+                    <?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>
+                >
+                    <input type="hidden" name="product" value="<?= (int) $_product->getId() ?>" />
+                    <input type="hidden" name="selected_configurable_option" value="" />
+                    <input type="hidden" name="related_product" id="related-products-field" value="" />
+                    <input type="hidden" name="item" value="<?= (int) $block->getRequest()->getParam('id') ?>" />
+                    <?= $block->getBlockHtml('formkey') ?>
+
+                    <div class="flex items-center justify-between gap-4">
+                        <span class="text-sm font-black text-neutral-950"><?= $escaper->escapeHtml(__('Veličina')) ?></span>
+                        <a href="#" class="!text-sm !font-bold !text-neutral-950 underline-offset-4 hover:!text-[#d60000]"><?= $escaper->escapeHtml(__('Vodič za veličine')) ?></a>
+                    </div>
+                    <div class="mt-3 grid grid-cols-5 gap-2 sm:max-w-[520px]">
+                        <?php foreach (['S', 'M', 'L', 'XL', 'XXL'] as $size): ?>
+                            <label class="cursor-pointer">
+                                <input class="peer sr-only" type="radio" name="jersey_size" value="<?= $escaper->escapeHtmlAttr($size) ?>" <?= $size === 'M' ? 'checked' : '' ?> />
+                                <span class="grid h-11 place-items-center rounded border border-neutral-300 bg-white text-sm font-black text-neutral-950 transition peer-checked:border-neutral-950 peer-checked:shadow-[inset_0_0_0_1px_#0b0b0b] hover:border-[#d60000]">
+                                    <?= $escaper->escapeHtml($size) ?>
+                                </span>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <label class="mt-4 block text-sm font-black text-neutral-950" for="personalization">
+                        <?= $escaper->escapeHtml(__('Personalizacija (Opcionalno)')) ?>
+                    </label>
+                    <select id="personalization" name="jersey_personalization" class="mt-2 h-11 w-full rounded border border-neutral-300 bg-white px-4 text-sm text-neutral-950 outline-none transition focus:border-neutral-950">
+                        <option value=""><?= $escaper->escapeHtml(__('Bez personalizacije')) ?></option>
+                        <option value="name_number"><?= $escaper->escapeHtml(__('Ime i broj')) ?></option>
+                    </select>
+
+                    <label class="mt-4 block text-sm font-black text-neutral-950" for="qty">
+                        <?= $escaper->escapeHtml(__('Količina')) ?>
+                    </label>
+                    <div class="mt-2 grid grid-cols-[112px_minmax(0,1fr)_52px] gap-2 sm:grid-cols-[124px_minmax(0,1fr)_52px] sm:gap-3">
+                        <div class="grid h-12 grid-cols-3 overflow-hidden rounded border border-neutral-300 bg-white">
+                            <button type="button" class="js-qty-minus grid place-items-center text-xl text-neutral-950 transition hover:bg-neutral-100" aria-label="<?= $escaper->escapeHtmlAttr(__('Smanji količinu')) ?>">−</button>
+                            <input
+                                type="number"
+                                name="qty"
+                                id="qty"
+                                min="1"
+                                value="<?= (float) $block->getProductDefaultQty() ?: 1 ?>"
+                                title="<?= $escaper->escapeHtmlAttr(__('Qty')) ?>"
+                                class="h-full w-full border-x border-neutral-300 text-center text-sm font-black outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                data-validate="<?= $escaper->escapeHtmlAttr(json_encode($block->getQuantityValidators())) ?>"
+                            />
+                            <button type="button" class="js-qty-plus grid place-items-center text-xl text-neutral-950 transition hover:bg-neutral-100" aria-label="<?= $escaper->escapeHtmlAttr(__('Povećaj količinu')) ?>">+</button>
+                        </div>
+
+                        <?php if ($_product->isSaleable()): ?>
+                            <button
+                                type="submit"
+                                title="<?= $escaper->escapeHtmlAttr(__('Dodaj u korpu')) ?>"
+                                class="inline-flex h-12 min-w-0 items-center justify-center gap-2 rounded bg-[#d60000] px-3 text-xs font-black uppercase text-white shadow-lg shadow-red-900/20 transition hover:bg-[#b80000] sm:gap-3 sm:px-6 sm:text-sm"
+                                id="product-addtocart-button"
+                            >
+                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h6.6a2 2 0 0 0 2-1.5L20 9H7M10 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <?= $escaper->escapeHtml(__('Dodaj u korpu')) ?>
+                            </button>
+                        <?php else: ?>
+                            <div class="grid h-12 place-items-center rounded bg-neutral-200 px-3 text-xs font-black uppercase text-neutral-500 sm:px-6 sm:text-sm">
+                                <?= $escaper->escapeHtml(__('Nije dostupno')) ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <a href="#" class="grid h-12 place-items-center rounded border border-neutral-300 !text-neutral-950 !no-underline transition hover:border-[#d60000] hover:!text-[#d60000]" aria-label="<?= $escaper->escapeHtmlAttr(__('Dodaj u listu želja')) ?>">
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21l8.8-8.3a5 5 0 0 0 0-7.1Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <button type="submit" class="mt-3 h-12 w-full rounded bg-neutral-950 text-sm font-black uppercase text-white transition hover:bg-neutral-800">
+                        <?= $escaper->escapeHtml(__('Kupi odmah')) ?>
+                    </button>
+                </form>
+
+                <div class="mt-7 grid gap-4 border-y border-neutral-100 py-5 sm:grid-cols-3">
+                    <?php
+                    $serviceItems = [
+                        [__('Besplatna dostava'), __('za porudžbine preko 100€')],
+                        [__('14 dana'), __('za povrat novca')],
+                        [__('Sigurno'), __('plaćanje')],
+                    ];
+                    ?>
+                    <?php foreach ($serviceItems as $serviceItem): ?>
+                        <div class="flex items-center gap-3">
+                            <svg class="h-7 w-7 shrink-0 text-neutral-950" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M4 7h16v10H4V7Zm3 13h10M8 11h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <div>
+                                <div class="text-sm font-black text-neutral-950"><?= $escaper->escapeHtml($serviceItem[0]) ?></div>
+                                <div class="text-xs text-neutral-500"><?= $escaper->escapeHtml($serviceItem[1]) ?></div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-shop pb-10 sm:pb-14">
+        <div class="border-b border-neutral-200">
+            <div class="flex gap-7 overflow-x-auto text-sm font-black uppercase text-neutral-500 sm:gap-12">
+                <a href="#opis" class="border-b-2 border-[#d60000] py-4 !text-neutral-950 !no-underline"><?= $escaper->escapeHtml(__('Opis')) ?></a>
+                <a href="#detalji" class="py-4 !text-neutral-500 !no-underline hover:!text-neutral-950"><?= $escaper->escapeHtml(__('Detalji')) ?></a>
+                <a href="#dostava" class="py-4 !text-neutral-500 !no-underline hover:!text-neutral-950"><?= $escaper->escapeHtml(__('Dostava')) ?></a>
+                <a href="#povrat" class="py-4 !text-neutral-500 !no-underline hover:!text-neutral-950"><?= $escaper->escapeHtml(__('Povrat i zamena')) ?></a>
+                <a href="#reviews" class="py-4 !text-neutral-500 !no-underline hover:!text-neutral-950"><?= $escaper->escapeHtml(__('Recenzije (124)')) ?></a>
+            </div>
         </div>
 
-        <article class="lg:sticky lg:top-24">
-            <p class="text-xs font-black uppercase tracking-[0.2em] text-yellow-700">
-                <?= $escaper->escapeHtml($product->getTypeId()) ?>
-            </p>
-            <h1 class="mt-3 text-3xl font-black leading-tight text-slate-950 sm:text-4xl">
-                <?= $escaper->escapeHtml($product->getName()) ?>
-            </h1>
-
-            <div class="mt-5 text-3xl font-black text-slate-950">
-                <?= /* @noEscape */ $priceHelper->currency($product->getFinalPrice(), true, false) ?>
+        <div class="grid gap-8 py-6 lg:grid-cols-[minmax(0,1fr)_560px] lg:items-start">
+            <div id="opis" class="max-w-3xl text-[15px] leading-7 text-neutral-800">
+                <?php if ($_description): ?>
+                    <?= /* @noEscape */ $_outputHelper->productAttribute($_product, $_description, 'description') ?>
+                <?php else: ?>
+                    <p><?= $escaper->escapeHtml(__('Pokažite svoju strast prema omiljenom klubu. Ovaj dres kombinuje klasični fudbalski dizajn sa modernom tehnologijom za vrhunske performanse.')) ?></p>
+                    <ul class="mt-3 list-disc pl-5">
+                        <li><?= $escaper->escapeHtml(__('Lagani i prozračni materijal')) ?></li>
+                        <li><?= $escaper->escapeHtml(__('Regular fit kroj za udobnost')) ?></li>
+                        <li><?= $escaper->escapeHtml(__('Vezeni grb kluba')) ?></li>
+                    </ul>
+                <?php endif; ?>
             </div>
 
-            <dl class="mt-6 grid grid-cols-2 gap-3 text-sm">
-                <div class="rounded-md bg-white p-4 shadow-sm ring-1 ring-slate-200">
-                    <dt class="font-black text-slate-500"><?= $escaper->escapeHtml(__('SKU')) ?></dt>
-                    <dd class="mt-1 font-bold text-slate-950"><?= $escaper->escapeHtml($product->getSku()) ?></dd>
-                </div>
-                <div class="rounded-md bg-white p-4 shadow-sm ring-1 ring-slate-200">
-                    <dt class="font-black text-slate-500"><?= $escaper->escapeHtml(__('Status')) ?></dt>
-                    <dd class="mt-1 font-bold text-slate-950">
-                        <?= $escaper->escapeHtml((int)$product->getStatus() === 1 ? __('Enabled') : __('Disabled')) ?>
-                    </dd>
-                </div>
-                <div class="rounded-md bg-white p-4 shadow-sm ring-1 ring-slate-200">
-                    <dt class="font-black text-slate-500"><?= $escaper->escapeHtml(__('Stock')) ?></dt>
-                    <dd class="mt-1 font-bold text-slate-950">
-                        <?php if ($stockData['is_in_stock'] === null): ?>
-                            <?= $escaper->escapeHtml(__('Unknown')) ?>
-                        <?php else: ?>
-                            <?= $escaper->escapeHtml($stockData['is_in_stock'] ? __('In stock') : __('Out of stock')) ?>
-                        <?php endif; ?>
-                    </dd>
-                </div>
-                <div class="rounded-md bg-white p-4 shadow-sm ring-1 ring-slate-200">
-                    <dt class="font-black text-slate-500"><?= $escaper->escapeHtml(__('Qty')) ?></dt>
-                    <dd class="mt-1 font-bold text-slate-950">
-                        <?= $escaper->escapeHtml($stockData['qty'] !== null ? (string)(float)$stockData['qty'] : __('Unknown')) ?>
-                    </dd>
-                </div>
-            </dl>
-
-            <?php if ($product->getShortDescription()): ?>
-                <div class="mt-6 rounded-lg bg-slate-50 p-5 text-base leading-7 text-slate-700 ring-1 ring-slate-200">
-                    <?= /* @noEscape */ $outputHelper->productAttribute($product, $product->getShortDescription(), 'short_description') ?>
-                </div>
-            <?php endif; ?>
-
-            <?php if ($product->getDescription()): ?>
-                <div class="mt-8 border-t border-slate-200 pt-6">
-                    <h2 class="text-lg font-black text-slate-950"><?= $escaper->escapeHtml(__('Description')) ?></h2>
-                    <div class="mt-3 text-base leading-7 text-slate-700">
-                        <?= /* @noEscape */ $outputHelper->productAttribute($product, $product->getDescription(), 'description') ?>
+            <div class="grid rounded-md bg-neutral-50 shadow-sm ring-1 ring-neutral-100 sm:grid-cols-4">
+                <?php
+                $footerBenefits = [
+                    [__('Zvanični dresovi'), __('100% original'), 'M7 4h10l1.5 4-3 2v10H8.5V10l-3-2L7 4Zm3 0c.5 1.2 1.2 1.8 2 1.8S13.5 5.2 14 4'],
+                    [__('Više od 5000+'), __('zadovoljnih kupaca'), 'M12 3 20 7v6c0 4-3.4 6.8-8 8-4.6-1.2-8-4-8-8V7l8-4Zm0 5.2 1.1 2.2 2.4.3-1.7 1.7.4 2.4-2.2-1.1-2.2 1.1.4-2.4-1.7-1.7 2.4-.3L12 8.2Z'],
+                    [__('Podrška 24/7'), __('Tu smo za vas'), 'M4 13v-1a8 8 0 0 1 16 0v1M4 13h3v5H5a1 1 0 0 1-1-1v-4Zm13 0h3v4a1 1 0 0 1-1 1h-2v-5Zm0 5c0 2-1.5 3-5 3'],
+                    [__('Dostava širom'), __('sveta'), 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-8-9h16M12 3c2.2 2.4 3.2 5.4 3.2 9S14.2 18.6 12 21c-2.2-2.4-3.2-5.4-3.2-9S9.8 5.4 12 3Z'],
+                ];
+                ?>
+                <?php foreach ($footerBenefits as $footerBenefit): ?>
+                    <div class="border-b border-neutral-200 p-5 text-center last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
+                        <svg class="mx-auto mb-3 h-11 w-11 text-neutral-950" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="<?= $escaper->escapeHtmlAttr($footerBenefit[2]) ?>" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div class="text-sm font-black text-neutral-950"><?= $escaper->escapeHtml($footerBenefit[0]) ?></div>
+                        <div class="mt-1 text-xs text-neutral-600"><?= $escaper->escapeHtml($footerBenefit[1]) ?></div>
                     </div>
-                </div>
-            <?php endif; ?>
-
-            <div class="mt-8 border-t border-slate-200 pt-6">
-                <h2 class="text-lg font-black text-slate-950"><?= $escaper->escapeHtml(__('Basic Data')) ?></h2>
-                <dl class="mt-3 grid gap-2 text-sm text-slate-700">
-                    <div class="flex justify-between gap-4">
-                        <dt class="font-bold text-slate-500"><?= $escaper->escapeHtml(__('URL Key')) ?></dt>
-                        <dd class="font-semibold text-slate-950"><?= $escaper->escapeHtml($product->getUrlKey()) ?></dd>
-                    </div>
-                    <div class="flex justify-between gap-4">
-                        <dt class="font-bold text-slate-500"><?= $escaper->escapeHtml(__('Attribute Set ID')) ?></dt>
-                        <dd class="font-semibold text-slate-950"><?= (int)$product->getAttributeSetId() ?></dd>
-                    </div>
-                    <div class="flex justify-between gap-4">
-                        <dt class="font-bold text-slate-500"><?= $escaper->escapeHtml(__('Type')) ?></dt>
-                        <dd class="font-semibold text-slate-950"><?= $escaper->escapeHtml($product->getTypeId()) ?></dd>
-                    </div>
-                </dl>
+                <?php endforeach; ?>
             </div>
-        </article>
-    </div>
-</section>
+        </div>
+    </section>
+</main>
+
+<script>
+require(['jquery'], function ($) {
+    var $mainImage = $('#jersey-pdp-main-image');
+    var $thumbs = $('.js-pdp-thumb');
+
+    $thumbs.on('click', function () {
+        var $thumb = $(this);
+        var imageUrl = $thumb.data('full-image');
+
+        if (!imageUrl || !$mainImage.length) {
+            return;
+        }
+
+        $mainImage.attr('src', imageUrl);
+        $thumbs.removeClass('border-[#d60000]').addClass('border-neutral-200');
+        $thumb.removeClass('border-neutral-200').addClass('border-[#d60000]');
+    });
+
+    $('.js-qty-minus, .js-qty-plus').on('click', function () {
+        var $qty = $('#qty');
+        var currentValue = parseFloat($qty.val()) || 1;
+        var nextValue = $(this).hasClass('js-qty-plus') ? currentValue + 1 : Math.max(1, currentValue - 1);
+
+        $qty.val(nextValue).trigger('change');
+    });
+});
+</script>
+
+<script type="text/x-magento-init">
+{
+    "#product_addtocart_form": {
+        "Magento_Catalog/js/validate-product": {}
+    },
+    "[data-role=priceBox][data-price-box=product-id-<?= $escaper->escapeHtml($_product->getId()) ?>]": {
+        "priceBox": {
+            "priceConfig": <?= /* @noEscape */ $block->getJsonConfig() ?>
+        }
+    }
+}
+</script>
+<?php endif; ?>
