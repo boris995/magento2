@@ -12,7 +12,10 @@ $_imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
 $_priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
 $_productName = $_product ? (string) $_product->getName() : '';
 $_shortDescription = $_product ? (string) $_product->getShortDescription() : '';
-$_description = $_product ? (string) $_product->getDescription() : '';
+$_description = $_product ? trim((string) $_product->getData('description')) : '';
+$_descriptionHtml = $_description !== ''
+    ? trim((string) $_outputHelper->productAttribute($_product, $_description, 'description'))
+    : '';
 $_finalPrice = $_product ? (float) $_product->getFinalPrice() : 0;
 $_regularPrice = $_product ? (float) $_product->getPrice() : 0;
 $_hasDiscount = $_regularPrice > $_finalPrice && $_finalPrice > 0;
@@ -293,15 +296,10 @@ if (!count($_galleryItems) && $_heroImage) {
 
         <div class="grid gap-8 py-6 lg:grid-cols-[minmax(0,1fr)_560px] lg:items-start">
             <div id="opis" class="max-w-3xl text-[15px] leading-7 text-neutral-800">
-                <?php if ($_description): ?>
-                    <?= /* @noEscape */ $_outputHelper->productAttribute($_product, $_description, 'description') ?>
+                <?php if ($_descriptionHtml !== ''): ?>
+                    <?= /* @noEscape */ $_descriptionHtml ?>
                 <?php else: ?>
-                    <p><?= $escaper->escapeHtml(__('Pokažite svoju strast prema omiljenom klubu. Ovaj dres kombinuje klasični fudbalski dizajn sa modernom tehnologijom za vrhunske performanse.')) ?></p>
-                    <ul class="mt-3 list-disc pl-5">
-                        <li><?= $escaper->escapeHtml(__('Lagani i prozračni materijal')) ?></li>
-                        <li><?= $escaper->escapeHtml(__('Regular fit kroj za udobnost')) ?></li>
-                        <li><?= $escaper->escapeHtml(__('Vezeni grb kluba')) ?></li>
-                    </ul>
+                    <p><?= $escaper->escapeHtml(__('Opis proizvoda nije dodat u admin panelu.')) ?></p>
                 <?php endif; ?>
             </div>
 
