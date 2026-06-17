@@ -10,111 +10,172 @@
 $category = $block->getLayer()->getCurrentCategory();
 $viewModel = $block->getData('jersey_category_products');
 $products = ($category && $viewModel) ? $viewModel->getAssignedProducts($category) : [];
-$outputHelper = $block->getData('outputHelper');
+$outputHelper = $block->getData('outputHelper') ?: $this->helper(\Magento\Catalog\Helper\Output::class);
 $categoryHelper = $this->helper(\Magento\Catalog\Helper\Category::class);
-$availableCategories = [];
-$collectCategories = function ($categories, int $level = 0) use (&$collectCategories, &$availableCategories): void {
-    foreach ($categories as $categoryItem) {
+$categoryName = $category ? (string)$category->getName() : (string)__('Products');
+$categoryDescription = $category ? (string)$category->getDescription() : '';
+$categoryDescriptionHtml = $category && $categoryDescription !== ''
+    ? $outputHelper->categoryAttribute($category, $categoryDescription, 'description')
+    : '';
+$categoryImageUrl = '';
+$categoryLinks = [];
+$collectCategoryLinks = function ($categoryItems) use (&$categoryLinks): void {
+    foreach ($categoryItems as $categoryItem) {
         if (!$categoryItem->getIsActive()) {
             continue;
         }
 
-        $availableCategories[] = [
+        $categoryLinks[] = [
             'name' => (string)$categoryItem->getName(),
             'url' => (string)$categoryItem->getUrl(),
-            'level' => $level,
         ];
-
-        $children = $categoryItem->getChildrenCategories();
-        if ($children && count($children)) {
-            $collectCategories($children, $level + 1);
-        }
     }
 };
 
-$collectCategories($categoryHelper->getStoreCategories(false, true, true));
+if ($category) {
+    try {
+        $categoryImageUrl = (string)$category->getImageUrl();
+    } catch (\Exception $exception) {
+        $categoryImageUrl = '';
+    }
+
+    $children = $category->getChildrenCategories();
+    if ($children && count($children)) {
+        $collectCategoryLinks($children);
+    }
+}
+
+if (!$categoryLinks) {
+    $collectCategoryLinks($categoryHelper->getStoreCategories(false, true, true));
+}
 ?>
 
-<section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-    <header class="mb-8 border-b border-slate-200 pb-6">
-        <p class="text-xs font-black uppercase tracking-[0.2em] text-yellow-700">
-            <?= $escaper->escapeHtml(__('Category')) ?>
-        </p>
-        <h1 class="mt-3 text-3xl font-black text-slate-950 sm:text-4xl">
-            <?= $escaper->escapeHtml($category ? $category->getName() : __('Products')) ?>
-        </h1>
-        <?php if ($category && $category->getDescription()): ?>
-            <div class="mt-4 max-w-3xl text-base leading-7 text-slate-600">
-                <?= /* @noEscape */ $outputHelper->categoryAttribute($category, $category->getDescription(), 'description') ?>
-            </div>
+<main class="relative left-1/2 w-screen -translate-x-1/2 bg-white text-neutral-950">
+    <section class="relative overflow-hidden bg-[#050505] text-white">
+        <?php if ($categoryImageUrl): ?>
+            <img
+                class="absolute inset-0 h-full w-full object-cover opacity-30"
+                src="<?= $escaper->escapeUrl($categoryImageUrl) ?>"
+                alt="<?= $escaper->escapeHtmlAttr($categoryName) ?>"
+            />
         <?php endif; ?>
-        <div class="mt-5 text-sm font-bold text-slate-500">
-            <?= $escaper->escapeHtml(__('%1 assigned product(s)', count($products))) ?>
-        </div>
-    </header>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_75%_10%,rgba(214,0,0,0.45),transparent_34%),linear-gradient(120deg,#050505_0%,rgba(5,5,5,0.9)_45%,rgba(5,5,5,0.68)_100%)]"></div>
+        <div class="container-shop relative grid min-h-[430px] gap-10 py-12 lg:grid-cols-[minmax(0,0.9fr)_380px] lg:items-end lg:py-16">
+            <div class="max-w-4xl">
+                <nav class="mb-7 flex flex-wrap items-center gap-3 text-xs font-bold text-white/55">
+                    <a href="<?= $escaper->escapeUrl($block->getUrl('')) ?>" class="!text-white/55 !no-underline transition hover:!text-white">
+                        <?= $escaper->escapeHtml(__('Početna')) ?>
+                    </a>
+                    <span aria-hidden="true">/</span>
+                    <a href="<?= $escaper->escapeUrl($block->getUrl('category-page')) ?>" class="!text-white/55 !no-underline transition hover:!text-white">
+                        <?= $escaper->escapeHtml(__('Kategorije')) ?>
+                    </a>
+                    <span aria-hidden="true">/</span>
+                    <strong class="text-white"><?= $escaper->escapeHtml($categoryName) ?></strong>
+                </nav>
 
-    <section class="mb-10">
-        <div class="mb-4 flex flex-wrap items-end justify-between gap-4">
-            <div>
-                <p class="text-xs font-black uppercase tracking-[0.18em] text-red-600">
-                    <?= $escaper->escapeHtml(__('Kategorije')) ?>
+                <p class="text-xs font-black uppercase tracking-[0.24em] text-[#ff2b2b]">
+                    <?= $escaper->escapeHtml(__('Jersey collection')) ?>
                 </p>
-                <h2 class="mt-2 text-2xl font-black text-slate-950">
-                    <?= $escaper->escapeHtml(__('Sve dostupne kategorije')) ?>
-                </h2>
-            </div>
-            <span class="text-sm font-bold text-slate-500">
-                <?= $escaper->escapeHtml(__('%1 kategorija', count($availableCategories))) ?>
-            </span>
-        </div>
+                <h1 class="mt-4 max-w-4xl text-5xl font-black uppercase leading-[0.92] sm:text-6xl lg:text-7xl">
+                    <?= $escaper->escapeHtml($categoryName) ?>
+                </h1>
+                <div class="mt-5 h-1 w-24 bg-[#ff2b2b]"></div>
 
-        <?php if (!$availableCategories): ?>
-            <div class="rounded-lg border border-slate-200 bg-white p-5 text-sm font-semibold text-slate-600">
-                <?= $escaper->escapeHtml(__('Trenutno nema dostupnih kategorija za prikaz.')) ?>
+                <div class="mt-6 max-w-2xl text-base leading-8 text-white/72">
+                    <?php if ($categoryDescriptionHtml): ?>
+                        <?= /* @noEscape */ $categoryDescriptionHtml ?>
+                    <?php else: ?>
+                        <p><?= $escaper->escapeHtml(__('Izaberi omiljeni dres iz ove kolekcije i pronađi modele spremne za utakmicu, trening ili svakodnevno nošenje.')) ?></p>
+                    <?php endif; ?>
+                </div>
             </div>
-        <?php else: ?>
-            <nav class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-label="<?= $escaper->escapeHtmlAttr(__('Sve dostupne kategorije')) ?>">
-                <?php foreach ($availableCategories as $availableCategory): ?>
+
+            <div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+                <div class="border border-white/10 bg-white/[0.06] p-5 backdrop-blur">
+                    <div class="text-4xl font-black"><?= (int)count($products) ?></div>
+                    <div class="mt-1 text-xs font-black uppercase tracking-[0.16em] text-white/55">
+                        <?= $escaper->escapeHtml(__('Proizvoda')) ?>
+                    </div>
+                </div>
+                <div class="border border-white/10 bg-white/[0.06] p-5 backdrop-blur">
+                    <div class="text-4xl font-black">100%</div>
+                    <div class="mt-1 text-xs font-black uppercase tracking-[0.16em] text-white/55">
+                        <?= $escaper->escapeHtml(__('Original')) ?>
+                    </div>
+                </div>
+                <div class="border border-white/10 bg-white/[0.06] p-5 backdrop-blur">
+                    <div class="text-4xl font-black">24h</div>
+                    <div class="mt-1 text-xs font-black uppercase tracking-[0.16em] text-white/55">
+                        <?= $escaper->escapeHtml(__('Brza obrada')) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-shop py-8 sm:py-10">
+        <?php if ($categoryLinks): ?>
+            <div class="mb-8 border-b border-neutral-200 pb-6">
+                <div class="mb-4 flex items-center justify-between gap-4">
+                    <h2 class="text-lg font-black uppercase tracking-[0.08em] text-neutral-950">
+                        <?= $escaper->escapeHtml(__('Istraži kategorije')) ?>
+                    </h2>
+                    <span class="text-sm font-bold text-neutral-500">
+                        <?= $escaper->escapeHtml(__('%1 dostupno', count($categoryLinks))) ?>
+                    </span>
+                </div>
+                <nav class="flex gap-3 overflow-x-auto pb-1" aria-label="<?= $escaper->escapeHtmlAttr(__('Kategorije')) ?>">
+                    <?php foreach ($categoryLinks as $categoryLink): ?>
                     <a
-                        href="<?= $escaper->escapeUrl($availableCategory['url']) ?>"
-                        class="<?= (int)$availableCategory['level'] > 0 ? 'border-slate-200 bg-slate-50' : 'border-slate-300 bg-white' ?> group flex min-h-16 items-center justify-between gap-4 rounded-lg border px-4 py-3 !text-slate-950 !no-underline shadow-sm transition hover:border-red-600 hover:shadow-md"
+                        href="<?= $escaper->escapeUrl($categoryLink['url']) ?>"
+                        class="group inline-flex min-h-12 shrink-0 items-center gap-3 border border-neutral-200 bg-white px-5 text-sm font-black uppercase tracking-[0.04em] !text-neutral-950 !no-underline transition hover:border-[#d60000] hover:bg-[#d60000] hover:!text-white"
                     >
-                        <span class="min-w-0">
-                            <span class="block truncate text-sm font-black uppercase tracking-[0.04em]">
-                                <?= $escaper->escapeHtml($availableCategory['name']) ?>
-                            </span>
-                            <?php if ((int)$availableCategory['level'] > 0): ?>
-                                <span class="mt-1 block text-xs font-bold text-slate-500">
-                                    <?= $escaper->escapeHtml(__('Podkategorija')) ?>
-                                </span>
-                            <?php endif; ?>
-                        </span>
-                        <svg class="h-5 w-5 shrink-0 text-red-600 transition group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <?= $escaper->escapeHtml($categoryLink['name']) ?>
+                        <svg class="h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </a>
+                    <?php endforeach; ?>
+                </nav>
+            </div>
+        <?php endif; ?>
+
+        <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="text-xs font-black uppercase tracking-[0.18em] text-[#d60000]">
+                    <?= $escaper->escapeHtml(__('Dostupni dresovi')) ?>
+                </p>
+                <h2 class="mt-2 text-3xl font-black text-neutral-950">
+                    <?= $escaper->escapeHtml($categoryName) ?>
+                </h2>
+            </div>
+            <div class="grid grid-cols-3 border border-neutral-200 text-center text-xs font-black uppercase text-neutral-600 sm:min-w-[360px]">
+                <div class="border-r border-neutral-200 px-3 py-3"><?= $escaper->escapeHtml(__('Novo')) ?></div>
+                <div class="border-r border-neutral-200 px-3 py-3"><?= $escaper->escapeHtml(__('Popularno')) ?></div>
+                <div class="px-3 py-3"><?= $escaper->escapeHtml(__('Original')) ?></div>
+            </div>
+        </div>
+
+        <?php if (!$products): ?>
+            <div class="border border-neutral-200 bg-neutral-50 p-8 text-neutral-700">
+                <h3 class="text-xl font-black text-neutral-950"><?= $escaper->escapeHtml(__('Nema proizvoda u ovoj kategoriji')) ?></h3>
+                <p class="mt-2 text-sm leading-6"><?= $escaper->escapeHtml(__('Dodaj proizvode u ovu kategoriju kroz Magento admin panel da bi se prikazali ovdje.')) ?></p>
+            </div>
+        <?php else: ?>
+            <ol class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <?php foreach ($products as $product): ?>
+                    <li>
+                        <?= $block->getLayout()
+                            ->createBlock(\Magento\Framework\View\Element\Template::class)
+                            ->setTemplate('Magento_Catalog::product/list/item.phtml')
+                            ->setData('product', $product)
+                            ->setData('list_block', $block)
+                            ->setData('jersey_category_products', $viewModel)
+                            ->toHtml() ?>
+                    </li>
                 <?php endforeach; ?>
-            </nav>
+            </ol>
         <?php endif; ?>
     </section>
-
-    <?php if (!$products): ?>
-        <div class="rounded-lg border border-slate-200 bg-white p-8 text-slate-600">
-            <?= $escaper->escapeHtml(__('No products are assigned to this category.')) ?>
-        </div>
-    <?php else: ?>
-        <ol class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <?php foreach ($products as $product): ?>
-                <li>
-                    <?= $block->getLayout()
-                        ->createBlock(\Magento\Framework\View\Element\Template::class)
-                        ->setTemplate('Magento_Catalog::product/list/item.phtml')
-                        ->setData('product', $product)
-                        ->setData('list_block', $block)
-                        ->setData('jersey_category_products', $viewModel)
-                        ->toHtml() ?>
-                </li>
-            <?php endforeach; ?>
-        </ol>
-    <?php endif; ?>
-</section>
+</main>
