@@ -284,3 +284,80 @@
     * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
 * **Sledeći koraci:** Hard refresh storefronta i proveriti da console vise ne prijavljuje `itemRenderer.simple` gresku.
 * **Clean Code Provera:** Da (XML parse provera, uspešan `npm run build-prod` i `php bin/magento cache:flush`).
+
+## [2026-06-18 18:04] - [Sidebar Cart] Modernizacija product detail layouta
+* **Status:** Završeno
+* **Tip promene:** Frontend Tailwind / Layout
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/view/page.phtml`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh PDP stranice i vizuelno proveriti hero sekciju, add-to-cart formu i detaljne tab/anchor sekcije.
+* **Clean Code Provera:** Da (PHP syntax provera, uspešan `npm run build-prod` i `php bin/magento cache:flush`).
+
+## [2026-06-18 18:11] - [Sidebar Cart] Popravka PDP add-to-cart skaliranja
+* **Status:** U toku
+* **Tip promene:** Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/view/page.phtml`
+* **Sledeći koraci:** Pokrenuti PHP syntax proveru, Tailwind build i Magento cache flush.
+* **Clean Code Provera:** Ne (finalna provera sledi).
+
+## [2026-06-18 18:13] - [Sidebar Cart] Finalizovana PDP add-to-cart skala
+* **Status:** Završeno
+* **Tip promene:** Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/view/page.phtml`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh PDP stranice i provjeriti CTA, qty selector, size selector i trust badges na desktop/mobile.
+* **Clean Code Provera:** Da (PHP syntax provera, uspešan `npm run build-prod` i `php bin/magento cache:flush`).
+
+## [2026-06-18 18:15] - [Sidebar Cart] Breadcrumb i klikabilni PDP tabovi
+* **Status:** U toku
+* **Tip promene:** Frontend Tailwind / JS Logic
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/view/page.phtml`
+* **Sledeći koraci:** Pokrenuti Tailwind build i Magento cache flush.
+* **Clean Code Provera:** Ne (PHP syntax provera uspešna, finalna provera sledi).
+
+## [2026-06-18 18:15] - [Sidebar Cart] Finalizovan breadcrumb i PDP tabovi
+* **Status:** Završeno
+* **Tip promene:** Frontend Tailwind / JS Logic
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/view/page.phtml`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh PDP stranice i proveriti klik na Opis, Detalji, Dostava, Povrat i Recenzije.
+* **Clean Code Provera:** Da (PHP syntax provera, uspešan `npm run build-prod` i `php bin/magento cache:flush`).
+
+## [2026-06-18 18:17] - [Sidebar Cart] Centriranje PDP qty i add-to-cart elemenata
+* **Status:** U toku
+* **Tip promene:** Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/view/page.phtml`
+* **Sledeći koraci:** Pokrenuti PHP syntax proveru, Tailwind build i Magento cache flush.
+* **Clean Code Provera:** Ne (finalna provera sledi).
+
+## [2026-06-18 18:17] - [Sidebar Cart] Finalizovano centriranje PDP kontrola
+* **Status:** Završeno
+* **Tip promene:** Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/view/page.phtml`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh PDP stranice i provjeriti da su minus, broj, plus, ikonica i tekst CTA dugmeta centrirani.
+* **Clean Code Provera:** Da (PHP syntax provera, uspešan `npm run build-prod` i `php bin/magento cache:flush`).
+
+## [2026-06-18 18:26] - [Sidebar Cart] Plavi moderni PDP desktop dizajn
+* **Status:** U toku
+* **Tip promene:** Frontend Tailwind / JS Logic
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/view/page.phtml`
+* **Sledeći koraci:** Pokrenuti Tailwind build i Magento cache flush.
+* **Clean Code Provera:** Ne (PHP syntax provera uspešna, finalna provera sledi).
+
+## [2026-06-18 18:26] - [Sidebar Cart] Finalizovan plavi PDP desktop dizajn
+* **Status:** Završeno
+* **Tip promene:** Frontend Tailwind / JS Logic
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/view/page.phtml`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh PDP stranice i provjeriti desktop hero, thumbnail aktivno stanje, CTA i tabove.
+* **Clean Code Provera:** Da (PHP syntax provera, uspešan `npm run build-prod` i `php bin/magento cache:flush`).
