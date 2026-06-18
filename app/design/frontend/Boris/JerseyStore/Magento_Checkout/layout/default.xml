@@ -18,6 +18,11 @@
                                 <item name="component" xsi:type="string">Magento_Checkout/js/view/minicart</item>
                                 <item name="config" xsi:type="array">
                                     <item name="template" xsi:type="string">Magento_Checkout/minicart/content</item>
+                                    <item name="itemRenderer" xsi:type="array">
+                                        <item name="default" xsi:type="string">defaultRenderer</item>
+                                        <item name="simple" xsi:type="string">defaultRenderer</item>
+                                        <item name="virtual" xsi:type="string">defaultRenderer</item>
+                                    </item>
                                 </item>
                                 <item name="children" xsi:type="array">
                                     <item name="subtotal.container" xsi:type="array">
@@ -30,6 +35,37 @@
                                                 <item name="component" xsi:type="string">uiComponent</item>
                                                 <item name="config" xsi:type="array">
                                                     <item name="template" xsi:type="string">Magento_Checkout/minicart/subtotal</item>
+                                                </item>
+                                                <item name="children" xsi:type="array">
+                                                    <item name="subtotal.totals" xsi:type="array">
+                                                        <item name="component" xsi:type="string">Magento_Checkout/js/view/checkout/minicart/subtotal/totals</item>
+                                                        <item name="config" xsi:type="array">
+                                                            <item name="template" xsi:type="string">Magento_Checkout/minicart/subtotal/totals</item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                    <item name="item.renderer" xsi:type="array">
+                                        <item name="component" xsi:type="string">Magento_Checkout/js/view/cart-item-renderer</item>
+                                        <item name="config" xsi:type="array">
+                                            <item name="displayArea" xsi:type="string">defaultRenderer</item>
+                                            <item name="template" xsi:type="string">Magento_Checkout/minicart/item/default</item>
+                                        </item>
+                                        <item name="children" xsi:type="array">
+                                            <item name="item.image" xsi:type="array">
+                                                <item name="component" xsi:type="string">Magento_Catalog/js/view/image</item>
+                                                <item name="config" xsi:type="array">
+                                                    <item name="template" xsi:type="string">Magento_Catalog/product/image</item>
+                                                    <item name="displayArea" xsi:type="string">itemImage</item>
+                                                </item>
+                                            </item>
+                                            <item name="checkout.cart.item.price.sidebar" xsi:type="array">
+                                                <item name="component" xsi:type="string">uiComponent</item>
+                                                <item name="config" xsi:type="array">
+                                                    <item name="template" xsi:type="string">Magento_Checkout/minicart/item/price</item>
+                                                    <item name="displayArea" xsi:type="string">priceSidebar</item>
                                                 </item>
                                             </item>
                                         </item>
@@ -51,6 +87,9 @@
                         </item>
                     </argument>
                 </arguments>
+                <block class="Magento\Checkout\Block\Item\Price\Renderer"
+                       name="checkout.cart.item.price.sidebar"
+                       template="Magento_Checkout::cart/item/price/sidebar.phtml"/>
                 <container name="minicart.addons" as="minicart.addons" label="Mini-cart promotion block"/>
             </block>
         </referenceBlock>

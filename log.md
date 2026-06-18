@@ -267,3 +267,20 @@
     * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
 * **Sledeći koraci:** Hard refresh storefronta i otvoriti sidebar; ako se vidi loader duže od sekunde, proveriti Network response za `customer/section/load`.
 * **Clean Code Provera:** Da (uspešan `npm run build-prod` i `php bin/magento cache:flush`).
+
+## [2026-06-18 02:27] - [Sidebar Cart] Direktna itemRenderer konfiguracija
+* **Status:** U toku
+* **Tip promene:** Layout
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/layout/default.xml`
+* **Sledeći koraci:** Proveriti XML, pokrenuti Tailwind build i Magento cache flush.
+* **Clean Code Provera:** Ne (finalna provera sledi).
+
+## [2026-06-18 02:29] - [Sidebar Cart] Finalizovana direktna itemRenderer konfiguracija
+* **Status:** Završeno
+* **Tip promene:** Layout
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/layout/default.xml`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh storefronta i proveriti da console vise ne prijavljuje `itemRenderer.simple` gresku.
+* **Clean Code Provera:** Da (XML parse provera, uspešan `npm run build-prod` i `php bin/magento cache:flush`).
