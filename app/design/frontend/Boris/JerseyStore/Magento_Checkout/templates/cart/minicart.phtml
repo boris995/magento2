@@ -36,7 +36,7 @@
         </span>
     </a>
 
-    <div class="block block-minicart fixed inset-0 z-[1000] hidden overflow-hidden pointer-events-none"
+    <div class="block block-minicart fixed inset-0 z-[1000] hidden h-screen max-h-screen overflow-hidden pointer-events-none"
          data-role="dropdownDialog"
          data-mage-init='{"dropdownDialog":{
             "appendTo":"[data-block=minicart]",
@@ -49,14 +49,14 @@
             "buttons":[]}}'>
         <button type="button"
                 data-role="minicart-overlay"
-                class="absolute inset-0 cursor-default bg-gray-500/75 opacity-0 transition-opacity duration-500"
+                class="absolute inset-0 cursor-default bg-transparent opacity-0 transition-opacity duration-500"
                 aria-label="<?= $block->escapeHtmlAttr(__('Close cart')) ?>"></button>
 
-        <div class="fixed inset-y-0 right-0 flex max-w-full pl-0 sm:pl-10 pointer-events-none">
+        <div class="fixed inset-y-0 right-0 flex h-screen max-h-screen w-full items-stretch pointer-events-none sm:w-[400px] md:w-full md:max-w-md">
             <div data-role="minicart-panel"
-                 class="pointer-events-auto w-screen max-w-md transform translate-x-full bg-white shadow-xl transition-all duration-500 ease-in-out">
+                 class="pointer-events-auto h-screen max-h-screen w-full transform translate-x-full overflow-hidden bg-white shadow-xl transition-all duration-500 ease-in-out sm:w-[400px] md:w-full md:max-w-md">
                 <div id="minicart-content-wrapper"
-                     class="flex h-full flex-col"
+                     class="flex h-screen max-h-screen w-full flex-col overflow-hidden sm:w-[400px] md:w-full md:max-w-md"
                      data-bind="scope: 'minicart_content'">
                     <!-- ko template: getTemplate() --><!-- /ko -->
                 </div>

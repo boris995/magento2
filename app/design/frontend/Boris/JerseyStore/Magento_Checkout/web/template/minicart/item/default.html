@@ -1,22 +1,24 @@
-<li class="item product product-item border-b border-gray-100 pb-4 last:border-b-0" data-role="product-item">
-    <div class="product grid grid-cols-[84px_1fr] gap-4">
+<li class="item product product-item border-b border-gray-100 pb-6 last:border-b-0" data-role="product-item">
+    <div class="product flex flex-col items-center text-center">
         <!-- ko if: product_has_url -->
-        <a data-bind="attr: {href: product_url, title: product_name}" tabindex="-1" class="product-item-photo block overflow-hidden bg-gray-100">
+        <a data-bind="attr: {href: product_url, title: product_name}"
+           tabindex="-1"
+           class="product-item-photo mx-auto grid h-36 w-36 place-items-center overflow-hidden bg-gray-100 [&_img]:h-full [&_img]:w-full [&_img]:object-cover">
             <!-- ko foreach: $parent.getRegion('itemImage') -->
                 <!-- ko template: {name: getTemplate(), data: item.product_image} --><!-- /ko -->
             <!-- /ko -->
         </a>
         <!-- /ko -->
         <!-- ko ifnot: product_has_url -->
-        <span class="product-item-photo block overflow-hidden bg-gray-100">
+        <span class="product-item-photo mx-auto grid h-36 w-36 place-items-center overflow-hidden bg-gray-100 [&_img]:h-full [&_img]:w-full [&_img]:object-cover">
             <!-- ko foreach: $parent.getRegion('itemImage') -->
                 <!-- ko template: {name: getTemplate(), data: item.product_image} --><!-- /ko -->
             <!-- /ko -->
         </span>
         <!-- /ko -->
 
-        <div class="product-item-details min-w-0">
-            <strong class="product-item-name block text-sm font-black uppercase leading-5 tracking-[0.04em]">
+        <div class="product-item-details mt-4 w-full min-w-0">
+            <strong class="product-item-name mx-auto block max-w-[280px] text-base font-black uppercase leading-6 tracking-[0.04em]">
                 <!-- ko if: product_has_url -->
                 <a class="!text-[#050505] !no-underline transition hover:!text-[#ff2b2b]" data-bind="attr: {href: product_url}, html: $parent.getProductNameUnsanitizedHtml(product_name)"></a>
                 <!-- /ko -->
@@ -26,7 +28,7 @@
             </strong>
 
             <!-- ko if: options.length -->
-            <div class="product options mt-2 text-xs font-semibold text-gray-500" data-mage-init='{"collapsible":{"openedState": "active", "saveState": false}}'>
+            <div class="product options mx-auto mt-3 max-w-[280px] text-xs font-semibold text-gray-500" data-mage-init='{"collapsible":{"openedState": "active", "saveState": false}}'>
                 <span data-role="title" class="toggle cursor-pointer font-extrabold text-[#050505]"><!-- ko i18n: 'See Details' --><!-- /ko --></span>
 
                 <div data-role="content" class="content mt-2">
@@ -50,7 +52,7 @@
             </div>
             <!-- /ko -->
 
-            <div class="product-item-pricing mt-3">
+            <div class="product-item-pricing mt-4">
                 <!-- ko if: canApplyMsrp -->
                 <div class="details-map text-xs font-semibold text-gray-500">
                     <span class="label" data-bind="i18n: 'Price'"></span>
@@ -58,14 +60,14 @@
                 </div>
                 <!-- /ko -->
                 <!-- ko ifnot: canApplyMsrp -->
-                <div class="text-sm font-black text-[#050505]">
+                <div class="text-xl font-black text-[#050505]">
                     <!-- ko foreach: $parent.getRegion('priceSidebar') -->
                         <!-- ko template: {name: getTemplate(), data: item.product_price, as: 'price'} --><!-- /ko -->
                     <!-- /ko -->
                 </div>
                 <!-- /ko -->
 
-                <div class="details-qty qty mt-3 flex items-center gap-2">
+                <div class="details-qty qty mt-4 flex items-center justify-center gap-2">
                     <label class="label text-xs font-extrabold uppercase tracking-[0.12em] text-gray-500" data-bind="i18n: 'Qty', attr: {
                            for: 'cart-item-'+item_id+'-qty'}"></label>
                     <input data-bind="attr: {
@@ -77,20 +79,20 @@
                            type="number"
                            min="0"
                            size="4"
-                           class="item-qty cart-item-qty h-9 w-16 border border-gray-200 px-2 text-center text-sm font-bold">
+                           class="item-qty cart-item-qty h-10 w-16 border border-gray-200 px-2 text-center text-sm font-bold">
                     <button data-bind="attr: {
                            id: 'update-cart-item-'+item_id,
                            'data-cart-item': item_id,
                            title: $t('Update')
                            }"
-                            class="update-cart-item h-9 bg-[#050505] px-3 text-xs font-black uppercase tracking-[0.1em] text-white"
+                            class="update-cart-item h-10 bg-[#050505] px-3 text-xs font-black uppercase tracking-[0.1em] text-white"
                             style="display: none">
                         <span data-bind="i18n: 'Update'"></span>
                     </button>
                 </div>
             </div>
 
-            <div class="product actions mt-3 flex items-center gap-4 text-xs font-black uppercase tracking-[0.1em]">
+            <div class="product actions mt-5 flex items-center justify-center gap-5 text-xs font-black uppercase tracking-[0.1em]">
                 <!-- ko if: is_visible_in_site_visibility -->
                 <div class="primary">
                     <a data-bind="attr: {href: configure_url, title: $t('Edit item')}" class="action edit !text-[#050505] !no-underline transition hover:!text-[#ff2b2b]">
@@ -107,7 +109,7 @@
             </div>
         </div>
     </div>
-    <div class="message notice mt-3 bg-gray-100 px-3 py-2 text-xs font-semibold text-gray-600" if="$data.message">
+    <div class="message notice mt-4 bg-gray-100 px-3 py-2 text-center text-xs font-semibold text-gray-600" if="$data.message">
         <div data-bind="text: $data.message"></div>
     </div>
 </li>

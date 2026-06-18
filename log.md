@@ -134,3 +134,136 @@
     * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
 * **Sledeći koraci:** Proveriti storefront klikom na ikonicu korpe na desktop i mobile širini.
 * **Clean Code Provera:** Da (uspešan `npm run build-prod`, PHP template syntax provera, XML parse provera i `php bin/magento cache:flush`).
+
+## [2026-06-18 01:08] - [Sidebar Cart] Poravnanje panela i 100vh visina
+* **Status:** U toku
+* **Tip promene:** Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/templates/cart/minicart.phtml`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+* **Sledeći koraci:** Pokrenuti Tailwind build, proveriti PHP sintaksu i flush cache.
+* **Clean Code Provera:** Ne (finalna provera sledi).
+
+## [2026-06-18 01:10] - [Sidebar Cart] Finalizovano poravnanje i max-height
+* **Status:** Završeno
+* **Tip promene:** Frontend Tailwind / Layout
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/templates/cart/minicart.phtml`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Vizuelno proveriti sidebar cart na storefrontu nakon hard refresh-a.
+* **Clean Code Provera:** Da (uspešan `npm run build-prod`, PHP syntax provera i `php bin/magento cache:flush`).
+
+## [2026-06-18 01:14] - [Sidebar Cart] Transparentan overlay, scroll lock i fiksna sirina
+* **Status:** U toku
+* **Tip promene:** Frontend Tailwind / JS Logic
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/templates/cart/minicart.phtml`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/js/sidebar-cart.js`
+* **Sledeći koraci:** Pokrenuti Tailwind build, PHP syntax proveru i Magento cache flush.
+* **Clean Code Provera:** Ne (finalna provera sledi).
+
+## [2026-06-18 01:16] - [Sidebar Cart] Finalizovan transparentan overlay i 320px panel
+* **Status:** Završeno
+* **Tip promene:** Frontend Tailwind / JS Logic
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/templates/cart/minicart.phtml`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/js/sidebar-cart.js`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh storefronta i proveriti da leva strana ostaje transparentna dok je panel otvoren.
+* **Clean Code Provera:** Da (uspešan `npm run build-prod`, PHP syntax provera i `php bin/magento cache:flush`).
+
+## [2026-06-18 01:19] - [Sidebar Cart] Responsive sirina po uredjajima
+* **Status:** U toku
+* **Tip promene:** Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/templates/cart/minicart.phtml`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+* **Sledeći koraci:** Pokrenuti Tailwind build, PHP syntax proveru i Magento cache flush.
+* **Clean Code Provera:** Ne (finalna provera sledi).
+
+## [2026-06-18 01:21] - [Sidebar Cart] Finalizovana responsive sirina
+* **Status:** Završeno
+* **Tip promene:** Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/templates/cart/minicart.phtml`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh storefronta i proveriti mobile `<640px`, tablet `>=640px` i desktop `>=768px`.
+* **Clean Code Provera:** Da (uspešan `npm run build-prod`, PHP syntax provera i `php bin/magento cache:flush`).
+
+## [2026-06-18 01:22] - [Sidebar Cart] Popravka Knockout itemRenderer greske
+* **Status:** U toku
+* **Tip promene:** Layout
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/layout/default.xml`
+* **Sledeći koraci:** Proveriti XML/PHP sintaksu, pokrenuti Tailwind build i Magento cache flush.
+* **Clean Code Provera:** Ne (finalna provera sledi).
+
+## [2026-06-18 01:24] - [Sidebar Cart] Finalizovana Knockout itemRenderer popravka
+* **Status:** Završeno
+* **Tip promene:** Layout
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/layout/default.xml`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh storefronta i ponovo otvoriti cart sa proizvodom u korpi.
+* **Clean Code Provera:** Da (XML parse provera, PHP syntax provera, uspešan `npm run build-prod` i `php bin/magento cache:flush`).
+
+## [2026-06-18 01:24] - [Sidebar Cart] Centriran prikaz proizvoda u korpi
+* **Status:** U toku
+* **Tip promene:** Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/item/default.html`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+* **Sledeći koraci:** Pokrenuti Tailwind build i Magento cache flush.
+* **Clean Code Provera:** Ne (finalna provera sledi).
+
+## [2026-06-18 01:26] - [Sidebar Cart] Finalizovan prikaz proizvoda u korpi
+* **Status:** Završeno
+* **Tip promene:** Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/item/default.html`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh storefronta i proveriti da se slika, naziv, cena i qty vide u sidebar cartu.
+* **Clean Code Provera:** Da (uspešan `npm run build-prod` i `php bin/magento cache:flush`).
+
+## [2026-06-18 01:31] - [Sidebar Cart] Scroll lock stranice i osvezavanje proizvoda
+* **Status:** U toku
+* **Tip promene:** JS Logic / Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/js/sidebar-cart.js`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+* **Sledeći koraci:** Pokrenuti Tailwind build i Magento cache flush.
+* **Clean Code Provera:** Ne (finalna provera sledi).
+
+## [2026-06-18 01:33] - [Sidebar Cart] Finalizovan scroll lock i instant cart reload
+* **Status:** Završeno
+* **Tip promene:** JS Logic / Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/js/sidebar-cart.js`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh storefronta, otvoriti sidebar sa home page-a i proveriti da se pozadina ne skroluje dok sidebar skroluje.
+* **Clean Code Provera:** Da (uspešan `npm run build-prod` i `php bin/magento cache:flush`).
+
+## [2026-06-18 02:19] - [Sidebar Cart] Forsirano ucitavanje cart itema
+* **Status:** U toku
+* **Tip promene:** JS Logic / Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/js/sidebar-cart.js`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+* **Sledeći koraci:** Pokrenuti Tailwind build i Magento cache flush.
+* **Clean Code Provera:** Ne (finalna provera sledi).
+
+## [2026-06-18 02:21] - [Sidebar Cart] Finalizovano forsirano ucitavanje cart itema
+* **Status:** Završeno
+* **Tip promene:** JS Logic / Frontend Tailwind
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/js/sidebar-cart.js`
+    * `app/design/frontend/Boris/JerseyStore/Magento_Checkout/web/template/minicart/content.html`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh storefronta i otvoriti sidebar; ako se vidi loader duže od sekunde, proveriti Network response za `customer/section/load`.
+* **Clean Code Provera:** Da (uspešan `npm run build-prod` i `php bin/magento cache:flush`).

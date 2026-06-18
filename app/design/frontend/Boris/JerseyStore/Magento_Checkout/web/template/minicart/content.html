@@ -1,13 +1,13 @@
-<div class="flex h-full flex-col bg-white text-[#050505]">
-    <div class="flex min-h-[76px] items-center justify-between border-b border-gray-200 px-5 sm:px-6">
+<div class="flex h-screen max-h-screen w-full flex-col overflow-hidden bg-white text-[#050505] sm:w-[400px] md:w-full md:max-w-md">
+    <div class="flex min-h-[88px] shrink-0 items-center justify-between border-b border-gray-200 px-5 sm:px-7">
         <div>
-            <p class="text-[11px] font-black uppercase tracking-[0.24em] text-[#ff2b2b]" translate="'Jersey Store'"></p>
-            <h2 class="mt-1 text-xl font-black uppercase tracking-[0.08em]" translate="'Your Cart'"></h2>
+            <p class="text-[10px] font-black uppercase tracking-[0.32em] text-[#ff2b2b]" translate="'Jersey Store'"></p>
+            <h2 class="mt-2 text-2xl font-black uppercase leading-none tracking-[0.08em] sm:text-3xl" translate="'Your Cart'"></h2>
         </div>
 
         <button type="button"
                 id="btn-minicart-close"
-                class="action close grid h-11 w-11 place-items-center border border-gray-200 text-[#050505] transition hover:border-[#ff2b2b] hover:text-[#ff2b2b]"
+                class="action close grid h-11 w-11 shrink-0 place-items-center border border-gray-200 bg-gray-50 text-[#050505] transition hover:border-[#ff2b2b] hover:text-[#ff2b2b]"
                 data-action="close"
                 data-bind="attr: { title: $t('Close') }, click: closeMinicart()">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -18,7 +18,7 @@
     </div>
 
     <if args="getCartParam('summary_count')">
-        <div class="flex items-center justify-between border-b border-gray-100 px-5 py-4 text-xs font-extrabold uppercase tracking-[0.12em] text-gray-500 sm:px-6">
+        <div class="flex shrink-0 items-center justify-between border-b border-gray-100 px-5 py-4 text-xs font-extrabold uppercase tracking-[0.12em] text-gray-500 sm:px-7">
             <div class="items-total">
                 <span class="count" if="maxItemsToDisplay < getCartLineItemsCount()" text="maxItemsToDisplay"></span>
                 <translate args="'of'" if="maxItemsToDisplay < getCartLineItemsCount()"></translate>
@@ -35,14 +35,20 @@
             </a>
         </div>
 
-        <div data-action="scroll" class="minicart-items-wrapper flex-1 overflow-y-auto px-5 py-5 sm:px-6">
-            <ol id="mini-cart" class="minicart-items grid gap-4" data-bind="foreach: { data: getCartItems(), as: 'item' }">
+        <div data-action="scroll" class="minicart-items-wrapper min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-6 sm:px-7">
+            <if args="getCartLineItemsCount() === 0">
+                <div class="flex min-h-full flex-col items-center justify-center text-center">
+                    <div class="h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-[#ff2b2b]"></div>
+                    <p class="mt-4 text-xs font-black uppercase tracking-[0.14em] text-gray-500" translate="'Loading cart products'"></p>
+                </div>
+            </if>
+            <ol id="mini-cart" class="minicart-items grid gap-6" data-bind="foreach: { data: getCartItems(), as: 'item' }">
                 <each args="$parent.getRegion($parent.getItemRenderer(item.product_type))"
                       render="{name: getTemplate(), data: item, afterRender: function() {$parents[1].initSidebar()}}"></each>
             </ol>
         </div>
 
-        <div class="border-t border-gray-200 bg-white px-5 py-5 shadow-[0_-12px_35px_rgba(5,5,5,0.07)] sm:px-6">
+        <div class="shrink-0 border-t border-gray-200 bg-white px-5 py-5 shadow-[0_-12px_35px_rgba(5,5,5,0.07)] sm:px-7">
             <each args="getRegion('subtotalContainer')" render=""></each>
             <each args="getRegion('extraInfo')" render=""></each>
 
@@ -72,18 +78,20 @@
     </if>
 
     <ifnot args="getCartParam('summary_count')">
-        <div class="flex flex-1 flex-col items-center justify-center px-6 text-center">
-            <div class="grid h-16 w-16 place-items-center rounded-full bg-gray-100 text-[#ff2b2b]">
-                <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 sm:px-7">
+            <div class="mx-auto flex min-h-full max-w-[320px] flex-col items-center justify-center py-12 text-center">
+            <div class="grid h-14 w-14 place-items-center rounded-full bg-gray-100 text-[#ff2b2b]">
+                <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path d="M6.5 8h11l-1 12h-9l-1-12Zm3 0a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             </div>
-            <strong class="subtitle empty mt-5 text-xl font-black uppercase tracking-[0.08em]" translate="'You have no items in your shopping cart.'"></strong>
-            <p class="mt-3 max-w-[280px] text-sm font-semibold leading-6 text-gray-500" translate="'Add your favorite jersey and it will appear here instantly.'"></p>
-            <a class="mt-7 inline-flex h-12 items-center justify-center bg-[#050505] px-6 text-sm font-black uppercase tracking-[0.12em] !text-white !no-underline transition hover:bg-[#ff2b2b]"
+            <strong class="subtitle empty mt-6 text-sm font-black uppercase leading-6 tracking-[0.12em]" translate="'You have no items in your shopping cart.'"></strong>
+            <p class="mt-4 text-sm font-semibold leading-6 text-gray-500" translate="'Add your favorite jersey and it will appear here instantly.'"></p>
+            <a class="mt-8 inline-flex h-12 items-center justify-center bg-[#050505] px-7 text-sm font-black uppercase tracking-[0.12em] !text-white !no-underline transition hover:bg-[#ff2b2b]"
                data-bind="attr: {href: shoppingCartUrl}">
                 <span translate="'View Cart'"></span>
             </a>
+            </div>
         </div>
     </ifnot>
 
