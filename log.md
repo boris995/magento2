@@ -361,3 +361,20 @@
     * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
 * **Sledeći koraci:** Hard refresh PDP stranice i provjeriti desktop hero, thumbnail aktivno stanje, CTA i tabove.
 * **Clean Code Provera:** Da (PHP syntax provera, uspešan `npm run build-prod` i `php bin/magento cache:flush`).
+
+## [2026-06-18 18:47] - [Sidebar Cart] PDP tab card sa dinamicnim contentom
+* **Status:** U toku
+* **Tip promene:** Frontend Tailwind / JS Logic
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/view/page.phtml`
+* **Sledeći koraci:** Pokrenuti Tailwind build i Magento cache flush.
+* **Clean Code Provera:** Ne (PHP syntax provera uspešna, finalna provera sledi).
+
+## [2026-06-18 18:47] - [Sidebar Cart] Finalizovan PDP tab card
+* **Status:** Završeno
+* **Tip promene:** Frontend Tailwind / JS Logic
+* **Izmenjeni fajlovi:**
+    * `app/design/frontend/Boris/JerseyStore/Magento_Catalog/templates/product/view/page.phtml`
+    * `app/design/frontend/Boris/JerseyStore/web/css/tailwind.css`
+* **Sledeći koraci:** Hard refresh PDP stranice i provjeriti da klik na svaki tab mijenja sadržaj unutar iste kartice.
+* **Clean Code Provera:** Da (PHP syntax provera, uspešan `npm run build-prod` i `php bin/magento cache:flush`).
