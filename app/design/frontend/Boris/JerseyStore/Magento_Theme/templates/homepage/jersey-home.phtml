@@ -18,10 +18,38 @@ $categories = [
     ['title' => 'Dječiji Dresovi', 'copy' => 'Lagani modeli za najmlađe navijače i buduće šampione.', 'href' => 'djeciji-dresovi', 'crop' => 'object-[84%_54%]', 'meta' => 'Kids'],
 ];
 $benefits = [
-    ['title' => 'Brza Dostava', 'copy' => 'Pakovanje i slanje bez čekanja.', 'icon' => 'truck'],
-    ['title' => 'Sigurno Plaćanje', 'copy' => 'Zaštićena kupovina svaki put.', 'icon' => 'lock'],
-    ['title' => 'Zamjena Veličine', 'copy' => 'Jednostavna zamjena ako fit nije pravi.', 'icon' => 'refresh'],
-    ['title' => 'Originalni Proizvodi', 'copy' => 'Pažljivo odabrani modeli za navijače.', 'icon' => 'shield'],
+    [
+        'title' => 'Brza Dostava',
+        'eyebrow' => 'Pakujemo isti dan',
+        'copy' => 'Tvoj dres spremamo odmah nakon narudžbe, pažljivo ga pakujemo i šaljemo bez nepotrebnog čekanja. Idealno kada treba stići prije derbija, poklona ili vikend utakmice.',
+        'note' => 'Praćenje pošiljke i jasne obavijesti od narudžbe do isporuke.',
+        'emoji' => '🚚',
+        'icon' => 'truck',
+    ],
+    [
+        'title' => 'Sigurno Plaćanje',
+        'eyebrow' => 'Kupovina bez stresa',
+        'copy' => 'Plaćanje je zaštićeno, jednostavno i brzo. Biraš način koji ti najviše odgovara, a mi brinemo da svaka narudžba bude obrađena uredno i transparentno.',
+        'note' => 'Siguran checkout, jasna potvrda i podrška ako zatreba pomoć.',
+        'emoji' => '🔒',
+        'icon' => 'lock',
+    ],
+    [
+        'title' => 'Zamjena Veličine',
+        'eyebrow' => 'Fit mora biti pravi',
+        'copy' => 'Ako veličina ne odgovara, proces zamjene je jednostavan. Želimo da dres stoji dobro, da se nosi udobno i da izgleda spremno za tribinu, trening ili svaki dan.',
+        'note' => 'Brza komunikacija i jasni koraci za zamjenu bez komplikacija.',
+        'emoji' => '🔁',
+        'icon' => 'refresh',
+    ],
+    [
+        'title' => 'Originalni Proizvodi',
+        'eyebrow' => 'Pažljivo odabrano',
+        'copy' => 'Svaki model biramo sa fokusom na izgled, materijal i detalje koje navijači primijete. Dobijaš dres koji izgleda ozbiljno i osjeća se dobro čim ga obučeš.',
+        'note' => 'Kvalitetni modeli za klubove, reprezentacije i retro kolekcije.',
+        'emoji' => '🛡️',
+        'icon' => 'shield',
+    ],
 ];
 
 $objectManager = ObjectManager::getInstance();
@@ -183,25 +211,77 @@ $stockHelper->addInStockFilterToCollection($products);
     </section>
 
     <!-- BENEFITS -->
-    <section class="bg-white py-10 lg:py-14">
-        <div class="container-shop grid grid-cols-1 border border-black/10 bg-white shadow-xl shadow-black/5 sm:grid-cols-2 lg:grid-cols-4">
-            <?php foreach ($benefits as $benefit): ?>
-                <article class="border-b border-black/10 p-6 last:border-b-0 sm:border-r lg:border-b-0">
-                    <div class="mb-5 flex h-11 w-11 items-center justify-center border border-black/15 text-[#050505]">
-                        <?php if ($benefit['icon'] === 'truck'): ?>
-                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none"><path d="M3 7h11v9H3V7Zm11 3h4l3 3v3h-7v-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="7" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/><circle cx="18" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/></svg>
-                        <?php elseif ($benefit['icon'] === 'lock'): ?>
-                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none"><path d="M6 10h12v10H6V10Zm3 0V7a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.7"/><path d="M12 14v3" stroke="#d60000" stroke-width="1.8" stroke-linecap="round"/></svg>
-                        <?php elseif ($benefit['icon'] === 'refresh'): ?>
-                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none"><path d="M20 7v5h-5M4 17v-5h5M18.5 10A7 7 0 0 0 6.2 7.4M5.5 14a7 7 0 0 0 12.3 2.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        <?php else: ?>
-                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none"><path d="M12 3 20 7v6c0 4.4-3.1 7.4-8 8-4.9-.6-8-3.6-8-8V7l8-4Z" stroke="currentColor" stroke-width="1.7"/><path d="m9 12 2 2 4-5" stroke="#d60000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        <?php endif; ?>
-                    </div>
-                    <h3 class="text-base font-extrabold uppercase"><?= $escaper->escapeHtml($benefit['title']) ?></h3>
-                    <p class="mt-2 text-sm leading-6 text-black/60"><?= $escaper->escapeHtml($benefit['copy']) ?></p>
-                </article>
-            <?php endforeach; ?>
+    <section class="relative overflow-hidden bg-white py-12 lg:py-20">
+        <div class="absolute inset-x-0 top-0 h-48 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.16),transparent_34%),radial-gradient(circle_at_top_right,rgba(214,0,0,0.12),transparent_30%)]"></div>
+
+        <div class="container-shop relative">
+            <div class="mx-auto mb-9 max-w-3xl text-center lg:mb-12">
+                <p class="text-xs font-black uppercase tracking-[0.22em] text-[#d60000]">Zašto kupci biraju nas ✨</p>
+                <h2 class="mt-3 text-3xl font-extrabold uppercase leading-tight text-[#050505] sm:text-4xl lg:text-5xl">
+                    Sve što trebaš za sigurnu kupovinu dresa
+                </h2>
+                <p class="mx-auto mt-4 max-w-2xl text-base leading-8 text-black/60">
+                    Od prvog klika do trenutka kada obučeš dres, svaki korak je napravljen da bude brz, jasan i bez nervoze.
+                    Moderno iskustvo kupovine, više informacija i podrška koja ne nestaje nakon checkouta.
+                </p>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                <?php foreach ($benefits as $index => $benefit): ?>
+                    <article class="group relative overflow-hidden rounded-2xl border border-black/10 bg-white p-6 shadow-xl shadow-black/5 transition duration-500 hover:-translate-y-2 hover:border-blue-500/40 hover:shadow-2xl hover:shadow-blue-950/10">
+                        <div class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-500/10 blur-2xl transition duration-500 group-hover:scale-125 group-hover:bg-blue-500/20"></div>
+                        <div class="absolute bottom-0 left-0 h-1 w-0 bg-[#d60000] transition-all duration-500 group-hover:w-full"></div>
+
+                        <div class="relative flex items-start justify-between gap-4">
+                            <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-blue-100 bg-blue-50 text-[#050505] shadow-sm transition duration-500 group-hover:rotate-3 group-hover:scale-110 group-hover:bg-[#d60000] group-hover:text-white">
+                                <?php if ($benefit['icon'] === 'truck'): ?>
+                                    <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none"><path d="M3 7h11v9H3V7Zm11 3h4l3 3v3h-7v-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="7" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/><circle cx="18" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/></svg>
+                                <?php elseif ($benefit['icon'] === 'lock'): ?>
+                                    <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none"><path d="M6 10h12v10H6V10Zm3 0V7a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.7"/><path d="M12 14v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                                <?php elseif ($benefit['icon'] === 'refresh'): ?>
+                                    <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none"><path d="M20 7v5h-5M4 17v-5h5M18.5 10A7 7 0 0 0 6.2 7.4M5.5 14a7 7 0 0 0 12.3 2.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <?php else: ?>
+                                    <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none"><path d="M12 3 20 7v6c0 4.4-3.1 7.4-8 8-4.9-.6-8-3.6-8-8V7l8-4Z" stroke="currentColor" stroke-width="1.7"/><path d="m9 12 2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <?php endif; ?>
+                            </div>
+
+                            <span class="animate-bounce rounded-full bg-[#050505] px-3 py-1 text-2xl leading-none shadow-lg shadow-black/10 [animation-duration:2.4s]" style="animation-delay: <?= (int) $index * 180 ?>ms;">
+                                <?= $escaper->escapeHtml($benefit['emoji']) ?>
+                            </span>
+                        </div>
+
+                        <div class="relative mt-6">
+                            <p class="text-[11px] font-black uppercase tracking-[0.18em] text-blue-700">
+                                <?= $escaper->escapeHtml($benefit['eyebrow']) ?>
+                            </p>
+                            <h3 class="mt-2 text-2xl font-extrabold uppercase leading-tight text-[#050505]">
+                                <?= $escaper->escapeHtml($benefit['title']) ?>
+                            </h3>
+                            <p class="mt-4 text-sm leading-7 text-black/65">
+                                <?= $escaper->escapeHtml($benefit['copy']) ?>
+                            </p>
+                            <div class="mt-5 rounded-xl bg-slate-50 p-4 text-sm font-semibold leading-6 text-black/70 ring-1 ring-black/5">
+                                <?= $escaper->escapeHtml($benefit['note']) ?>
+                            </div>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+
+            <div class="mt-5 grid gap-3 rounded-2xl border border-blue-100 bg-blue-50 p-5 text-center shadow-lg shadow-blue-950/5 sm:grid-cols-3 sm:text-left lg:mt-6">
+                <div>
+                    <div class="text-2xl font-extrabold text-[#050505]">24h ⚡</div>
+                    <p class="mt-1 text-sm leading-6 text-black/60">Brza obrada većine narudžbi i uredno pakovanje.</p>
+                </div>
+                <div>
+                    <div class="text-2xl font-extrabold text-[#050505]">14 dana ✅</div>
+                    <p class="mt-1 text-sm leading-6 text-black/60">Fleksibilna zamjena veličine kada fit nije pravi.</p>
+                </div>
+                <div>
+                    <div class="text-2xl font-extrabold text-[#050505]">Support 💬</div>
+                    <p class="mt-1 text-sm leading-6 text-black/60">Tu smo za pitanja oko modela, veličina i narudžbe.</p>
+                </div>
+            </div>
         </div>
     </section>
 

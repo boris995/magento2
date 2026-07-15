@@ -6,12 +6,21 @@
         <referenceBlock name="navigation.sections" remove="true"/>
         <referenceBlock name="store.menu" remove="true"/>
         <referenceBlock name="catalog.topnav" remove="true"/>
+        <referenceContainer name="footer" remove="true"/>
+        <referenceBlock name="form.subscribe" remove="true"/>
+        <referenceBlock name="absolute_footer" remove="true"/>
 
         <referenceContainer name="page.wrapper">
             <block class="Magento\Framework\View\Element\Template"
                    name="jersey.custom.header"
                    template="Magento_Theme::header/jersey-header.phtml"
                    before="-"/>
+        </referenceContainer>
+
+        <referenceContainer name="footer-container">
+            <block class="Magento\Newsletter\Block\Subscribe"
+                   name="jersey.custom.footer"
+                   template="Magento_Theme::footer/jersey-footer.phtml"/>
         </referenceContainer>
     </body>
 </page>
