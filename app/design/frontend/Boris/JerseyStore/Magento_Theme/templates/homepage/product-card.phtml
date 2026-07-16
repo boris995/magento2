@@ -18,10 +18,7 @@ if (!$product) {
 }
 
 $productName = (string) $product->getName();
-$urlKey = trim((string) $product->getUrlKey(), '/');
-$productUrl = $urlKey !== ''
-    ? $block->getUrl('', ['_direct' => $urlKey . '.html'])
-    : (string) $product->getProductUrl();
+$productUrl = $block->getUrl('catalog/product/view', ['id' => (int) $product->getId()]);
 $imageUrl = $imageHelper
     ? $imageHelper->init($product, 'product_page_image_medium')->constrainOnly(true)->keepAspectRatio(true)->keepFrame(false)->getUrl()
     : '';
@@ -35,17 +32,17 @@ $cleanDescription = $shortDescription !== '' ? strip_tags($shortDescription) : _
 <article class="group min-w-[76vw] snap-start sm:min-w-[320px] lg:min-w-0">
     <a
         href="<?= $escaper->escapeUrl($productUrl) ?>"
-        class="block overflow-hidden border border-black/10 bg-white !text-[#050505] !no-underline shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#d60000] hover:shadow-2xl hover:shadow-black/10"
+        class="block overflow-hidden rounded-lg border border-white/10 bg-[#111] !text-white !no-underline shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#d60000] hover:shadow-2xl hover:shadow-black/40"
         aria-label="<?= $escaper->escapeHtmlAttr($productName) ?>"
     >
-        <div class="relative h-[330px] overflow-hidden bg-gradient-to-br from-neutral-100 via-white to-neutral-200 lg:h-80">
-            <span class="absolute left-4 top-4 z-10 bg-[#d60000] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-white">
-                <?= $escaper->escapeHtml(__('Dostupno')) ?>
+        <div class="relative h-[250px] overflow-hidden bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12),transparent_55%),#0b0b0b] lg:h-64">
+            <span class="absolute left-4 top-4 z-10 rounded bg-[#e32929] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-white">
+                <?= $escaper->escapeHtml(__('Novo')) ?>
             </span>
 
-            <span class="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center border border-black/10 bg-white/95 text-[#050505] shadow-sm transition group-hover:bg-[#050505] group-hover:text-white">
+            <span class="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white/70 shadow-sm transition group-hover:border-[#e32929] group-hover:text-white">
                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21l8.8-8.3a5 5 0 0 0 0-7.1Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </span>
 
@@ -53,7 +50,7 @@ $cleanDescription = $shortDescription !== '' ? strip_tags($shortDescription) : _
                 <img
                     src="<?= $escaper->escapeUrl($imageUrl) ?>"
                     alt="<?= $escaper->escapeHtmlAttr($productName) ?>"
-                    class="h-full w-full object-contain object-center p-4 transition duration-500 group-hover:scale-105"
+                    class="h-full w-full object-contain object-center p-5 transition duration-500 group-hover:scale-105"
                     loading="lazy"
                 />
             <?php else: ?>
@@ -64,24 +61,24 @@ $cleanDescription = $shortDescription !== '' ? strip_tags($shortDescription) : _
         </div>
 
         <div class="p-5">
-            <div class="flex items-start justify-between gap-4">
-                <h3 class="text-base font-extrabold leading-snug text-[#050505] transition group-hover:text-[#d60000]">
+            <div>
+                <h3 class="text-base font-extrabold leading-snug text-white transition group-hover:text-[#ff3b3b]">
                     <?= $escaper->escapeHtml($productName) ?>
                 </h3>
-                <p class="shrink-0 text-sm font-extrabold text-[#050505]">
+                <p class="mt-2 text-sm font-extrabold text-white">
                     <?= /* @noEscape */ $price ?>
                 </p>
             </div>
 
-            <p class="mt-3 line-clamp-2 text-sm leading-6 text-black/60">
+            <p class="mt-3 line-clamp-2 text-sm leading-6 text-white/50">
                 <?= $escaper->escapeHtml($cleanDescription) ?>
             </p>
 
-            <div class="mt-5 flex items-center justify-between border-t border-black/10 pt-4">
-                <span class="text-xs font-black uppercase tracking-[0.16em] text-[#050505]">
+            <div class="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
+                <span class="text-xs font-black uppercase tracking-[0.16em] text-white/80">
                     <?= $escaper->escapeHtml(__('Detalji')) ?>
                 </span>
-                <span class="h-px w-10 bg-[#d60000] transition group-hover:w-16"></span>
+                <span class="h-px w-10 bg-[#e32929] transition group-hover:w-16"></span>
             </div>
         </div>
     </a>

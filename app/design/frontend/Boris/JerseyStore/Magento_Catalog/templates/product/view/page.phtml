@@ -51,28 +51,26 @@ if (!count($_galleryItems) && $_heroImage) {
 ?>
 
 <?php if ($_product): ?>
-<main class="bg-white text-[#0b0b0b]">
-    <section class="container-shop py-6 sm:py-9 lg:py-12">
-        <div class="grid gap-10 lg:grid-cols-[minmax(0,1.06fr)_minmax(430px,0.94fr)] lg:items-start xl:gap-16">
-            <div class="grid gap-4 sm:grid-cols-[92px_minmax(0,1fr)] lg:sticky lg:top-24">
-                <div class="order-2 flex gap-2 overflow-x-auto pb-1 sm:order-1 sm:flex-col sm:overflow-visible sm:pb-0">
+<main class="relative left-1/2 w-screen -translate-x-1/2 bg-[#1B263B] text-white">
+    <section class="container-shop py-6 sm:py-8 lg:py-10">
+        <nav class="mb-6 flex w-full items-center gap-2 overflow-x-auto whitespace-nowrap text-sm font-semibold text-white/55">
+            <a class="!text-white/65 !no-underline transition hover:!text-white" href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"><?= $escaper->escapeHtml(__('Home')) ?></a>
+            <span class="text-white/25" aria-hidden="true">›</span>
+            <a class="!text-white/65 !no-underline transition hover:!text-white" href="<?= $escaper->escapeUrl($block->getUrl('category-page')) ?>"><?= $escaper->escapeHtml(__('Retro dresovi')) ?></a>
+            <span class="text-white/25" aria-hidden="true">›</span>
+            <strong class="truncate font-semibold text-white/80"><?= $escaper->escapeHtml($_productName) ?></strong>
+        </nav>
+
+        <div class="grid gap-8 lg:grid-cols-[minmax(0,1.12fr)_minmax(420px,0.88fr)] lg:items-start xl:gap-12">
+            <div class="grid gap-4 md:grid-cols-[88px_minmax(0,1fr)] lg:sticky lg:top-24">
+                <div class="order-2 flex gap-3 overflow-x-auto pb-1 md:order-1 md:flex-col md:overflow-visible md:pb-0">
                     <?php foreach ($_galleryItems as $_index => $_item): ?>
-                        <button
-                            type="button"
-                            class="<?= $_index === 0 ? 'border-[#1d4ed8] ring-4 ring-blue-100' : 'border-slate-200' ?> js-pdp-thumb grid aspect-square min-w-20 place-items-center overflow-hidden rounded-md border-2 bg-white p-2 shadow-sm transition hover:border-[#1d4ed8] hover:ring-4 hover:ring-blue-50 sm:min-w-0"
-                            data-full-image="<?= $escaper->escapeUrl($_item['url']) ?>"
-                            aria-label="<?= $escaper->escapeHtmlAttr(__('Prikaži sliku proizvoda')) ?>"
-                        >
-                            <img
-                                class="h-full w-full object-contain"
-                                src="<?= $escaper->escapeUrl($_item['url']) ?>"
-                                alt="<?= $escaper->escapeHtmlAttr($_item['label']) ?>"
-                                loading="<?= $_index === 0 ? 'eager' : 'lazy' ?>"
-                            />
+                        <button type="button" class="<?= $_index === 0 ? 'border-[#6d3df5] shadow-[0_0_0_1px_#6d3df5]' : 'border-white/15' ?> js-pdp-thumb grid aspect-square min-w-20 place-items-center overflow-hidden rounded-md border bg-white/[0.04] p-2 transition hover:border-[#6d3df5] md:min-w-0" data-full-image="<?= $escaper->escapeUrl($_item['url']) ?>" aria-label="<?= $escaper->escapeHtmlAttr(__('Prikaži sliku proizvoda')) ?>">
+                            <img class="h-full w-full object-contain" src="<?= $escaper->escapeUrl($_item['url']) ?>" alt="<?= $escaper->escapeHtmlAttr($_item['label']) ?>" loading="<?= $_index === 0 ? 'eager' : 'lazy' ?>" />
                         </button>
                     <?php endforeach; ?>
 
-                    <button type="button" class="grid aspect-square min-w-20 place-items-center rounded-md border border-slate-200 bg-white text-center text-[11px] font-black uppercase text-slate-900 shadow-sm transition hover:border-[#1d4ed8] hover:text-[#1d4ed8] sm:min-w-0">
+                    <button type="button" class="grid aspect-square min-w-20 place-items-center rounded-md border border-white/15 bg-white/[0.04] text-center text-[11px] font-black uppercase text-white transition hover:border-[#6d3df5] hover:text-[#8b6cff] md:min-w-0">
                         <svg class="mx-auto mb-1 h-7 w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
                             <path d="m10 8 6 4-6 4V8Z" fill="currentColor"/>
@@ -81,94 +79,70 @@ if (!count($_galleryItems) && $_heroImage) {
                     </button>
                 </div>
 
-                <div class="relative order-1 overflow-hidden rounded-lg bg-white shadow-[0_18px_60px_rgba(15,23,42,0.08)] ring-1 ring-slate-200 sm:order-2">
-                    <?php if ($_hasDiscount): ?>
-                        <div class="absolute right-4 top-4 z-10 rounded bg-[#1d4ed8] px-3 py-2 text-lg font-black text-white shadow-lg shadow-blue-900/20">
-                            -<?= (int) $_discountPercent ?>%
-                        </div>
-                    <?php endif; ?>
-                    <div class="grid aspect-[4/5] min-h-[420px] place-items-center bg-gradient-to-br from-white via-slate-50 to-blue-50/70 p-5 sm:min-h-[580px] sm:p-8 lg:min-h-[650px]">
-                        <img
-                            id="jersey-pdp-main-image"
-                            class="h-full max-h-[640px] w-full object-contain"
-                            src="<?= $escaper->escapeUrl($_heroImage) ?>"
-                            alt="<?= $escaper->escapeHtmlAttr($_productName) ?>"
-                        />
+                <div class="relative order-1 overflow-hidden rounded-lg border border-white/10 bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.12),transparent_34%),linear-gradient(135deg,#202020,#090a0d_68%)] shadow-[0_30px_90px_rgba(0,0,0,0.35)] md:order-2">
+                    <div class="absolute right-4 top-4 z-10 rounded border border-[#ffd54a]/70 bg-black/40 px-3 py-2 text-sm font-black uppercase tracking-[0.12em] text-[#ffd54a] backdrop-blur">
+                        <?= $_hasDiscount ? '-' . (int) $_discountPercent . '%' : $escaper->escapeHtml(__('Retro')) ?>
+                    </div>
+                    <button type="button" class="absolute left-4 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white backdrop-blur transition hover:bg-[#6d3df5] sm:grid" aria-label="<?= $escaper->escapeHtmlAttr(__('Prethodna slika')) ?>">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 6-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <button type="button" class="absolute right-4 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white backdrop-blur transition hover:bg-[#6d3df5] sm:grid" aria-label="<?= $escaper->escapeHtmlAttr(__('Sljedeća slika')) ?>">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <button type="button" class="absolute bottom-4 right-4 z-10 grid h-11 w-11 place-items-center rounded-full bg-black/55 text-white backdrop-blur transition hover:bg-[#6d3df5]" aria-label="<?= $escaper->escapeHtmlAttr(__('Uvećaj sliku')) ?>">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 3H3v5M21 8V3h-5M3 16v5h5M16 21h5v-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="grid aspect-[4/5] min-h-[420px] place-items-center p-5 sm:min-h-[560px] sm:p-8 lg:min-h-[660px]">
+                        <img id="jersey-pdp-main-image" class="h-full max-h-[620px] w-full object-contain drop-shadow-[0_24px_36px_rgba(0,0,0,0.45)]" src="<?= $escaper->escapeUrl($_heroImage) ?>" alt="<?= $escaper->escapeHtmlAttr($_productName) ?>" />
                     </div>
                 </div>
             </div>
 
-            <div class="rounded-lg bg-white p-0 lg:border lg:border-slate-200 lg:p-7 lg:shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
-                <nav class="mb-5 flex w-full items-center gap-2 overflow-x-auto whitespace-nowrap rounded-md bg-blue-50 px-3 py-2 text-[11px] font-black uppercase tracking-[0.1em] text-slate-500 ring-1 ring-blue-100">
-                    <a class="!text-slate-500 !no-underline transition hover:!text-[#1d4ed8]" href="<?= $escaper->escapeUrl($block->getUrl('')) ?>">
-                        <?= $escaper->escapeHtml(__('Početna')) ?>
-                    </a>
-                    <span class="text-blue-300" aria-hidden="true">/</span>
-                    <a class="!text-slate-500 !no-underline transition hover:!text-[#1d4ed8]" href="<?= $escaper->escapeUrl($block->getUrl('category-page')) ?>">
-                        <?= $escaper->escapeHtml(__('Retro dresovi')) ?>
-                    </a>
-                    <span class="text-blue-300" aria-hidden="true">/</span>
-                    <strong class="truncate font-black text-slate-950"><?= $escaper->escapeHtml($_productName) ?></strong>
-                </nav>
+            <div class="lg:pt-7">
+                <div class="mb-3 inline-flex items-center text-xs font-black uppercase tracking-[0.16em] text-[#7b55ff]"><?= $escaper->escapeHtml(__('Premium retro jersey')) ?></div>
 
-                <div class="mb-3 inline-flex items-center rounded bg-blue-50 px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.16em] text-[#1d4ed8] ring-1 ring-blue-100">
-                    <?= $escaper->escapeHtml(__('Premium retro jersey')) ?>
-                </div>
-
-                <h1 class="max-w-[680px] text-3xl font-black leading-tight tracking-[-0.01em] text-slate-950 sm:text-4xl lg:text-[44px]">
+                <h1 class="max-w-[680px] text-3xl font-black leading-tight tracking-[-0.02em] text-white sm:text-4xl lg:text-[42px]">
                     <?= /* @noEscape */ $_outputHelper->productAttribute($_product, $_productName, 'name') ?>
                 </h1>
 
-                <div class="mt-5 flex flex-wrap items-end gap-4 border-b border-slate-200 pb-5">
-                    <strong class="text-4xl font-black leading-none text-[#1d4ed8]">
-                        <?= /* @noEscape */ $_priceHelper->currency($_finalPrice, true, false) ?>
-                    </strong>
+                <div class="mt-5 flex flex-wrap items-end gap-4 border-b border-white/15 pb-5">
+                    <strong class="text-4xl font-black leading-none text-[#6d3df5] sm:text-5xl"><?= /* @noEscape */ $_priceHelper->currency($_finalPrice, true, false) ?></strong>
                     <?php if ($_hasDiscount): ?>
-                        <span class="pb-1 text-lg font-bold text-slate-400 line-through">
-                            <?= /* @noEscape */ $_priceHelper->currency($_regularPrice, true, false) ?>
-                        </span>
-                        <span class="mb-1 rounded bg-blue-50 px-3 py-2 text-xs font-black uppercase text-[#1d4ed8] ring-1 ring-blue-100">
+                        <span class="pb-1 text-lg font-bold text-white/35 line-through"><?= /* @noEscape */ $_priceHelper->currency($_regularPrice, true, false) ?></span>
+                        <span class="mb-1 rounded bg-[#6d3df5]/15 px-3 py-2 text-xs font-black uppercase text-[#a58cff] ring-1 ring-[#6d3df5]/30">
                             <?= $escaper->escapeHtml(__('Ušteda')) ?> <?= /* @noEscape */ $_priceHelper->currency($_regularPrice - $_finalPrice, true, false) ?>
                         </span>
                     <?php endif; ?>
                 </div>
 
-                <ul class="mt-5 grid gap-3 text-[15px] font-semibold leading-6 text-slate-800">
+                <ul class="mt-5 grid gap-3 text-[15px] font-semibold leading-6 text-white/80">
                     <?php
                     $sellingPoints = [
                         __('100% prozračni poliester za udobnost tokom cijelog dana.'),
                         __('Retro detalji inspirisani originalnim fudbalskim dresovima.'),
                         __('Regular fit kroj koji dobro stoji uz jeans, trenerku ili šorc.'),
+                        __('Visokokvalitetna štampa i izrade - dugotrajna i postojana.'),
                     ];
                     ?>
                     <?php foreach ($sellingPoints as $point): ?>
                         <li class="flex gap-3">
-                            <span class="mt-1.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-blue-50 text-[#1d4ed8] ring-1 ring-blue-100" aria-hidden="true">
-                                <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="none">
-                                    <path d="m5 10 3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
+                            <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border border-white/70 text-white" aria-hidden="true">
+                                <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="none"><path d="m5 10 3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </span>
                             <span><?= $escaper->escapeHtml($point) ?></span>
                         </li>
                     <?php endforeach; ?>
                 </ul>
 
-                <div class="mt-5 max-w-[640px] rounded-md bg-slate-50 p-4 text-[15px] leading-7 text-slate-700 ring-1 ring-slate-100">
+                <div class="mt-5 max-w-[640px] rounded-md border border-white/15 bg-white/[0.04] p-4 text-[15px] leading-7 text-white/78">
                     <?php if ($_shortDescription): ?>
                         <?= /* @noEscape */ $_outputHelper->productAttribute($_product, $_shortDescription, 'short_description') ?>
                     <?php else: ?>
-                        <?= $escaper->escapeHtml(__('Zvanični fudbalski dres sa laganim materijalom, modernim krojem i udobnošću za svakodnevno nošenje.')) ?>
+                        <?= $escaper->escapeHtml(__('Zvanični fudbalski dres sa laganim materijalom, modernim krojem i udobnošću za svakodnevno nošenje. Savršen za navijače i kolekcionare.')) ?>
                     <?php endif; ?>
                 </div>
 
-                <form
-                    class="mt-7 border-t border-slate-200 pt-6"
-                    data-product-sku="<?= $escaper->escapeHtmlAttr($_product->getSku()) ?>"
-                    action="<?= $escaper->escapeUrl($block->getSubmitUrl($_product)) ?>"
-                    method="post"
-                    id="product_addtocart_form"
-                    <?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>
-                >
+                <form class="mt-6" data-product-sku="<?= $escaper->escapeHtmlAttr($_product->getSku()) ?>" action="<?= $escaper->escapeUrl($block->getSubmitUrl($_product)) ?>" method="post" id="product_addtocart_form" <?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
                     <input type="hidden" name="product" value="<?= (int) $_product->getId() ?>" />
                     <input type="hidden" name="selected_configurable_option" value="" />
                     <input type="hidden" name="related_product" id="related-products-field" value="" />
@@ -176,76 +150,57 @@ if (!count($_galleryItems) && $_heroImage) {
                     <?= $block->getBlockHtml('formkey') ?>
 
                     <div class="flex items-center justify-between gap-4">
-                        <span class="text-sm font-black text-slate-950"><?= $escaper->escapeHtml(__('Veličina')) ?></span>
-                        <a href="#" class="!text-sm !font-bold !text-[#1d4ed8] !no-underline underline-offset-4 hover:!text-blue-700"><?= $escaper->escapeHtml(__('Vodič za veličine')) ?></a>
+                        <span class="text-sm font-black uppercase text-white"><?= $escaper->escapeHtml(__('Veličina')) ?></span>
+                        <button type="button" class="pdp-size-guide text-sm font-bold text-[#8b6cff] transition hover:text-white"><?= $escaper->escapeHtml(__('Vodič za veličine')) ?></button>
                     </div>
-                    <div class="mt-3 grid grid-cols-5 gap-2">
+                    <div class="mt-3 grid grid-cols-2 gap-2 min-[420px]:grid-cols-5">
                         <?php foreach (['S', 'M', 'L', 'XL', 'XXL'] as $size): ?>
                             <label class="cursor-pointer">
                                 <input class="peer sr-only" type="radio" name="jersey_size" value="<?= $escaper->escapeHtmlAttr($size) ?>" <?= $size === 'M' ? 'checked' : '' ?> />
-                                <span class="grid h-12 place-items-center rounded-md border border-slate-300 bg-white text-sm font-black text-slate-950 transition peer-checked:border-[#1d4ed8] peer-checked:bg-[#1d4ed8] peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-blue-900/10 hover:border-[#1d4ed8]">
+                                <span class="grid h-12 place-items-center rounded-md border border-white/15 bg-white/[0.03] text-sm font-black text-white transition peer-checked:border-[#6d3df5] peer-checked:bg-[#6d3df5] peer-checked:text-white hover:border-[#6d3df5]">
                                     <?= $escaper->escapeHtml($size) ?>
                                 </span>
                             </label>
                         <?php endforeach; ?>
                     </div>
 
-                    <label class="mt-5 block text-sm font-black text-slate-950" for="qty">
-                        <?= $escaper->escapeHtml(__('Količina')) ?>
-                    </label>
-                    <div class="mt-2 grid items-stretch gap-3 sm:grid-cols-[132px_minmax(0,1fr)]">
-                        <div class="grid h-14 grid-cols-3 overflow-hidden rounded-md border border-slate-300 bg-white">
-                            <button type="button" class="js-qty-minus grid h-full place-items-center text-xl font-black leading-none text-slate-950 transition hover:bg-blue-50 hover:text-[#1d4ed8]" aria-label="<?= $escaper->escapeHtmlAttr(__('Smanji količinu')) ?>">−</button>
-                            <input
-                                type="number"
-                                name="qty"
-                                id="qty"
-                                min="1"
-                                value="<?= (float) $block->getProductDefaultQty() ?: 1 ?>"
-                                aria-label="<?= $escaper->escapeHtmlAttr(__('Količina')) ?>"
-                                class="grid h-full w-full place-items-center border-x border-slate-300 p-0 text-center text-base font-black leading-none text-slate-950 outline-none [appearance:textfield] focus:bg-blue-50 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                                data-validate="<?= $escaper->escapeHtmlAttr(json_encode($block->getQuantityValidators())) ?>"
-                            />
-                            <button type="button" class="js-qty-plus grid h-full place-items-center text-xl font-black leading-none text-slate-950 transition hover:bg-blue-50 hover:text-[#1d4ed8]" aria-label="<?= $escaper->escapeHtmlAttr(__('Povećaj količinu')) ?>">+</button>
+                    <label class="sr-only" for="qty"><?= $escaper->escapeHtml(__('Količina')) ?></label>
+                    <div class="pdp-purchase-bar mt-5 grid grid-cols-[minmax(0,1fr)_64px] gap-2 rounded-[18px] border border-white/15 bg-[linear-gradient(145deg,rgba(255,255,255,0.045),rgba(255,255,255,0.012))] p-2.5 shadow-[0_20px_55px_rgba(0,0,0,0.38)] sm:grid-cols-[148px_minmax(0,1fr)_76px] sm:gap-3 sm:p-3">
+                        <div class="pdp-qty-control col-span-2 grid h-16 grid-cols-3 overflow-hidden rounded-xl border border-white/20 bg-black/20 sm:col-span-1 sm:h-[72px]">
+                            <button type="button" class="pdp-qty-button js-qty-minus grid h-full place-items-center text-2xl font-light leading-none text-white/80 transition hover:bg-white/[0.07] hover:text-[#e9bd6d]" aria-label="<?= $escaper->escapeHtmlAttr(__('Smanji količinu')) ?>">−</button>
+                            <input type="number" name="qty" id="qty" min="1" value="<?= (float) $block->getProductDefaultQty() ?: 1 ?>" aria-label="<?= $escaper->escapeHtmlAttr(__('Količina')) ?>" class="pdp-qty-input grid h-full w-full place-items-center border-x border-white/15 bg-transparent p-0 text-center text-lg font-semibold leading-none text-white outline-none [appearance:textfield] focus:bg-white/[0.06] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none" data-validate="<?= $escaper->escapeHtmlAttr(json_encode($block->getQuantityValidators())) ?>" />
+                            <button type="button" class="pdp-qty-button js-qty-plus grid h-full place-items-center text-[32px] font-light leading-none text-white/80 transition hover:bg-white/[0.07] hover:text-[#e9bd6d]" aria-label="<?= $escaper->escapeHtmlAttr(__('Povećaj količinu')) ?>">+</button>
                         </div>
 
                         <?php if ($_product->isSaleable()): ?>
-                            <button
-                                type="submit"
-                                class="grid h-14 min-w-0 grid-cols-[24px_minmax(0,1fr)_24px] items-center rounded-md bg-[#1d4ed8] px-5 text-sm font-black uppercase leading-none tracking-[0.18em] text-white shadow-xl shadow-blue-900/20 transition hover:-translate-y-0.5 hover:bg-blue-700 sm:text-base"
-                                id="product-addtocart-button"
-                                aria-label="<?= $escaper->escapeHtmlAttr(__('Dodaj u korpu')) ?>"
-                            >
-                                <svg class="h-5 w-5 justify-self-start" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h6.6a2 2 0 0 0 2-1.5L20 9H7M10 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                                <span class="justify-self-center text-center"><?= $escaper->escapeHtml(__('Dodaj u korpu')) ?></span>
+                            <button type="submit" class="group grid h-16 min-w-0 grid-cols-[22px_minmax(0,1fr)_22px] items-center rounded-xl border border-[#f4d38d] bg-[linear-gradient(135deg,#f4d995_0%,#d7a552_100%)] px-4 text-[13px] font-black uppercase leading-none tracking-[0.16em] text-[#111214] shadow-[inset_0_1px_0_rgba(255,255,255,0.48),0_12px_28px_rgba(201,151,70,0.18)] transition duration-200 hover:-translate-y-0.5 hover:brightness-110 sm:h-[72px] sm:grid-cols-[28px_minmax(0,1fr)_28px] sm:px-6 sm:text-base sm:tracking-[0.2em]" id="product-addtocart-button" aria-label="<?= $escaper->escapeHtmlAttr(__('Dodaj u korpu')) ?>">
+                                <svg class="h-6 w-6 justify-self-start transition-transform group-hover:-rotate-3 group-hover:scale-105 sm:h-7 sm:w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 4h2.2l2.1 10.1a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.6L20 8H6.1M9.5 21a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Zm8 0a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <span class="justify-self-center whitespace-nowrap text-center"><?= $escaper->escapeHtml(__('Dodaj u korpu')) ?></span>
                                 <span aria-hidden="true"></span>
                             </button>
                         <?php else: ?>
-                            <div class="grid h-14 place-items-center rounded-md bg-slate-200 px-3 text-xs font-black uppercase text-slate-500 sm:px-6 sm:text-sm">
-                                <?= $escaper->escapeHtml(__('Nije dostupno')) ?>
-                            </div>
+                            <div class="grid h-16 place-items-center rounded-xl bg-white/10 px-3 text-xs font-black uppercase text-white/55 sm:h-[72px] sm:px-6 sm:text-sm"><?= $escaper->escapeHtml(__('Nije dostupno')) ?></div>
                         <?php endif; ?>
+                        <button type="button" class="pdp-wishlist-button grid h-16 place-items-center rounded-xl border border-white/15 bg-black/20 text-[#e9bd6d] transition hover:border-[#e9bd6d]/70 hover:bg-[#e9bd6d]/10 sm:h-[72px]" aria-label="<?= $escaper->escapeHtmlAttr(__('Dodaj u listu želja')) ?>">
+                            <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21l8.8-8.3a5 5 0 0 0 0-7.1Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
                     </div>
                 </form>
 
-                <div class="mt-5 grid gap-3 border-y border-slate-100 py-5 sm:grid-cols-3">
+                <div class="mt-5 grid gap-3 border-y border-white/10 py-5 sm:grid-cols-3">
                     <?php
                     $serviceItems = [
-                        [__('Sigurno plaćanje'), __('kartica ili pouzeće')],
+                        [__('Sigurno plaćanje'), __('kartice i PayPal')],
                         [__('Brza dostava'), __('1-3 radna dana')],
                         [__('14 dana povrat'), __('bez komplikacija')],
                     ];
                     ?>
                     <?php foreach ($serviceItems as $serviceItem): ?>
-                        <div class="flex items-center justify-center gap-3 rounded-md bg-blue-50 px-3 py-3 ring-1 ring-blue-100">
-                            <svg class="h-6 w-6 shrink-0 text-[#1d4ed8]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M4 7h16v10H4V7Zm3 13h10M8 11h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                        <div class="flex items-center gap-3 rounded-md px-1 py-2">
+                            <svg class="h-6 w-6 shrink-0 text-[#6d3df5]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16v10H4V7Zm3 13h10M8 11h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             <div>
-                                <div class="text-[13px] font-black leading-4 text-slate-950"><?= $escaper->escapeHtml($serviceItem[0]) ?></div>
-                                <div class="mt-0.5 text-[11px] leading-4 text-slate-500"><?= $escaper->escapeHtml($serviceItem[1]) ?></div>
+                                <div class="text-[13px] font-black leading-4 text-white"><?= $escaper->escapeHtml($serviceItem[0]) ?></div>
+                                <div class="mt-0.5 text-[11px] leading-4 text-white/55"><?= $escaper->escapeHtml($serviceItem[1]) ?></div>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -254,28 +209,50 @@ if (!count($_galleryItems) && $_heroImage) {
         </div>
     </section>
 
-    <section class="container-shop border-t border-slate-200 pb-10 pt-8 sm:pb-14 sm:pt-10">
+    <section class="container-shop pb-10 sm:pb-14">
+        <div class="grid overflow-hidden rounded-lg border border-white/10 bg-white/[0.04] shadow-[0_24px_80px_rgba(0,0,0,0.28)] sm:grid-cols-2 lg:grid-cols-4">
+            <?php
+            $productBenefits = [
+                [__('Originalni proizvodi'), __('Garantujemo 100% autentičnost svakog dresa.'), 'M12 3 20 7v6c0 4-3.4 6.8-8 8-4.6-1.2-8-4-8-8V7l8-4Zm-3 9 2 2 4-5'],
+                [__('Premium kvalitet'), __('Pažljivo birani materijali za maksimalnu udobnost.'), 'M12 3 14.7 8.5l6 .9-4.3 4.2 1 5.9L12 16.6 6.6 19.5l1-5.9-4.3-4.2 6-.9L12 3Z'],
+                [__('Brza dostava'), __('Dostava širom BiH i regiona u roku 1-3 dana.'), 'M3 7h11v10H3V7Zm11 3h3l4 4v3h-7v-7ZM7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z'],
+                [__('14 dana povrat'), __('Ako niste zadovoljni, vratite bez komplikacija.'), 'M20 12a8 8 0 1 1-2.3-5.7M20 4v6h-6'],
+            ];
+            ?>
+            <?php foreach ($productBenefits as $benefit): ?>
+                <div class="flex gap-4 border-b border-white/10 p-5 last:border-b-0 sm:[&:nth-child(odd)]:border-r lg:border-b-0 lg:border-r lg:last:border-r-0">
+                    <svg class="h-11 w-11 shrink-0 text-white" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="<?= $escaper->escapeHtmlAttr($benefit[2]) ?>" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <div>
+                        <h3 class="text-sm font-black uppercase tracking-[0.04em] text-white"><?= $escaper->escapeHtml($benefit[0]) ?></h3>
+                        <p class="mt-2 text-sm leading-6 text-white/60"><?= $escaper->escapeHtml($benefit[1]) ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </section>
+
+    <section class="container-shop border-t border-white/10 pb-12 pt-8 sm:pb-16 sm:pt-10">
         <div class="mb-6">
-            <p class="text-xs font-black uppercase tracking-[0.28em] text-[#1d4ed8]"><?= $escaper->escapeHtml(__('Detalji proizvoda')) ?></p>
-            <h2 class="mt-2 text-2xl font-black text-slate-950 sm:text-3xl"><?= $escaper->escapeHtml(__('Sve što trebaš znati prije kupovine')) ?></h2>
+            <p class="text-xs font-black uppercase tracking-[0.28em] text-[#7b55ff]"><?= $escaper->escapeHtml(__('Detalji proizvoda')) ?></p>
+            <h2 class="mt-2 text-2xl font-black text-white sm:text-3xl"><?= $escaper->escapeHtml(__('Sve što trebaš znati prije kupovine')) ?></h2>
         </div>
 
         <div class="grid gap-8 py-7 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-start">
-            <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
-                <div class="border-b border-slate-200 bg-slate-50/80 px-3 pt-3">
-                    <div class="js-pdp-tabs flex gap-2 overflow-x-auto text-sm font-black uppercase tracking-[0.08em] text-slate-500" role="tablist" aria-label="<?= $escaper->escapeHtmlAttr(__('Detalji proizvoda')) ?>">
-                        <button type="button" class="js-pdp-tab rounded-t-md border border-b-0 border-[#1d4ed8] bg-[#1d4ed8] px-5 py-3 text-white shadow-sm" data-tab-target="opis" aria-controls="opis" aria-selected="true" role="tab"><?= $escaper->escapeHtml(__('Opis')) ?></button>
-                        <button type="button" class="js-pdp-tab rounded-t-md border border-b-0 border-transparent px-5 py-3 text-slate-500 transition hover:bg-white hover:text-[#1d4ed8]" data-tab-target="detalji" aria-controls="detalji" aria-selected="false" role="tab"><?= $escaper->escapeHtml(__('Detalji')) ?></button>
-                        <button type="button" class="js-pdp-tab rounded-t-md border border-b-0 border-transparent px-5 py-3 text-slate-500 transition hover:bg-white hover:text-[#1d4ed8]" data-tab-target="dostava" aria-controls="dostava" aria-selected="false" role="tab"><?= $escaper->escapeHtml(__('Dostava')) ?></button>
-                        <button type="button" class="js-pdp-tab rounded-t-md border border-b-0 border-transparent px-5 py-3 text-slate-500 transition hover:bg-white hover:text-[#1d4ed8]" data-tab-target="povrat" aria-controls="povrat" aria-selected="false" role="tab"><?= $escaper->escapeHtml(__('Povrat')) ?></button>
-                        <button type="button" class="js-pdp-tab rounded-t-md border border-b-0 border-transparent px-5 py-3 text-slate-500 transition hover:bg-white hover:text-[#1d4ed8]" data-tab-target="reviews" aria-controls="reviews" aria-selected="false" role="tab"><?= $escaper->escapeHtml(__('Recenzije')) ?></button>
+            <div class="overflow-hidden rounded-lg border border-white/10 bg-white/[0.035] shadow-[0_18px_60px_rgba(0,0,0,0.25)]">
+                <div class="border-b border-white/10 bg-black/20 px-3 pt-3">
+                    <div class="js-pdp-tabs flex gap-2 overflow-x-auto text-sm font-black uppercase tracking-[0.08em] text-white/55" role="tablist" aria-label="<?= $escaper->escapeHtmlAttr(__('Detalji proizvoda')) ?>">
+                        <button type="button" class="js-pdp-tab rounded-t-md border border-b-0 border-[#6d3df5] bg-[#6d3df5] px-5 py-3 text-white shadow-sm" data-tab-target="opis" aria-controls="opis" aria-selected="true" role="tab"><?= $escaper->escapeHtml(__('Opis')) ?></button>
+                        <button type="button" class="js-pdp-tab rounded-t-md border border-b-0 border-transparent px-5 py-3 text-white/55 transition hover:bg-white/10 hover:text-white" data-tab-target="detalji" aria-controls="detalji" aria-selected="false" role="tab"><?= $escaper->escapeHtml(__('Detalji')) ?></button>
+                        <button type="button" class="js-pdp-tab rounded-t-md border border-b-0 border-transparent px-5 py-3 text-white/55 transition hover:bg-white/10 hover:text-white" data-tab-target="dostava" aria-controls="dostava" aria-selected="false" role="tab"><?= $escaper->escapeHtml(__('Dostava')) ?></button>
+                        <button type="button" class="js-pdp-tab rounded-t-md border border-b-0 border-transparent px-5 py-3 text-white/55 transition hover:bg-white/10 hover:text-white" data-tab-target="povrat" aria-controls="povrat" aria-selected="false" role="tab"><?= $escaper->escapeHtml(__('Povrat')) ?></button>
+                        <button type="button" class="js-pdp-tab rounded-t-md border border-b-0 border-transparent px-5 py-3 text-white/55 transition hover:bg-white/10 hover:text-white" data-tab-target="reviews" aria-controls="reviews" aria-selected="false" role="tab"><?= $escaper->escapeHtml(__('Recenzije')) ?></button>
                     </div>
                 </div>
 
                 <div class="min-h-[320px] p-6 sm:p-8">
                 <article id="opis" class="js-pdp-tab-panel">
-                    <h3 class="text-lg font-black uppercase tracking-[0.08em] text-[#1d4ed8]"><?= $escaper->escapeHtml(__('Opis')) ?></h3>
-                    <div class="mt-4 text-[15px] leading-7 text-slate-700">
+                    <h3 class="text-lg font-black uppercase tracking-[0.08em] text-[#8b6cff]"><?= $escaper->escapeHtml(__('Opis')) ?></h3>
+                    <div class="mt-4 text-[15px] leading-7 text-white/70">
                         <?php if ($_descriptionHtml !== ''): ?>
                             <?= /* @noEscape */ $_descriptionHtml ?>
                         <?php else: ?>
@@ -285,64 +262,59 @@ if (!count($_galleryItems) && $_heroImage) {
                 </article>
 
                 <article id="detalji" class="js-pdp-tab-panel hidden">
-                    <h3 class="text-lg font-black uppercase tracking-[0.08em] text-[#1d4ed8]"><?= $escaper->escapeHtml(__('Detalji')) ?></h3>
+                    <h3 class="text-lg font-black uppercase tracking-[0.08em] text-[#8b6cff]"><?= $escaper->escapeHtml(__('Detalji')) ?></h3>
                     <dl class="mt-5 grid gap-3 text-sm sm:grid-cols-2">
-                        <div class="flex justify-between gap-4 rounded-md bg-slate-50 px-4 py-3">
-                            <dt class="font-bold text-slate-500"><?= $escaper->escapeHtml(__('Materijal')) ?></dt>
-                            <dd class="font-black text-slate-950"><?= $escaper->escapeHtml(__('Poliester')) ?></dd>
+                        <div class="flex justify-between gap-4 rounded-md border border-white/10 bg-white/[0.04] px-4 py-3">
+                            <dt class="font-bold text-white/55"><?= $escaper->escapeHtml(__('Materijal')) ?></dt>
+                            <dd class="font-black text-white"><?= $escaper->escapeHtml(__('Poliester')) ?></dd>
                         </div>
-                        <div class="flex justify-between gap-4 rounded-md bg-slate-50 px-4 py-3">
-                            <dt class="font-bold text-slate-500"><?= $escaper->escapeHtml(__('Kroj')) ?></dt>
-                            <dd class="font-black text-slate-950"><?= $escaper->escapeHtml(__('Regular fit')) ?></dd>
+                        <div class="flex justify-between gap-4 rounded-md border border-white/10 bg-white/[0.04] px-4 py-3">
+                            <dt class="font-bold text-white/55"><?= $escaper->escapeHtml(__('Kroj')) ?></dt>
+                            <dd class="font-black text-white"><?= $escaper->escapeHtml(__('Regular fit')) ?></dd>
                         </div>
-                        <div class="flex justify-between gap-4 rounded-md bg-slate-50 px-4 py-3">
-                            <dt class="font-bold text-slate-500"><?= $escaper->escapeHtml(__('SKU')) ?></dt>
-                            <dd class="font-black text-slate-950"><?= $escaper->escapeHtml($_product->getSku()) ?></dd>
+                        <div class="flex justify-between gap-4 rounded-md border border-white/10 bg-white/[0.04] px-4 py-3">
+                            <dt class="font-bold text-white/55"><?= $escaper->escapeHtml(__('SKU')) ?></dt>
+                            <dd class="font-black text-white"><?= $escaper->escapeHtml($_product->getSku()) ?></dd>
                         </div>
-                        <div class="flex justify-between gap-4 rounded-md bg-slate-50 px-4 py-3">
-                            <dt class="font-bold text-slate-500"><?= $escaper->escapeHtml(__('Održavanje')) ?></dt>
-                            <dd class="font-black text-slate-950"><?= $escaper->escapeHtml(__('Pranje na 30°C')) ?></dd>
+                        <div class="flex justify-between gap-4 rounded-md border border-white/10 bg-white/[0.04] px-4 py-3">
+                            <dt class="font-bold text-white/55"><?= $escaper->escapeHtml(__('Održavanje')) ?></dt>
+                            <dd class="font-black text-white"><?= $escaper->escapeHtml(__('Pranje na 30°C')) ?></dd>
                         </div>
                     </dl>
                 </article>
 
                 <article id="dostava" class="js-pdp-tab-panel hidden">
-                    <h3 class="text-lg font-black uppercase tracking-[0.08em] text-[#1d4ed8]"><?= $escaper->escapeHtml(__('Dostava')) ?></h3>
-                    <p class="mt-4 text-[15px] leading-7 text-slate-700"><?= $escaper->escapeHtml(__('Narudžbe se pakuju brzo i šalju pouzdanom dostavom. Nakon slanja dobijaš informacije za praćenje pošiljke.')) ?></p>
+                    <h3 class="text-lg font-black uppercase tracking-[0.08em] text-[#8b6cff]"><?= $escaper->escapeHtml(__('Dostava')) ?></h3>
+                    <p class="mt-4 text-[15px] leading-7 text-white/70"><?= $escaper->escapeHtml(__('Narudžbe se pakuju brzo i šalju pouzdanom dostavom. Nakon slanja dobijaš informacije za praćenje pošiljke.')) ?></p>
                 </article>
 
                 <article id="povrat" class="js-pdp-tab-panel hidden">
-                    <h3 class="text-lg font-black uppercase tracking-[0.08em] text-[#1d4ed8]"><?= $escaper->escapeHtml(__('Povrat i zamjena')) ?></h3>
-                    <p class="mt-4 text-[15px] leading-7 text-slate-700"><?= $escaper->escapeHtml(__('Ako veličina ne odgovara, proizvod možeš vratiti ili zamijeniti u roku od 14 dana, pod uslovom da nije nošen ili oštećen.')) ?></p>
+                    <h3 class="text-lg font-black uppercase tracking-[0.08em] text-[#8b6cff]"><?= $escaper->escapeHtml(__('Povrat i zamjena')) ?></h3>
+                    <p class="mt-4 text-[15px] leading-7 text-white/70"><?= $escaper->escapeHtml(__('Ako veličina ne odgovara, proizvod možeš vratiti ili zamijeniti u roku od 14 dana, pod uslovom da nije nošen ili oštećen.')) ?></p>
                 </article>
 
                 <article id="reviews" class="js-pdp-tab-panel hidden">
-                    <h3 class="text-lg font-black uppercase tracking-[0.08em] text-[#1d4ed8]"><?= $escaper->escapeHtml(__('Recenzije')) ?></h3>
-                    <div class="mt-4 text-[15px] leading-7 text-slate-700">
+                    <h3 class="text-lg font-black uppercase tracking-[0.08em] text-[#8b6cff]"><?= $escaper->escapeHtml(__('Recenzije')) ?></h3>
+                    <div class="mt-4 text-[15px] leading-7 text-white/70">
                         <p><?= $escaper->escapeHtml(__('Recenzije kupaca će biti prikazane ovdje kada budu dostupne.')) ?></p>
                     </div>
                 </article>
                 </div>
             </div>
 
-            <div class="grid rounded-lg bg-white shadow-[0_18px_60px_rgba(15,23,42,0.05)] ring-1 ring-slate-200 sm:grid-cols-4">
-                <?php
-                $footerBenefits = [
-                    [__('Zvanični dresovi'), __('100% original'), 'M7 4h10l1.5 4-3 2v10H8.5V10l-3-2L7 4Zm3 0c.5 1.2 1.2 1.8 2 1.8S13.5 5.2 14 4'],
-                    [__('Više od 5000+'), __('zadovoljnih kupaca'), 'M12 3 20 7v6c0 4-3.4 6.8-8 8-4.6-1.2-8-4-8-8V7l8-4Zm0 5.2 1.1 2.2 2.4.3-1.7 1.7.4 2.4-2.2-1.1-2.2 1.1.4-2.4-1.7-1.7 2.4-.3L12 8.2Z'],
-                    [__('Podrška 24/7'), __('Tu smo za vas'), 'M4 13v-1a8 8 0 0 1 16 0v1M4 13h3v5H5a1 1 0 0 1-1-1v-4Zm13 0h3v4a1 1 0 0 1-1 1h-2v-5Zm0 5c0 2-1.5 3-5 3'],
-                    [__('Dostava širom'), __('sveta'), 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-8-9h16M12 3c2.2 2.4 3.2 5.4 3.2 9S14.2 18.6 12 21c-2.2-2.4-3.2-5.4-3.2-9S9.8 5.4 12 3Z'],
-                ];
-                ?>
-                <?php foreach ($footerBenefits as $footerBenefit): ?>
-                    <div class="border-b border-slate-200 p-5 text-center last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
-                        <svg class="mx-auto mb-3 h-11 w-11 text-[#1d4ed8]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="<?= $escaper->escapeHtmlAttr($footerBenefit[2]) ?>" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <div class="text-sm font-black text-slate-950"><?= $escaper->escapeHtml($footerBenefit[0]) ?></div>
-                        <div class="mt-1 text-xs text-slate-600"><?= $escaper->escapeHtml($footerBenefit[1]) ?></div>
+            <div class="rounded-lg border border-white/10 bg-white/[0.04] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
+                <div class="flex items-center gap-4">
+                    <strong class="text-4xl font-black text-white">4.9</strong>
+                    <div>
+                        <div class="flex gap-1 text-[#ffd54a]" aria-label="<?= $escaper->escapeHtmlAttr(__('Pet zvjezdica')) ?>">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <p class="mt-1 text-sm text-white/55"><?= $escaper->escapeHtml(__('24 recenzije')) ?></p>
                     </div>
-                <?php endforeach; ?>
+                </div>
+                <button type="button" class="mt-5 grid h-12 w-full place-items-center rounded-md border border-white/10 bg-white/[0.04] text-sm font-black text-white transition hover:border-[#6d3df5] hover:text-[#8b6cff]">
+                    <?= $escaper->escapeHtml(__('Pogledaj sve recenzije')) ?>
+                </button>
             </div>
         </div>
     </section>
@@ -362,8 +334,8 @@ require(['jquery'], function ($) {
         }
 
         $mainImage.attr('src', imageUrl);
-        $thumbs.removeClass('border-[#1d4ed8] ring-4 ring-blue-100').addClass('border-slate-200');
-        $thumb.removeClass('border-slate-200').addClass('border-[#1d4ed8] ring-4 ring-blue-100');
+        $thumbs.removeClass('border-[#6d3df5] shadow-[0_0_0_1px_#6d3df5]').addClass('border-white/15');
+        $thumb.removeClass('border-white/15').addClass('border-[#6d3df5] shadow-[0_0_0_1px_#6d3df5]');
     });
 
     $('.js-qty-minus, .js-qty-plus').on('click', function () {
@@ -383,13 +355,13 @@ require(['jquery'], function ($) {
         }
 
         $('.js-pdp-tab')
-            .removeClass('border-[#1d4ed8] bg-[#1d4ed8] text-white shadow-sm')
-            .addClass('border-transparent text-slate-500')
+            .removeClass('border-[#6d3df5] bg-[#6d3df5] text-white shadow-sm')
+            .addClass('border-transparent text-white/55')
             .attr('aria-selected', 'false');
 
         $tab
-            .removeClass('border-transparent text-slate-500')
-            .addClass('border-[#1d4ed8] bg-[#1d4ed8] text-white shadow-sm')
+            .removeClass('border-transparent text-white/55')
+            .addClass('border-[#6d3df5] bg-[#6d3df5] text-white shadow-sm')
             .attr('aria-selected', 'true');
 
         $('.js-pdp-tab-panel').addClass('hidden');
