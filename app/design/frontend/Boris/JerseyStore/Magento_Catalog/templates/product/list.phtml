@@ -56,16 +56,16 @@ foreach ($categoryLinks as &$categoryLink) {
 unset($categoryLink);
 ?>
 
-<main class="relative left-1/2 w-screen -translate-x-1/2 bg-[#141A24] text-white">
-    <section class="relative overflow-hidden border-b border-[#2A3447] bg-[#141A24]">
+<main class="premium-category-page relative left-1/2 w-screen -translate-x-1/2 bg-transparent text-white">
+    <section class="relative min-h-[360px] overflow-hidden border-b border-[#2A3447] bg-[linear-gradient(90deg,#0B0F19_0%,rgba(11,15,25,0.96)_42%,rgba(11,15,25,0.5)_100%)]">
         <?php if ($categoryImageUrl): ?>
             <img
-                class="absolute right-0 top-0 hidden h-full w-1/2 object-cover opacity-10 lg:block"
+                class="absolute right-0 top-0 hidden h-full w-[58%] object-cover opacity-35 [mask-image:linear-gradient(to_left,black_60%,transparent)] lg:block"
                 src="<?= $escaper->escapeUrl($categoryImageUrl) ?>"
                 alt="<?= $escaper->escapeHtmlAttr($categoryName) ?>"
             />
         <?php endif; ?>
-        <div class="container-shop relative py-7 sm:py-9">
+        <div class="container-shop relative py-9 sm:py-12 lg:py-14">
             <nav class="mb-6 flex flex-wrap items-center gap-3 text-xs font-bold text-[#B7C0D1]">
                 <a href="<?= $escaper->escapeUrl($block->getUrl('')) ?>" class="!text-[#B7C0D1] !no-underline transition hover:!text-[#D4AF37]">
                     <?= $escaper->escapeHtml(__('Početna')) ?>
@@ -78,16 +78,14 @@ unset($categoryLink);
                 <strong class="text-white"><?= $escaper->escapeHtml($categoryName) ?></strong>
             </nav>
 
-            <div class="grid gap-7 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
+            <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-end">
                 <div>
                     <p class="text-xs font-black uppercase tracking-[0.24em] text-[#D4AF37]">
                         <?= $escaper->escapeHtml(__('Jersey collection')) ?>
                     </p>
-                    <h1 class="mt-3 max-w-4xl text-4xl font-black uppercase leading-none text-white sm:text-6xl">
+                    <h1 class="mt-3 max-w-4xl text-4xl font-black uppercase leading-none tracking-[-0.03em] text-white sm:text-6xl">
                         <?= $escaper->escapeHtml($categoryName) ?>
                     </h1>
-                    <div class="mt-5 h-1 w-24 bg-[#D4AF37]"></div>
-
                     <div class="mt-5 max-w-2xl text-base leading-7 text-[#B7C0D1]">
                         <?php if ($categoryDescriptionHtml): ?>
                             <?= /* @noEscape */ $categoryDescriptionHtml ?>
@@ -97,7 +95,7 @@ unset($categoryLink);
                     </div>
                 </div>
 
-                <div class="grid grid-cols-3 border border-[#2A3447] bg-[#141A24] text-center shadow-sm">
+                <div class="grid grid-cols-3 rounded-md border border-[#2A3447] bg-[#141A24]/80 text-center shadow-2xl shadow-black/20 backdrop-blur">
                     <div class="border-r border-[#2A3447] p-4">
                         <div class="text-3xl font-black text-white"><?= (int)count($products) ?></div>
                         <div class="mt-1 text-[11px] font-black uppercase tracking-[0.12em] text-[#B7C0D1]">
@@ -121,35 +119,22 @@ unset($categoryLink);
         </div>
     </section>
 
-    <section class="container-shop py-8 sm:py-10">
+    <section class="container-shop grid gap-x-6 gap-y-7 py-8 sm:py-10 lg:grid-cols-[230px_minmax(0,1fr)] lg:items-start">
         <?php if ($categoryLinks): ?>
-            <section class="mb-8">
+            <section class="rounded-md border border-[#2A3447] bg-[#141A24]/85 p-4 lg:col-start-1 lg:row-start-1">
                 <div class="mb-4 flex items-end justify-between gap-4">
-                    <div>
-                        <p class="text-xs font-black uppercase tracking-[0.18em] text-[#D4AF37]">
-                            <?= $escaper->escapeHtml(__('Kategorije')) ?>
-                        </p>
-                        <h2 class="mt-2 text-2xl font-black text-white">
-                            <?= $escaper->escapeHtml(__('Izaberi kategoriju')) ?>
-                        </h2>
-                    </div>
-                    <span class="hidden text-sm font-bold text-[#B7C0D1] sm:block">
-                        <?= $escaper->escapeHtml(__('%1 dostupno', count($categoryLinks))) ?>
-                    </span>
+                    <h2 class="text-sm font-black uppercase tracking-[0.06em] text-white"><?= $escaper->escapeHtml(__('Kategorije')) ?></h2>
                 </div>
 
-                <nav class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4" aria-label="<?= $escaper->escapeHtmlAttr(__('Kategorije')) ?>">
+                <nav class="mt-3 grid" aria-label="<?= $escaper->escapeHtmlAttr(__('Kategorije')) ?>">
                     <?php foreach ($categoryLinks as $categoryLink): ?>
                         <a
                             href="<?= $escaper->escapeUrl($categoryLink['url']) ?>"
-                            class="<?= $categoryLink['is_current'] ? 'border-[#D4AF37] bg-[#D4AF37] !text-white' : 'border-[#2A3447] bg-[#141A24] !text-white' ?> group flex min-h-24 items-center justify-between gap-4 border p-4 !no-underline shadow-sm transition hover:border-[#E6C55A] hover:bg-[#E6C55A] hover:!text-white"
+                            class="<?= $categoryLink['is_current'] ? '!text-[#D4AF37]' : '!text-[#B7C0D1]' ?> group flex items-center justify-between gap-3 border-b border-[#2A3447] px-1 py-3 text-sm font-bold !no-underline last:border-b-0 hover:!text-[#E6C55A]"
                         >
                             <span>
-                                <span class="block text-base font-black uppercase leading-tight">
+                                <span class="block leading-tight">
                                     <?= $escaper->escapeHtml($categoryLink['name']) ?>
-                                </span>
-                                <span class="<?= $categoryLink['is_current'] ? 'text-[#B7C0D1]' : 'text-[#B7C0D1] group-hover:text-white/75' ?> mt-2 block text-xs font-bold">
-                                    <?= $escaper->escapeHtml(__('Pogledaj dresove')) ?>
                                 </span>
                             </span>
                             <svg class="h-5 w-5 shrink-0 transition group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -161,8 +146,9 @@ unset($categoryLink);
             </section>
         <?php endif; ?>
 
-        <section class="mb-8 border-y border-[#2A3447] bg-[#141A24] py-5" data-category-filters>
-            <div class="grid gap-4 lg:grid-cols-[minmax(220px,1fr)_auto_auto_auto] lg:items-end">
+        <section class="category-filters rounded-md border border-[#2A3447] bg-[#141A24]/85 p-4 lg:col-start-1 lg:row-start-2" data-category-filters>
+            <h2 class="mb-5 text-sm font-black uppercase tracking-[0.06em] text-white"><?= $escaper->escapeHtml(__('Filteri')) ?></h2>
+            <div class="grid gap-4">
                 <label class="block">
                     <span class="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-[#B7C0D1]">
                         <?= $escaper->escapeHtml(__('Pretraga')) ?>
@@ -187,44 +173,37 @@ unset($categoryLink);
                     </select>
                 </label>
 
-                <label class="flex h-12 items-center gap-3 border border-[#2A3447] bg-[#141A24] px-4 text-sm font-black text-white lg:mt-6">
+                <label class="flex h-12 items-center gap-3 border border-[#2A3447] bg-[#0B0F19] px-4 text-sm font-black text-white">
                     <input type="checkbox" data-filter-stock class="h-4 w-4 accent-[#D4AF37]" />
                     <?= $escaper->escapeHtml(__('Samo dostupno')) ?>
                 </label>
 
-                <button type="button" data-filter-reset class="h-12 border border-[#2A3447] bg-[#141A24] px-5 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:bg-[#E6C55A] hover:border-[#E6C55A] lg:mt-6">
+                <button type="button" data-filter-reset class="category-reset h-12 border border-[#2A3447] bg-transparent px-5 text-xs font-black uppercase tracking-[0.08em] text-white transition hover:border-[#E6C55A] hover:text-[#E6C55A]">
                     <?= $escaper->escapeHtml(__('Reset')) ?>
                 </button>
             </div>
-            <div class="mt-4 flex items-center justify-between gap-4 text-sm font-bold text-[#B7C0D1]">
+            <div class="mt-4 text-xs font-bold text-[#B7C0D1]">
                 <span data-filter-count><?= $escaper->escapeHtml(__('%1 proizvoda prikazano', count($products))) ?></span>
-                <span><?= $escaper->escapeHtml(__('Filteri se primjenjuju odmah')) ?></span>
             </div>
         </section>
 
-        <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div class="flex flex-col gap-4 lg:col-start-2 lg:row-start-1 sm:flex-row sm:items-end sm:justify-between">
             <div>
-                <p class="text-xs font-black uppercase tracking-[0.18em] text-[#D4AF37]">
-                    <?= $escaper->escapeHtml(__('Dostupni dresovi')) ?>
-                </p>
-                <h2 class="mt-2 text-3xl font-black text-white">
-                    <?= $escaper->escapeHtml($categoryName) ?>
-                </h2>
+                <h2 class="text-xl font-black text-white"><?= $escaper->escapeHtml(__('%1 proizvoda', count($products))) ?></h2>
             </div>
-            <div class="grid grid-cols-3 border border-[#2A3447] text-center text-xs font-black uppercase text-[#B7C0D1] sm:min-w-[360px]">
-                <div class="border-r border-[#2A3447] px-3 py-3"><?= $escaper->escapeHtml(__('Novo')) ?></div>
-                <div class="border-r border-[#2A3447] px-3 py-3"><?= $escaper->escapeHtml(__('Popularno')) ?></div>
-                <div class="px-3 py-3"><?= $escaper->escapeHtml(__('Original')) ?></div>
+            <div class="flex items-center gap-2">
+                <button type="button" class="category-view-toggle grid h-11 w-11 place-items-center rounded border border-[#D4AF37] text-[#D4AF37]" aria-label="<?= $escaper->escapeHtmlAttr(__('Mrežni prikaz')) ?>"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Zm10 0h6v6h-6v-6Z" stroke="currentColor" stroke-width="1.5"/></svg></button>
+                <div class="grid h-11 min-w-44 place-items-center rounded border border-[#2A3447] px-4 text-xs font-bold text-[#B7C0D1]"><?= $escaper->escapeHtml(__('Popularno')) ?></div>
             </div>
         </div>
 
         <?php if (!$products): ?>
-            <div class="border border-[#2A3447] bg-[#141A24] p-8 text-[#B7C0D1]">
+            <div class="border border-[#2A3447] bg-[#141A24] p-8 text-[#B7C0D1] lg:col-start-2 lg:row-start-2">
                 <h3 class="text-xl font-black text-white"><?= $escaper->escapeHtml(__('Nema proizvoda u ovoj kategoriji')) ?></h3>
                 <p class="mt-2 text-sm leading-6"><?= $escaper->escapeHtml(__('Dodaj proizvode u ovu kategoriju kroz Magento admin panel da bi se prikazali ovdje.')) ?></p>
             </div>
         <?php else: ?>
-            <ol class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <ol class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3 lg:col-start-2 lg:row-start-2">
                 <?php foreach ($products as $index => $product): ?>
                     <?php
                     $stockData = $viewModel ? $viewModel->getStockData($product) : ['is_in_stock' => null, 'qty' => null];
@@ -246,11 +225,22 @@ unset($categoryLink);
                     </li>
                 <?php endforeach; ?>
             </ol>
-            <div data-filter-empty class="mt-6 hidden border border-[#2A3447] bg-[#141A24] p-8 text-[#B7C0D1]">
+            <div data-filter-empty class="hidden border border-[#2A3447] bg-[#141A24] p-8 text-[#B7C0D1] lg:col-start-2 lg:row-start-3">
                 <h3 class="text-xl font-black text-white"><?= $escaper->escapeHtml(__('Nema proizvoda za odabrane filtere')) ?></h3>
                 <p class="mt-2 text-sm leading-6"><?= $escaper->escapeHtml(__('Promijeni pretragu ili resetuj filtere da vidiš sve proizvode.')) ?></p>
             </div>
         <?php endif; ?>
+    </section>
+
+    <section class="container-shop pb-12">
+        <div class="grid overflow-hidden rounded-md border border-[#2A3447] bg-[#141A24]/90 sm:grid-cols-2 lg:grid-cols-4">
+            <?php foreach ([[__('100% original'), __('Garantujemo originalnost svakog dresa.'), 'M12 3 20 7v6c0 4-3.4 6.8-8 8-4.6-1.2-8-4-8-8V7l8-4Zm-3 9 2 2 4-5'], [__('Brza dostava'), __('Dostava širom BiH i regiona.'), 'M3 7h11v10H3V7Zm11 3h3l4 4v3h-7v-7'], [__('14 dana povrat'), __('Povrat bez komplikacija.'), 'M20 12a8 8 0 1 1-2.3-5.7M20 4v6h-6'], [__('Sigurno plaćanje'), __('Kartice i sigurne metode plaćanja.'), 'M6 10h12v10H6V10Zm3 0V7a3 3 0 0 1 6 0v3']] as $benefit): ?>
+                <article class="flex gap-4 border-b border-[#2A3447] p-5 last:border-b-0 sm:[&:nth-child(odd)]:border-r lg:border-b-0 lg:border-r lg:last:border-r-0">
+                    <svg class="h-10 w-10 shrink-0 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="<?= $escaper->escapeHtmlAttr($benefit[2]) ?>" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <div><h3 class="text-xs font-black uppercase text-white"><?= $escaper->escapeHtml($benefit[0]) ?></h3><p class="mt-2 text-xs leading-5 text-[#B7C0D1]"><?= $escaper->escapeHtml($benefit[1]) ?></p></div>
+                </article>
+            <?php endforeach; ?>
+        </div>
     </section>
 </main>
 
