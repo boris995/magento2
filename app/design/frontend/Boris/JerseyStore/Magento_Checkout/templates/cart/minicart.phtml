@@ -7,7 +7,7 @@
     data-block="minicart"
     class="jersey-minicart-wrapper"
     data-mage-init='{"Magento_Checkout/js/sidebar-cart":{}}'>
-    <a class="action showcart relative grid h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#ff2b2b]"
+    <a class="action showcart relative grid h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#D4AF37]"
        href="<?= $block->escapeUrl($block->getShoppingCartUrl()) ?>"
        aria-label="<?= $block->escapeHtmlAttr(__('Open cart')) ?>"
        data-bind="scope: 'minicart_content'">
@@ -18,7 +18,7 @@
                   stroke-linecap="round"
                   stroke-linejoin="round" />
         </svg>
-        <span class="counter qty absolute right-1 top-[5px] h-4 min-w-4 rounded-full bg-[#ff2b2b] px-1 text-center text-[10px] font-black leading-4 text-white"
+        <span class="counter qty absolute right-1 top-[5px] h-4 min-w-4 rounded-full bg-[#D4AF37] px-1 text-center text-[10px] font-black leading-4 text-white"
               data-bind="css: { empty: !!getCartParam('summary_count') == false && !isLoading() },
                blockLoader: isLoading">
             <span class="counter-number">
@@ -54,7 +54,7 @@
 
         <div class="fixed inset-y-0 right-0 flex h-screen max-h-screen w-full items-stretch pointer-events-none sm:w-[400px] md:w-full md:max-w-md">
             <div data-role="minicart-panel"
-                 class="pointer-events-auto h-screen max-h-screen w-full transform translate-x-full overflow-hidden bg-white shadow-xl transition-all duration-500 ease-in-out sm:w-[400px] md:w-full md:max-w-md">
+                 class="pointer-events-auto h-screen max-h-screen w-full transform translate-x-full overflow-hidden bg-[#141A24] shadow-xl transition-all duration-500 ease-in-out sm:w-[400px] md:w-full md:max-w-md">
                 <div id="minicart-content-wrapper"
                      class="flex h-screen max-h-screen w-full flex-col overflow-hidden sm:w-[400px] md:w-full md:max-w-md"
                      data-bind="scope: 'minicart_content'">

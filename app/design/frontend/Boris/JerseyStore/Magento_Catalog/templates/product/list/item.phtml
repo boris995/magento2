@@ -24,7 +24,7 @@ $_productUrl = $_viewModel ? $_viewModel->getProductUrl($_product) : $_product->
 ?>
 
 <article
-    class="group flex h-full flex-col overflow-hidden border border-neutral-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-[#d60000] hover:shadow-2xl hover:shadow-neutral-950/10"
+    class="group flex h-full flex-col overflow-hidden border border-[#2A3447] bg-[#141A24] transition duration-300 hover:-translate-y-1 hover:border-[#E6C55A] hover:shadow-2xl hover:shadow-neutral-950/10"
     id="product-item-info_<?= (int) $_product->getId() ?>"
 >
     <a
@@ -32,10 +32,10 @@ $_productUrl = $_viewModel ? $_viewModel->getProductUrl($_product) : $_product->
         class="relative block bg-gradient-to-br from-neutral-100 via-white to-neutral-200 p-4"
         tabindex="-1"
     >
-        <span class="absolute left-4 top-4 z-10 bg-[#d60000] px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] text-white">
+        <span class="absolute left-4 top-4 z-10 bg-[#D4AF37] px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] text-white">
             <?= $escaper->escapeHtml($_stockData['is_in_stock'] === false ? __('Nema na stanju') : __('Dres')) ?>
         </span>
-        <div class="aspect-[4/5] overflow-hidden bg-white">
+        <div class="aspect-[4/5] overflow-hidden bg-[#141A24]">
             <div class="h-full w-full transition duration-500 group-hover:scale-105">
                 <?= $_productImage->toHtml() ?>
             </div>
@@ -44,30 +44,30 @@ $_productUrl = $_viewModel ? $_viewModel->getProductUrl($_product) : $_product->
 
     <div class="flex flex-1 flex-col p-5">
         <div class="flex-1">
-            <h2 class="text-lg font-black leading-snug text-neutral-950">
+            <h2 class="text-lg font-black leading-snug text-white">
                 <a
                     href="<?= $escaper->escapeUrl($_productUrl) ?>"
-                    class="!text-neutral-950 !no-underline transition hover:!text-[#d60000]"
+                    class="!text-white !no-underline transition hover:!text-[#D4AF37]"
                     title="<?= $escaper->escapeHtmlAttr($_productName) ?>"
                 >
                     <?= /* @noEscape */ $_outputHelper->productAttribute($_product, $_product->getName(), 'name') ?>
                 </a>
             </h2>
 
-            <div class="mt-3 text-sm text-neutral-500">
+            <div class="mt-3 text-sm text-[#B7C0D1]">
                 <?= $_listBlock->getReviewsSummaryHtml($_product, $_templateType) ?>
             </div>
 
-            <div class="mt-4 text-2xl font-black text-neutral-950">
+            <div class="mt-4 text-2xl font-black text-white">
                 <?= /* @noEscape */ $_priceHelper->currency($_product->getFinalPrice(), true, false) ?>
             </div>
 
             <?= $_listBlock->getProductDetailsHtml($_product) ?>
 
-            <dl class="mt-4 grid grid-cols-2 border border-neutral-200 text-sm">
-                <div class="border-r border-neutral-200 bg-neutral-50 p-3">
-                    <dt class="font-black text-neutral-500"><?= $escaper->escapeHtml(__('Stanje')) ?></dt>
-                    <dd class="mt-1 font-bold text-neutral-950">
+            <dl class="mt-4 grid grid-cols-2 border border-[#2A3447] text-sm">
+                <div class="border-r border-[#2A3447] bg-[#141A24] p-3">
+                    <dt class="font-black text-[#B7C0D1]"><?= $escaper->escapeHtml(__('Stanje')) ?></dt>
+                    <dd class="mt-1 font-bold text-white">
                         <?php if ($_stockData['is_in_stock'] === null): ?>
                             <?= $escaper->escapeHtml(__('Nepoznato')) ?>
                         <?php else: ?>
@@ -75,9 +75,9 @@ $_productUrl = $_viewModel ? $_viewModel->getProductUrl($_product) : $_product->
                         <?php endif; ?>
                     </dd>
                 </div>
-                <div class="bg-neutral-50 p-3">
-                    <dt class="font-black text-neutral-500"><?= $escaper->escapeHtml(__('Tip')) ?></dt>
-                    <dd class="mt-1 font-bold text-neutral-950">
+                <div class="bg-[#141A24] p-3">
+                    <dt class="font-black text-[#B7C0D1]"><?= $escaper->escapeHtml(__('Tip')) ?></dt>
+                    <dd class="mt-1 font-bold text-white">
                         <?= $escaper->escapeHtml(__('Original')) ?>
                     </dd>
                 </div>
@@ -104,20 +104,20 @@ $_productUrl = $_viewModel ? $_viewModel->getProductUrl($_product) : $_product->
                     <button
                         type="submit"
                         title="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
-                        class="w-full bg-[#d60000] px-5 py-3 text-sm font-black uppercase tracking-[0.1em] text-white transition hover:bg-neutral-950"
+                        class="w-full bg-[#D4AF37] px-5 py-3 text-sm font-black uppercase tracking-[0.1em] text-white transition hover:bg-[#141A24]"
                     >
                         <span><?= $escaper->escapeHtml(__('Dodaj u korpu')) ?></span>
                     </button>
                 </form>
             <?php else: ?>
-                <div class="border border-neutral-200 px-5 py-3 text-center text-sm font-black uppercase tracking-[0.1em] text-neutral-500">
+                <div class="border border-[#2A3447] px-5 py-3 text-center text-sm font-black uppercase tracking-[0.1em] text-[#B7C0D1]">
                     <?= $escaper->escapeHtml($_product->isAvailable() ? __('Dostupno') : __('Nema na stanju')) ?>
                 </div>
             <?php endif; ?>
 
             <a
                 href="<?= $escaper->escapeUrl($_productUrl) ?>"
-                class="text-center text-sm font-black !text-neutral-500 !no-underline transition hover:!text-neutral-950"
+                class="text-center text-sm font-black !text-[#B7C0D1] !no-underline transition hover:!text-white"
             >
                 <?= $escaper->escapeHtml(__('Detalji proizvoda')) ?>
             </a>

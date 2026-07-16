@@ -116,10 +116,10 @@ $products
 $stockHelper->addInStockFilterToCollection($products);
 ?>
 
-<main class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-[#1B263B] text-white">
+<main class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-transparent text-white">
 
     <!-- HERO -->
-    <section class="relative overflow-hidden bg-[#050505] text-white">
+    <section class="relative overflow-hidden bg-transparent text-white">
         <div class="absolute inset-0">
             <img
                 src="<?= $escaper->escapeUrl($image) ?>"
@@ -127,53 +127,53 @@ $stockHelper->addInStockFilterToCollection($products);
                 class="h-full w-full object-cover object-[66%_42%] opacity-[0.42]"
                 loading="eager"
             />
-            <div class="absolute inset-0 bg-[linear-gradient(90deg,#050505_0%,rgba(5,5,5,0.94)_34%,rgba(5,5,5,0.5)_64%,rgba(5,5,5,0.72)_100%)]"></div>
-            <div class="absolute left-[42%] top-0 hidden h-full w-36 -skew-x-12 bg-[#d60000]/35 blur-sm lg:block"></div>
-            <div class="absolute left-[48%] top-0 hidden h-full w-3 -skew-x-12 bg-white/40 lg:block"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(90deg,#0B0F19_0%,rgba(5,5,5,0.94)_34%,rgba(5,5,5,0.5)_64%,rgba(5,5,5,0.72)_100%)]"></div>
+            <div class="absolute left-[42%] top-0 hidden h-full w-36 -skew-x-12 bg-[#D4AF37]/35 blur-sm lg:block"></div>
+            <div class="absolute left-[48%] top-0 hidden h-full w-3 -skew-x-12 bg-[#141A24]/40 lg:block"></div>
             <div class="absolute bottom-10 right-3 hidden text-[160px] font-black leading-none text-white/[0.04] lg:block">25/26</div>
-            <div class="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#050505] to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#0B0F19] to-transparent"></div>
         </div>
 
         <div class="container-shop relative grid min-h-[620px] gap-10 py-14 lg:grid-cols-[minmax(0,0.72fr)_minmax(320px,0.28fr)] lg:items-center lg:py-20">
             <div class="max-w-4xl">
-                <p class="text-xs font-black uppercase tracking-[0.24em] text-[#ff2b2b]">
+                <p class="text-xs font-black uppercase tracking-[0.24em] text-[#D4AF37]">
                     Nova kolekcija 2025/26
                 </p>
 
                 <h1 class="mt-5 max-w-4xl text-5xl font-black uppercase italic leading-[0.88] tracking-[-0.04em] sm:text-7xl lg:text-8xl">
-                    Dresovi koje<br /><span class="text-[#e32929]">živiš</span>
+                    Dresovi koje<br /><span class="text-[#D4AF37]">živiš</span>
                 </h1>
 
-                <p class="mt-6 max-w-xl text-base font-semibold leading-8 text-white/78 sm:text-lg">
+                <p class="mt-6 max-w-xl text-base font-semibold leading-8 text-[#B7C0D1] sm:text-lg">
                     Klupski, reprezentativni i retro dresovi najnovije sezone. Vrhunski kvalitet, tvoj stil i strast koja se nosi svaki dan.
                 </p>
 
                 <div class="mt-9 flex flex-col gap-3 sm:flex-row">
                     <a href="<?= $escaper->escapeUrl($block->getUrl('category-page')) ?>"
-                       class="inline-flex h-13 items-center justify-center bg-[#e32929] px-7 text-sm font-extrabold uppercase tracking-[0.08em] !text-white !no-underline shadow-xl shadow-red-950/30 transition hover:-translate-y-0.5 hover:bg-white hover:!text-[#050505]">
+                       class="inline-flex h-13 items-center justify-center bg-[#D4AF37] px-7 text-sm font-extrabold uppercase tracking-[0.08em] !text-white !no-underline shadow-xl shadow-red-950/30 transition hover:-translate-y-0.5 hover:bg-[#141A24] hover:!text-white">
                         Pogledaj kolekciju →
                     </a>
                     <a href="<?= $escaper->escapeUrl($block->getUrl('club-jerseys')) ?>"
-                       class="inline-flex h-13 items-center justify-center border border-white/25 bg-white/[0.03] px-7 text-sm font-extrabold uppercase tracking-[0.08em] !text-white !no-underline transition hover:border-white hover:bg-white hover:!text-[#050505]">
+                       class="inline-flex h-13 items-center justify-center border border-[#2A3447] bg-[#141A24]/[0.03] px-7 text-sm font-extrabold uppercase tracking-[0.08em] !text-white !no-underline transition hover:border-white hover:bg-[#141A24] hover:!text-white">
                         Naši klubovi
                     </a>
                 </div>
 
-                <div class="mt-9 grid gap-4 text-xs font-black uppercase tracking-[0.08em] text-white/90 sm:grid-cols-3">
+                <div class="mt-9 grid gap-4 text-xs font-black uppercase tracking-[0.08em] text-[#B7C0D1] sm:grid-cols-3">
                     <div class="flex items-center gap-3">
-                        <span class="grid h-9 w-9 place-items-center rounded-full border border-white/20 text-[#ff3b3b]">
+                        <span class="grid h-9 w-9 place-items-center rounded-full border border-[#2A3447] text-[#D4AF37]">
                             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 20 7v6c0 4.4-3.1 7.4-8 8-4.9-.6-8-3.6-8-8V7l8-4Z" stroke="currentColor" stroke-width="1.7"/><path d="m9 12 2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </span>
                         Originalni proizvodi
                     </div>
                     <div class="flex items-center gap-3">
-                        <span class="grid h-9 w-9 place-items-center rounded-full border border-white/20 text-[#ff3b3b]">
+                        <span class="grid h-9 w-9 place-items-center rounded-full border border-[#2A3447] text-[#D4AF37]">
                             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 10h12v10H6V10Zm3 0V7a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.7"/><path d="M12 14v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                         </span>
                         Sigurno plaćanje
                     </div>
                     <div class="flex items-center gap-3">
-                        <span class="grid h-9 w-9 place-items-center rounded-full border border-white/20 text-[#ff3b3b]">
+                        <span class="grid h-9 w-9 place-items-center rounded-full border border-[#2A3447] text-[#D4AF37]">
                             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7h11v9H3V7Zm11 3h4l3 3v3h-7v-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="7" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/><circle cx="18" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/></svg>
                         </span>
                         Brza dostava 24h
@@ -182,18 +182,18 @@ $stockHelper->addInStockFilterToCollection($products);
             </div>
 
             <div class="hidden self-end lg:block">
-                <div class="grid grid-cols-3 border border-white/10 bg-white/[0.06] text-center backdrop-blur">
-                    <div class="border-r border-white/10 p-4">
+                <div class="grid grid-cols-3 border border-[#2A3447] bg-[#141A24]/[0.06] text-center backdrop-blur">
+                    <div class="border-r border-[#2A3447] p-4">
                         <div class="text-3xl font-extrabold">100%</div>
-                        <div class="mt-1 text-[10px] font-black uppercase tracking-[0.12em] text-white/55">Original</div>
+                        <div class="mt-1 text-[10px] font-black uppercase tracking-[0.12em] text-[#B7C0D1]">Original</div>
                     </div>
-                    <div class="border-r border-white/10 p-4">
+                    <div class="border-r border-[#2A3447] p-4">
                         <div class="text-3xl font-extrabold">24h</div>
-                        <div class="mt-1 text-[10px] font-black uppercase tracking-[0.12em] text-white/55">Obrada</div>
+                        <div class="mt-1 text-[10px] font-black uppercase tracking-[0.12em] text-[#B7C0D1]">Obrada</div>
                     </div>
                     <div class="p-4">
                         <div class="text-3xl font-extrabold">14d</div>
-                        <div class="mt-1 text-[10px] font-black uppercase tracking-[0.12em] text-white/55">Povrat</div>
+                        <div class="mt-1 text-[10px] font-black uppercase tracking-[0.12em] text-[#B7C0D1]">Povrat</div>
                     </div>
                 </div>
             </div>
@@ -201,28 +201,28 @@ $stockHelper->addInStockFilterToCollection($products);
     </section>
 
     <!-- CATEGORIES -->
-    <section class="bg-[#070707] py-10 text-white lg:py-12">
+    <section class="bg-[#141A24] py-10 text-white lg:py-12">
         <div class="container-shop">
             <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                    <p class="text-xs font-black uppercase tracking-[0.18em] text-[#d60000]">Kategorije</p>
+                    <p class="text-xs font-black uppercase tracking-[0.18em] text-[#D4AF37]">Kategorije</p>
                     <h2 class="mt-2 text-3xl font-extrabold uppercase text-white lg:text-4xl">Pronađi svoj stil</h2>
                 </div>
-                <a href="<?= $escaper->escapeUrl($block->getUrl('category-page')) ?>" class="text-sm font-extrabold uppercase tracking-[0.08em] !text-white !no-underline hover:!text-[#d60000]">
+                <a href="<?= $escaper->escapeUrl($block->getUrl('category-page')) ?>" class="text-sm font-extrabold uppercase tracking-[0.08em] !text-white !no-underline hover:!text-[#D4AF37]">
                     Sve kategorije →
                 </a>
             </div>
 
             <?php if (!count($categories)): ?>
-                <div class="border border-white/10 bg-white/[0.04] p-8 text-sm font-semibold text-white/60 shadow-sm">
+                <div class="border border-[#2A3447] bg-[#141A24]/[0.04] p-8 text-sm font-semibold text-[#B7C0D1] shadow-sm">
                     <?= $escaper->escapeHtml(__('Trenutno nema aktivnih kategorija za prikaz.')) ?>
                 </div>
             <?php else: ?>
                 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     <?php foreach ($categories as $category): ?>
                         <a href="<?= $escaper->escapeUrl($category['url']) ?>"
-                           class="group overflow-hidden rounded-lg border border-white/10 bg-white/[0.04] !text-white !no-underline shadow-sm transition hover:-translate-y-1 hover:border-[#d60000] hover:shadow-2xl hover:shadow-black/40">
-                            <div class="relative h-44 overflow-hidden bg-neutral-900">
+                           class="group overflow-hidden rounded-lg border border-[#2A3447] bg-[#141A24]/[0.04] !text-white !no-underline shadow-sm transition hover:-translate-y-1 hover:border-[#E6C55A] hover:shadow-2xl hover:shadow-black/40">
+                            <div class="relative h-44 overflow-hidden bg-[#141A24]">
                                 <img src="<?= $escaper->escapeUrl($category['image']) ?>"
                                      alt="<?= $escaper->escapeHtmlAttr($category['title']) ?>"
                                      class="h-full w-full object-cover <?= $escaper->escapeHtmlAttr($category['crop']) ?> transition duration-500 group-hover:scale-105"
@@ -236,7 +236,7 @@ $stockHelper->addInStockFilterToCollection($products);
                                         <h3 class="text-lg font-extrabold uppercase leading-tight"><?= $escaper->escapeHtml($category['title']) ?></h3>
                                         <span class="mt-1 block text-sm text-white/75"><?= $escaper->escapeHtml(__('Pogledaj više')) ?> »</span>
                                     </div>
-                                    <span class="shrink-0 rounded-full bg-[#e32929] px-3 py-1 text-[11px] font-black uppercase tracking-[0.08em] text-white">
+                                    <span class="shrink-0 rounded-full bg-[#D4AF37] px-3 py-1 text-[11px] font-black uppercase tracking-[0.08em] text-white">
                                         <?= (int) $category['active_count'] ?>
                                     </span>
                                 </div>
@@ -249,20 +249,20 @@ $stockHelper->addInStockFilterToCollection($products);
     </section>
 
     <!-- BEST SELLERS -->
-    <section class="bg-[#070707] py-10 text-white lg:py-14">
+    <section class="bg-transparent py-10 text-white lg:py-14">
         <div class="container-shop">
             <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                    <p class="text-xs font-black uppercase tracking-[0.18em] text-[#d60000]">Popularno</p>
+                    <p class="text-xs font-black uppercase tracking-[0.18em] text-[#D4AF37]">Popularno</p>
                     <h2 class="mt-2 text-3xl font-extrabold uppercase text-white lg:text-4xl">Najprodavaniji dresovi</h2>
                 </div>
-                <a href="<?= $escaper->escapeUrl($block->getUrl('category-page')) ?>" class="text-sm font-extrabold uppercase tracking-[0.08em] !text-white !no-underline hover:!text-[#d60000]">
+                <a href="<?= $escaper->escapeUrl($block->getUrl('category-page')) ?>" class="text-sm font-extrabold uppercase tracking-[0.08em] !text-white !no-underline hover:!text-[#D4AF37]">
                     Pregledaj sve →
                 </a>
             </div>
 
             <?php if (!$products->getSize()): ?>
-                <div class="border border-white/10 bg-white/[0.04] p-8 text-sm font-semibold text-white/60 shadow-sm">
+                <div class="border border-[#2A3447] bg-[#141A24]/[0.04] p-8 text-sm font-semibold text-[#B7C0D1] shadow-sm">
                     <?= $escaper->escapeHtml(__('Trenutno nema aktivnih proizvoda na stanju.')) ?>
                 </div>
             <?php else: ?>
@@ -282,12 +282,12 @@ $stockHelper->addInStockFilterToCollection($products);
     </section>
 
     <!-- BENEFITS -->
-    <section class="relative overflow-hidden bg-[#f7f7f7] py-12 text-[#050505] lg:py-16">
+    <section class="relative overflow-hidden bg-[#141A24] py-12 text-white lg:py-16">
         <div class="absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.08),transparent_38%)]"></div>
 
         <div class="container-shop relative">
             <div class="mx-auto mb-8 max-w-3xl text-center">
-                <p class="text-xs font-black uppercase tracking-[0.22em] text-[#d60000]">Zaštita, kvalitet, povjerenje »</p>
+                <p class="text-xs font-black uppercase tracking-[0.22em] text-[#D4AF37]">Zaštita, kvalitet, povjerenje »</p>
                 <h2 class="mt-3 text-3xl font-black uppercase leading-[0.95] tracking-[-0.03em] sm:text-4xl lg:text-5xl">
                     Sve što trebaš za sigurnu<br class="hidden sm:block" /> kupovinu dresa
                 </h2>
@@ -299,8 +299,8 @@ $stockHelper->addInStockFilterToCollection($products);
 
             <div class="mx-auto grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <?php foreach ($benefits as $index => $benefit): ?>
-                    <article class="group rounded-xl bg-white p-6 text-center shadow-2xl shadow-black/10 ring-1 ring-black/5 transition duration-500 hover:-translate-y-2 hover:shadow-red-950/10">
-                        <div class="mx-auto grid h-20 w-20 place-items-center rounded-full bg-[#151515] text-white shadow-xl shadow-black/20 transition duration-500 group-hover:rotate-6 group-hover:scale-105 group-hover:bg-[#d60000]">
+                    <article class="group rounded-xl bg-[#141A24] p-6 text-center shadow-2xl shadow-black/10 ring-1 ring-black/5 transition duration-500 hover:-translate-y-2 hover:shadow-red-950/10">
+                        <div class="mx-auto grid h-20 w-20 place-items-center rounded-full bg-[#141A24] text-white shadow-xl shadow-black/20 transition duration-500 group-hover:rotate-6 group-hover:scale-105 group-hover:bg-[#E6C55A]">
                             <?php if ($benefit['icon'] === 'truck'): ?>
                                 <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none"><path d="M3 7h11v9H3V7Zm11 3h4l3 3v3h-7v-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="7" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/><circle cx="18" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/></svg>
                             <?php elseif ($benefit['icon'] === 'lock'): ?>
@@ -315,42 +315,42 @@ $stockHelper->addInStockFilterToCollection($products);
                         <p class="mt-3 text-sm font-semibold leading-6 text-black/55">
                             <?= $escaper->escapeHtml($benefit['note']) ?>
                         </p>
-                        <span class="mx-auto mt-5 block h-0.5 w-14 bg-[#d60000] transition group-hover:w-20"></span>
+                        <span class="mx-auto mt-5 block h-0.5 w-14 bg-[#D4AF37] transition group-hover:w-20"></span>
                     </article>
                 <?php endforeach; ?>
             </div>
 
-            <div class="mx-auto mt-5 grid max-w-5xl overflow-hidden rounded-xl bg-[#151515] text-white shadow-2xl shadow-black/15 sm:grid-cols-3">
-                <div class="flex items-center justify-center gap-4 border-b border-white/10 p-4 sm:border-b-0 sm:border-r">
+            <div class="mx-auto mt-5 grid max-w-5xl overflow-hidden rounded-xl bg-[#141A24] text-white shadow-2xl shadow-black/15 sm:grid-cols-3">
+                <div class="flex items-center justify-center gap-4 border-b border-[#2A3447] p-4 sm:border-b-0 sm:border-r">
                     <span class="text-2xl">⚽</span>
-                    <div><strong class="block text-2xl font-black">24h</strong><span class="text-sm text-white/60">Brza obrada narudžbi</span></div>
+                    <div><strong class="block text-2xl font-black">24h</strong><span class="text-sm text-[#B7C0D1]">Brza obrada narudžbi</span></div>
                 </div>
-                <div class="flex items-center justify-center gap-4 border-b border-white/10 p-4 sm:border-b-0 sm:border-r">
+                <div class="flex items-center justify-center gap-4 border-b border-[#2A3447] p-4 sm:border-b-0 sm:border-r">
                     <span class="text-2xl">✅</span>
-                    <div><strong class="block text-2xl font-black">14 dana</strong><span class="text-sm text-white/60">Mogućnost povrata</span></div>
+                    <div><strong class="block text-2xl font-black">14 dana</strong><span class="text-sm text-[#B7C0D1]">Mogućnost povrata</span></div>
                 </div>
                 <div class="flex items-center justify-center gap-4 p-4">
                     <span class="text-2xl">💬</span>
-                    <div><strong class="block text-2xl font-black">Support</strong><span class="text-sm text-white/60">Tu smo za tebe 24/7</span></div>
+                    <div><strong class="block text-2xl font-black">Support</strong><span class="text-sm text-[#B7C0D1]">Tu smo za tebe 24/7</span></div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- PROMO -->
-    <section class="border-y border-white/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_28%),#07090d] py-8 text-white lg:py-10">
+    <section class="border-y border-[#2A3447] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_28%),#0B0F19] py-8 text-white lg:py-10">
         <div class="container-shop">
-            <div class="relative mx-auto grid max-w-6xl overflow-hidden rounded-xl border border-white/15 bg-[#111] shadow-2xl shadow-black/30 lg:grid-cols-[0.8fr_1.2fr]">
+            <div class="relative mx-auto grid max-w-6xl overflow-hidden rounded-xl border border-[#2A3447] bg-[#111] shadow-2xl shadow-black/30 lg:grid-cols-[0.8fr_1.2fr]">
                 <div class="absolute -left-16 top-0 h-48 w-48 rotate-45 bg-[repeating-linear-gradient(90deg,rgba(214,0,0,0.7)_0_2px,transparent_2px_18px)] opacity-50"></div>
                 <div class="relative z-10 flex flex-col justify-center p-7 lg:p-12">
-                    <p class="text-xs font-black uppercase tracking-[0.18em] text-[#ff2b2b]">Personalizuj svoj dres</p>
+                    <p class="text-xs font-black uppercase tracking-[0.18em] text-[#D4AF37]">Personalizuj svoj dres</p>
                     <h2 class="mt-4 text-4xl font-black uppercase leading-[0.96] tracking-[-0.03em] lg:text-5xl">Dres sa tvojim<br />imenom</h2>
                     <p class="mt-5 max-w-md text-base font-semibold leading-7 text-white/62">
                         Dodaj svoje ime i broj i istakni se na terenu i van njega. Tvoj stil, tvoj dres, tvoje pravilo.
                     </p>
 
                     <a href="<?= $escaper->escapeUrl($block->getUrl('category-page')) ?>"
-                       class="mt-7 inline-flex h-12 w-fit items-center justify-center rounded bg-[#d60000] px-8 text-sm font-extrabold uppercase tracking-[0.08em] !text-white !no-underline transition hover:-translate-y-0.5 hover:bg-white hover:!text-[#050505]">
+                       class="mt-7 inline-flex h-12 w-fit items-center justify-center rounded bg-[#D4AF37] px-8 text-sm font-extrabold uppercase tracking-[0.08em] !text-white !no-underline transition hover:-translate-y-0.5 hover:bg-[#141A24] hover:!text-white">
                         Kreiraj sada →
                     </a>
                 </div>
@@ -361,7 +361,7 @@ $stockHelper->addInStockFilterToCollection($products);
                          class="h-full w-full object-cover object-[70%_48%] opacity-85"
                          loading="lazy" />
                     <div class="absolute inset-0 bg-gradient-to-r from-[#111] via-transparent to-transparent"></div>
-                    <div class="absolute right-6 top-0 grid h-24 w-24 place-items-center bg-[#d60000] text-center text-xl font-black uppercase leading-none text-white shadow-xl shadow-red-950/30">
+                    <div class="absolute right-6 top-0 grid h-24 w-24 place-items-center bg-[#D4AF37] text-center text-xl font-black uppercase leading-none text-white shadow-xl shadow-red-950/30">
                         -20%<br /><span class="text-sm">popust</span>
                     </div>
                 </div>

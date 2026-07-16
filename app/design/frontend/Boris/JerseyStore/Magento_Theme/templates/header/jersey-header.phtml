@@ -51,13 +51,13 @@ $navItems = array_merge(
 ?>
 
 <header
-    class="relative sticky top-0 z-[999] border-b border-white/10 bg-[#1B263B]/96 text-white shadow-2xl shadow-black/40 backdrop-blur">
+    class="relative sticky top-0 z-[999] border-b border-[#2A3447] bg-[#0B0F19]/96 text-white shadow-2xl shadow-black/40 backdrop-blur">
     <input id="jersey-mobile-menu" type="checkbox" class="jersey-menu-checkbox"
         aria-label="<?= $escaper->escapeHtmlAttr(__('Toggle mobile navigation')) ?>" />
 
-    <div class="hidden border-b border-white/10 bg-[linear-gradient(90deg,#101010,#171717,#101010)] py-2 text-center text-[11px] font-black uppercase tracking-[0.12em] text-white/90 lg:block">
+    <div class="hidden border-b border-[#2A3447] bg-[linear-gradient(90deg,#141A24,#141A24,#141A24)] py-2 text-center text-[11px] font-black uppercase tracking-[0.12em] text-[#B7C0D1] lg:block">
         <span class="inline-flex items-center gap-2">
-            <svg class="h-5 w-5 text-[#e32929]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <svg class="h-5 w-5 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M3 7h11v9H3V7Zm11 3h4l3 3v3h-7v-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
                 <circle cx="7" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/>
                 <circle cx="18" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/>
@@ -69,7 +69,7 @@ $navItems = array_merge(
     <div class="container-shop relative">
         <div class="absolute right-5 top-3 z-20 flex items-center gap-1 lg:top-4 lg:gap-3.5">
             <a href="<?= $escaper->escapeUrl($block->getUrl('catalogsearch/result')) ?>"
-                class="grid h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#ff2b2b]">
+                class="grid h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#D4AF37]">
                 <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none">
                     <path d="m21 21-4.2-4.2m1.2-5.3a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor"
                         stroke-width="1.8" stroke-linecap="round" />
@@ -77,7 +77,7 @@ $navItems = array_merge(
             </a>
 
             <a href="<?= $escaper->escapeUrl($block->getUrl('customer/account')) ?>"
-                class="hidden h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#ff2b2b] lg:grid">
+                class="hidden h-11 w-11 place-items-center !text-white !no-underline transition hover:!text-[#D4AF37] lg:grid">
                 <svg class="h-[21px] w-[21px]" viewBox="0 0 24 24" fill="none">
                     <path d="M20 21a8 8 0 0 0-16 0m12-13a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" stroke="currentColor"
                         stroke-width="1.8" stroke-linecap="round" />
@@ -91,18 +91,18 @@ $navItems = array_merge(
             <a href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"
                 class="inline-grid !text-white !no-underline leading-[.9]">
                 <span class="text-2xl font-black uppercase tracking-[0.16em]">Jersey</span>
-                <span class="mt-[5px] text-[13px] font-black uppercase tracking-[0.34em] text-[#ff2b2b]">Store</span>
+                <span class="mt-[5px] text-[13px] font-black uppercase tracking-[0.34em] text-[#D4AF37]">Store</span>
             </a>
 
             <nav class="flex items-center">
                 <?php foreach ($navItems as $index => $item): ?>
                     <a href="<?= $escaper->escapeUrl($item['href']) ?>" class="group relative inline-flex min-h-[76px] items-center px-[19px]
                     !text-white !no-underline text-xs font-black uppercase tracking-[0.08em]
-                    transition hover:!text-[#ff2b2b]
-                    <?= $index === 0 ? 'after:absolute after:bottom-[18px] after:left-0 after:h-0.5 after:w-full after:bg-[#ff2b2b]' : '' ?>">
+                    transition hover:!text-[#D4AF37]
+                    <?= $index === 0 ? 'after:absolute after:bottom-[18px] after:left-0 after:h-0.5 after:w-full after:bg-[#D4AF37]' : '' ?>">
                         <?= $escaper->escapeHtml($item['label']) ?>
                         <span
-                            class="absolute bottom-[18px] left-0 h-0.5 w-0 bg-[#ff2b2b] transition-all duration-300 group-hover:w-full"></span>
+                            class="absolute bottom-[18px] left-0 h-0.5 w-0 bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
                     </a>
                 <?php endforeach; ?>
             </nav>
@@ -111,7 +111,7 @@ $navItems = array_merge(
 
         <div class="grid h-[68px] grid-cols-[48px_1fr_96px] items-center lg:hidden">
             <label for="jersey-mobile-menu"
-                class="jersey-menu-button flex h-11 w-11 cursor-pointer flex-col items-center justify-center gap-1.5 justify-self-start border border-white/15 bg-white/5 transition hover:border-[#ff2b2b]/70 hover:bg-white/10">
+                class="jersey-menu-button flex h-11 w-11 cursor-pointer flex-col items-center justify-center gap-1.5 justify-self-start border border-[#2A3447] bg-[#141A24]/5 transition hover:border-[#E6C55A]/70 hover:bg-[#141A24]/10">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -120,7 +120,7 @@ $navItems = array_merge(
             <a href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"
                 class="inline-grid justify-self-center text-center !text-white !no-underline leading-[.9]">
                 <span class="text-lg font-black uppercase tracking-[0.16em]">Jersey</span>
-                <span class="mt-[5px] text-[11px] font-black uppercase tracking-[0.34em] text-[#ff2b2b]">Store</span>
+                <span class="mt-[5px] text-[11px] font-black uppercase tracking-[0.34em] text-[#D4AF37]">Store</span>
             </a>
             <div></div>
         </div>
@@ -130,16 +130,16 @@ $navItems = array_merge(
         class="jersey-mobile-backdrop fixed inset-0 z-[1000] bg-black/60 opacity-0 transition duration-300 lg:hidden"></label>
 
     <aside
-        class="jersey-mobile-drawer fixed left-0 top-0 z-[1001] h-screen w-[86vw] max-w-[340px] overflow-y-auto bg-[#050505] shadow-2xl shadow-black/60 transition duration-300 lg:hidden">
-        <div class="flex h-[78px] items-center justify-between border-b border-white/10 px-[22px]">
+        class="jersey-mobile-drawer fixed left-0 top-0 z-[1001] h-screen w-[86vw] max-w-[340px] overflow-y-auto bg-[#0B0F19] shadow-2xl shadow-black/60 transition duration-300 lg:hidden">
+        <div class="flex h-[78px] items-center justify-between border-b border-[#2A3447] px-[22px]">
             <a href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"
                 class="inline-grid !text-white !no-underline leading-[.9]">
                 <span class="text-2xl font-black uppercase tracking-[0.16em]">Jersey</span>
-                <span class="mt-[5px] text-[13px] font-black uppercase tracking-[0.34em] text-[#ff2b2b]">Store</span>
+                <span class="mt-[5px] text-[13px] font-black uppercase tracking-[0.34em] text-[#D4AF37]">Store</span>
             </a>
 
             <label for="jersey-mobile-menu"
-                class="grid h-11 w-11 cursor-pointer place-items-center border border-white/15 text-white">
+                class="grid h-11 w-11 cursor-pointer place-items-center border border-[#2A3447] text-white">
                 <svg class="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="none">
                     <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
@@ -149,7 +149,7 @@ $navItems = array_merge(
         <nav class="grid px-[22px] pb-7 pt-3">
             <?php foreach ($navItems as $item): ?>
                 <a href="<?= $escaper->escapeUrl($item['href']) ?>"
-                    class="flex min-h-[58px] items-center border-b border-white/10 !text-white !no-underline text-sm font-black uppercase tracking-[0.08em] transition hover:pl-2 hover:!text-[#ff2b2b]">
+                    class="flex min-h-[58px] items-center border-b border-[#2A3447] !text-white !no-underline text-sm font-black uppercase tracking-[0.08em] transition hover:pl-2 hover:!text-[#D4AF37]">
                     <?= $escaper->escapeHtml($item['label']) ?>
                 </a>
             <?php endforeach; ?>
