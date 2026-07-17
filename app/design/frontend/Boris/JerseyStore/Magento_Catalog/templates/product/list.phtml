@@ -119,9 +119,10 @@ unset($categoryLink);
         </div>
     </section>
 
-    <section class="container-shop grid gap-x-6 gap-y-7 py-8 sm:py-10 lg:grid-cols-[230px_minmax(0,1fr)] lg:items-start">
+    <section class="category-catalog-layout container-shop py-8 sm:py-10">
+        <aside class="category-catalog-sidebar grid gap-5">
         <?php if ($categoryLinks): ?>
-            <section class="rounded-md border border-[#2A3447] bg-[#141A24]/85 p-4 lg:col-start-1 lg:row-start-1">
+            <section class="rounded-md border border-[#2A3447] bg-[#141A24]/85 p-4">
                 <div class="mb-4 flex items-end justify-between gap-4">
                     <h2 class="text-sm font-black uppercase tracking-[0.06em] text-white"><?= $escaper->escapeHtml(__('Kategorije')) ?></h2>
                 </div>
@@ -146,7 +147,7 @@ unset($categoryLink);
             </section>
         <?php endif; ?>
 
-        <section class="category-filters rounded-md border border-[#2A3447] bg-[#141A24]/85 p-4 lg:col-start-1 lg:row-start-2" data-category-filters>
+        <section class="category-filters rounded-md border border-[#2A3447] bg-[#141A24]/85 p-4" data-category-filters>
             <h2 class="mb-5 text-sm font-black uppercase tracking-[0.06em] text-white"><?= $escaper->escapeHtml(__('Filteri')) ?></h2>
             <div class="grid gap-4">
                 <label class="block">
@@ -186,8 +187,10 @@ unset($categoryLink);
                 <span data-filter-count><?= $escaper->escapeHtml(__('%1 proizvoda prikazano', count($products))) ?></span>
             </div>
         </section>
+        </aside>
 
-        <div class="flex flex-col gap-4 lg:col-start-2 lg:row-start-1 sm:flex-row sm:items-end sm:justify-between">
+        <div class="category-catalog-products min-w-0">
+        <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
                 <h2 class="text-xl font-black text-white"><?= $escaper->escapeHtml(__('%1 proizvoda', count($products))) ?></h2>
             </div>
@@ -198,12 +201,12 @@ unset($categoryLink);
         </div>
 
         <?php if (!$products): ?>
-            <div class="border border-[#2A3447] bg-[#141A24] p-8 text-[#B7C0D1] lg:col-start-2 lg:row-start-2">
+            <div class="border border-[#2A3447] bg-[#141A24] p-8 text-[#B7C0D1]">
                 <h3 class="text-xl font-black text-white"><?= $escaper->escapeHtml(__('Nema proizvoda u ovoj kategoriji')) ?></h3>
                 <p class="mt-2 text-sm leading-6"><?= $escaper->escapeHtml(__('Dodaj proizvode u ovu kategoriju kroz Magento admin panel da bi se prikazali ovdje.')) ?></p>
             </div>
         <?php else: ?>
-            <ol class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3 lg:col-start-2 lg:row-start-2">
+            <ol class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
                 <?php foreach ($products as $index => $product): ?>
                     <?php
                     $stockData = $viewModel ? $viewModel->getStockData($product) : ['is_in_stock' => null, 'qty' => null];
@@ -225,11 +228,12 @@ unset($categoryLink);
                     </li>
                 <?php endforeach; ?>
             </ol>
-            <div data-filter-empty class="hidden border border-[#2A3447] bg-[#141A24] p-8 text-[#B7C0D1] lg:col-start-2 lg:row-start-3">
+            <div data-filter-empty class="mt-6 hidden border border-[#2A3447] bg-[#141A24] p-8 text-[#B7C0D1]">
                 <h3 class="text-xl font-black text-white"><?= $escaper->escapeHtml(__('Nema proizvoda za odabrane filtere')) ?></h3>
                 <p class="mt-2 text-sm leading-6"><?= $escaper->escapeHtml(__('Promijeni pretragu ili resetuj filtere da vidiš sve proizvode.')) ?></p>
             </div>
         <?php endif; ?>
+        </div>
     </section>
 
     <section class="container-shop pb-12">

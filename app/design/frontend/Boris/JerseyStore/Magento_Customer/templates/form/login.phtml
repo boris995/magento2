@@ -1,0 +1,75 @@
+<?php
+/** @var \Magento\Customer\Block\Form\Login $block */
+/** @var \Magento\Framework\Escaper $escaper */
+
+if (!$block->getButtonLockManager()) {
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $block->setButtonLockManager($objectManager->get(\Magento\Framework\View\Element\ButtonLockManager::class));
+}
+
+$benefits = [
+    [__('Brža kupovina'), __('Spremite svoje podatke i kupujte brže.'), 'M13 2 4 14h7l-1 8 9-14h-7l2-8Z'],
+    [__('Praćenje narudžbi'), __('Pratite status svojih narudžbi u svakom trenutku.'), 'M4 7 12 3l8 4-8 4-8-4Zm0 0v10l8 4 8-4V7M12 11v10'],
+    [__('Lista želja'), __('Spremite svoje omiljene artikle i vratite im se kasnije.'), 'M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21l8.8-8.3a5 5 0 0 0 0-7.1Z'],
+];
+$trustItems = [
+    [__('100% original'), __('Garantujemo originalnost svakog dresa.'), 'M12 3 20 7v6c0 4-3.4 6.8-8 8-4.6-1.2-8-4-8-8V7l8-4Zm-3 9 2 2 4-5'],
+    [__('Brza dostava'), __('Dostava širom BiH i regiona u roku 1–3 dana.'), 'M3 7h11v10H3V7Zm11 3h3l4 4v3h-7v-7'],
+    [__('14 dana povrat'), __('Povrat bez komplikacija.'), 'M20 12a8 8 0 1 1-2.3-5.7M20 4v6h-6'],
+    [__('Sigurno plaćanje'), __('Sigurno plaćanje karticama i drugim metodama.'), 'M6 10h12v10H6V10Zm3 0V7a3 3 0 0 1 6 0v3'],
+];
+?>
+
+<main class="premium-login-page relative left-1/2 w-screen -translate-x-1/2 bg-transparent text-white">
+    <section class="container-shop py-9 sm:py-12 lg:py-16">
+        <nav class="mb-9 flex items-center gap-3 text-sm text-[#B7C0D1]">
+            <a href="<?= $escaper->escapeUrl($block->getUrl('')) ?>" class="!text-[#B7C0D1] !no-underline hover:!text-[#D4AF37]"><?= $escaper->escapeHtml(__('Home')) ?></a><span>›</span><strong class="font-medium text-[#D4AF37]"><?= $escaper->escapeHtml(__('Customer Login')) ?></strong>
+        </nav>
+        <header class="mb-9">
+            <h1 class="text-4xl font-black tracking-[-0.03em] sm:text-5xl"><?= $escaper->escapeHtml(__('Customer Login')) ?></h1>
+            <p class="mt-4 text-base text-[#B7C0D1]"><?= $escaper->escapeHtml(__('Prijavite se na svoj račun ili kreirajte novi i uživajte u svim pogodnostima.')) ?></p>
+        </header>
+
+        <div class="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+            <section class="rounded-xl border border-[#2A3447] bg-[#141A24]/85 p-6 shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-8">
+                <div class="flex items-center gap-5">
+                    <span class="grid h-16 w-16 place-items-center rounded-full border border-[#2A3447] bg-[#0B0F19] text-[#D4AF37]"><svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 10h12v10H6V10Zm3 0V7a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="15" r="1" fill="currentColor"/></svg></span>
+                    <div><p class="text-lg font-black uppercase text-[#D4AF37]"><?= $escaper->escapeHtml(__('Prijava na račun')) ?></p><h2 class="mt-1 text-xl font-medium"><?= $escaper->escapeHtml(__('Registrirani kupci')) ?></h2></div>
+                </div>
+                <span class="mt-5 block h-px w-20 bg-[#D4AF37]"></span>
+
+                <form class="premium-login-form mt-7" action="<?= $escaper->escapeUrl($block->getPostActionUrl()) ?>" method="post" id="login-form" data-mage-init='{"validation":{}}'>
+                    <?= $block->getBlockHtml('formkey') ?>
+                    <label class="block text-sm font-black text-white" for="email"><?= $escaper->escapeHtml(__('Email adresa')) ?></label>
+                    <div class="relative mt-2"><input name="login[username]" value="<?= $escaper->escapeHtmlAttr($block->getUsername()) ?>" id="email" type="email" class="h-14 w-full rounded-md border border-[#2A3447] bg-[#0B0F19] px-14 text-sm text-white outline-none placeholder:text-[#B7C0D1] focus:border-[#D4AF37]" placeholder="<?= $escaper->escapeHtmlAttr(__('Unesite svoju email adresu')) ?>" data-mage-init='{"mage/trim-input":{}}' data-validate="{required:true,'validate-email':true}"/><svg class="absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5h18v14H3V5Zm1 1 8 7 8-7" stroke="currentColor" stroke-width="1.5"/></svg></div>
+
+                    <label class="mt-6 block text-sm font-black text-white" for="password"><?= $escaper->escapeHtml(__('Lozinka')) ?></label>
+                    <div class="relative mt-2"><input name="login[password]" type="password" id="password" class="h-14 w-full rounded-md border border-[#2A3447] bg-[#0B0F19] px-14 text-sm text-white outline-none placeholder:text-[#B7C0D1] focus:border-[#D4AF37]" placeholder="<?= $escaper->escapeHtmlAttr(__('Unesite svoju lozinku')) ?>" data-validate="{required:true}"/><svg class="absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 10h12v10H6V10Zm3 0V7a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.5"/></svg></div>
+
+                    <div class="mt-5 flex flex-wrap items-center justify-between gap-4 text-sm"><label class="flex items-center gap-3 text-[#B7C0D1]"><input id="show-login-password" type="checkbox" class="h-4 w-4 accent-[#D4AF37]"/><?= $escaper->escapeHtml(__('Prikaži lozinku')) ?></label><a href="<?= $escaper->escapeUrl($block->getForgotPasswordUrl()) ?>" class="!text-[#D4AF37] !no-underline hover:!text-[#E6C55A]"><?= $escaper->escapeHtml(__('Zaboravili ste lozinku?')) ?></a></div>
+                    <?= $block->getChildHtml('form_additional_info') ?>
+                    <button type="submit" class="login-submit mt-7 grid h-14 w-full grid-cols-[1fr_24px] items-center rounded-md bg-[#D4AF37] px-7 text-sm font-black uppercase tracking-[0.06em] text-[#0B0F19]" name="send" id="send2" <?php if ($block->getButtonLockManager()->isDisabled('customer_login_form_submit')): ?>disabled<?php endif; ?>><span><?= $escaper->escapeHtml(__('Prijavi se')) ?></span><span class="text-2xl">→</span></button>
+                </form>
+            </section>
+
+            <section class="rounded-xl border border-[#2A3447] bg-[#141A24]/85 p-6 shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-8">
+                <div class="flex items-center gap-5"><span class="grid h-16 w-16 place-items-center rounded-full border border-[#2A3447] bg-[#0B0F19] text-[#D4AF37]"><svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M3 21a7 7 0 0 1 14 0M19 6v6m-3-3h6" stroke="currentColor" stroke-width="1.6"/></svg></span><div><p class="text-lg font-black uppercase text-[#D4AF37]"><?= $escaper->escapeHtml(__('Novi kupac')) ?></p><h2 class="mt-1 text-xl font-medium"><?= $escaper->escapeHtml(__('Kreirajte svoj račun')) ?></h2></div></div>
+                <span class="mt-5 block h-px w-20 bg-[#D4AF37]"></span>
+                <div class="mt-5 grid"><?php foreach ($benefits as $benefit): ?><article class="flex items-center gap-5 border-b border-[#2A3447] py-5 last:border-b-0"><span class="grid h-16 w-16 shrink-0 place-items-center rounded-full border border-[#2A3447] bg-[#0B0F19] text-[#D4AF37]"><svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="<?= $escaper->escapeHtmlAttr($benefit[2]) ?>" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><h3 class="font-black text-white"><?= $escaper->escapeHtml($benefit[0]) ?></h3><p class="mt-1 text-sm leading-6 text-[#B7C0D1]"><?= $escaper->escapeHtml($benefit[1]) ?></p></div></article><?php endforeach; ?></div>
+                <a href="<?= $escaper->escapeUrl($block->getUrl('customer/account/create')) ?>" class="mt-6 grid h-14 w-full grid-cols-[1fr_24px] items-center rounded-md border border-[#D4AF37] px-7 text-center text-sm font-black uppercase tracking-[0.06em] !text-[#D4AF37] !no-underline transition hover:bg-[#E6C55A] hover:!text-[#0B0F19]"><span><?= $escaper->escapeHtml(__('Kreiraj račun')) ?></span><span class="text-2xl">→</span></a>
+            </section>
+        </div>
+
+        <section class="mt-7 grid overflow-hidden rounded-xl border border-[#2A3447] bg-[#141A24]/85 sm:grid-cols-2 lg:grid-cols-4"><?php foreach ($trustItems as $item): ?><article class="flex gap-4 border-b border-[#2A3447] p-6 last:border-b-0 sm:[&:nth-child(odd)]:border-r lg:border-b-0 lg:border-r lg:last:border-r-0"><svg class="h-12 w-12 shrink-0 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="<?= $escaper->escapeHtmlAttr($item[2]) ?>" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><div><h3 class="text-xs font-black uppercase text-white"><?= $escaper->escapeHtml($item[0]) ?></h3><p class="mt-2 text-xs leading-5 text-[#B7C0D1]"><?= $escaper->escapeHtml($item[1]) ?></p></div></article><?php endforeach; ?></section>
+        <p class="mt-8 text-center text-sm text-[#B7C0D1]"><?= $escaper->escapeHtml(__('Trebate pomoć? Kontaktirajte naš support tim na')) ?> <a href="mailto:support@jerseystore.local" class="font-bold !text-[#D4AF37] !no-underline">support@jerseystore.local</a></p>
+    </section>
+</main>
+
+<script>
+require(['jquery'], function ($) {
+    $('#show-login-password').on('change', function () {
+        $('#password').attr('type', this.checked ? 'text' : 'password');
+    });
+});
+</script>
+<script type="text/x-magento-init">{"*":{"Magento_Customer/js/block-submit-on-send":{"formId":"login-form"}}}</script>

@@ -89,6 +89,29 @@ body {
     margin: 0 !important;
 }
 
+.category-catalog-layout {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 1024px) {
+    .category-catalog-layout {
+        align-items: start;
+        grid-template-columns: 230px minmax(0, 1fr);
+    }
+
+    .category-catalog-sidebar {
+        grid-column: 1;
+        position: sticky;
+        top: 6.5rem;
+    }
+
+    .category-catalog-products {
+        grid-column: 2;
+    }
+}
+
 .category-filters input[type="search"]:focus,
 .category-filters select:focus {
     border-color: var(--color-site-primary) !important;
@@ -142,6 +165,65 @@ body {
 .premium-site-footer .footer-newsletter-form button[type="submit"]:hover {
     background: var(--color-site-primary-hover) !important;
     border-color: var(--color-site-primary-hover) !important;
+}
+
+.login-container {
+    display: block !important;
+}
+
+.premium-login-page .premium-login-form input[type="email"],
+.premium-login-page .premium-login-form input[type="password"],
+.premium-login-page .premium-login-form input[type="text"] {
+    background: var(--color-site-background) !important;
+    border: 1px solid var(--color-site-border) !important;
+    border-radius: 0.375rem !important;
+    box-shadow: none !important;
+    color: var(--color-site-text) !important;
+    height: 3.5rem !important;
+    margin: 0 !important;
+    padding-left: 3.5rem !important;
+}
+
+.premium-login-page .premium-login-form input:focus {
+    border-color: var(--color-site-primary) !important;
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
+}
+
+.premium-login-page .premium-login-form .login-submit {
+    background: var(--color-site-primary) !important;
+    border: 1px solid var(--color-site-primary) !important;
+    border-radius: 0.375rem !important;
+    color: var(--color-site-background) !important;
+    height: 3.5rem !important;
+    margin-top: 1.75rem !important;
+    width: 100% !important;
+}
+
+.premium-login-page .premium-login-form .login-submit:hover {
+    background: var(--color-site-primary-hover) !important;
+    border-color: var(--color-site-primary-hover) !important;
+}
+
+.page-footer {
+    background: #0B0F19 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+footer.premium-site-footer {
+    background-color: #0B0F19 !important;
+    background-image: radial-gradient(circle at top right, rgba(212, 175, 55, 0.06), transparent 34%) !important;
+    color: #FFFFFF !important;
+}
+
+.premium-site-footer .footer-feature-card {
+    background: rgba(20, 26, 36, 0.92) !important;
+    border: 1px solid #2A3447 !important;
+}
+
+.page-footer + .copyright,
+.copyright {
+    display: none !important;
 }
 
 /* Keep Magento's generic button rules from overriding the PDP purchase bar. */
